@@ -2,13 +2,11 @@
 import ItemsBreadCrum from '@/components/BackgroundCover/ItemsBreadCrum.vue'
 import { onMounted, ref } from 'vue'
 
-
 const items = ref([])
 
 onMounted(async () => {
-  const response = await fetch('/public/data/breadCrumData.json')
+  const response = await fetch('/data/breadCrumData.json')
   items.value = await response.json()
-  console.log(items.value);
 })
 </script>
 

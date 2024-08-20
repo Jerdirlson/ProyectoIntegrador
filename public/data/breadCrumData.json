@@ -1,18 +1,18 @@
 [
   {
-    "icon": "/icons/breadCrum/",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    "icon": "/svg/hospital_bed.png",
+    "description": "Hospitalización y atención personalizada."
   },
   {
-    "icon": "/icons/contactIcon/",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    "icon": "/svg/stethoscope.png",
+    "description": "Exámenes y citas con atención específica y especializada."
   },
   {
-    "icon": "/icons/aboutIcon/",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    "icon": "/svg/syringe.png",
+    "description": "Vacunación e inyectología con seguimiento médico."
   },
   {
-    "icon": "/icons/loquesea/",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    "icon": "/svg/blood_icon.png",
+    "description": "Laboratorio, toma de pruebas y análisis de muestras."
   }
 ]
