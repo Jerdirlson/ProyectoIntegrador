@@ -2,6 +2,7 @@
 import MainLayout from '@/layouts/MainLayout.vue'
 import BackgroundCover from '@/components/BackgroundCover/BackgroundCover.vue'
 import InfiniteCarousel from "@/components/carousel/infiniteCarousel.vue";
+import Specialties from "@/components/Sites/Sites.vue";
 
 const image = '/images/home/doctor1.jpg'
 </script>
@@ -12,6 +13,7 @@ const image = '/images/home/doctor1.jpg'
       <div class="h-[calc(100vh-4rem)]">
         <BackgroundCover :image />
       </div>
+      <Specialties />
       <InfiniteCarousel />
     </MainLayout>
   </main>

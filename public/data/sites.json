@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Medicina general",
+    "summary": "Atención integral para prevenir, diagnosticar y tratar enfermedades comunes, mejorando tu salud y bienestar.",
+    "img": "/images/home/fisioterapia.jpg"
+  },
+  {
+    "title": "Medicina interna",
+    "summary": "Atención especializada en adultos, centrada en el diagnóstico y tratamiento de enfermedades crónicas y complejas.",
+    "img": "/images/home/nutricion.jpg"
+  },
+  {
+    "title": "Salud mental",
+    "summary": "Apoyo emocional y psicológico para superar dificultades, mejorando tu bienestar y equilibrio mental.",
+    "img": "/images/home/psicologia.jpg"
+  },
+  {
+    "title": "Salud reproductiva",
+    "summary": "Servicios especializados en salud sexual y reproductiva, ofreciendo cuidado en todas las etapas de la vida.",
+    "img": "/images/home/reproductiva.jpg"
+  },
+  {
+    "title": "Medicina musculoesquelética",
+    "summary": "Diagnóstico y tratamiento de afecciones en huesos, músculos y articulaciones, mejorando tu movilidad y calidad de vida.",
+    "img": "/images/home/musculoesqueletica.jpg"
+  },
+  {
+    "title": "Pediatría",
+    "summary": "Cuidado especializado para la salud y desarrollo infantil, acompañando a tus hijos desde el nacimiento hasta la adolescencia.",
+    "img": "/images/home/pediatria.jpg"
+  }
+]
