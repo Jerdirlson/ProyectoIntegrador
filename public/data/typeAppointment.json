@@ -1,0 +1,54 @@
+[
+  {
+    "categoria": "Medicina General",
+    "servicios": [
+      "Consultas de Medicina General",
+      "Exámenes físicos",
+      "Evaluaciones Preventivas y de Salud",
+      "Manejo de Enfermedades Crónicas",
+      "Consejería en Estilo de Vida y Prevención de Enfermedades",
+      "Vacunación",
+      "Procedimientos Menores de Medicina General",
+      "Manejo de Enfermedades Comunes"
+    ],
+    "accion": "Agendar",
+    "href": "schedule"
+  },
+  {
+    "categoria": "Emergencias",
+    "servicios": [
+      "Atención de Urgencias y Emergencias ALTA",
+      "Atención de Urgencias y Emergencias MEDIA",
+      "Atención de Urgencias y Emergencias BAJA"
+    ],
+    "accion": "Agendar"
+  },
+  {
+    "categoria": "Laboratorios",
+    "servicios": [
+      "Examen de sangre",
+      "Examen de Orina",
+      "Examen de Heces",
+      "Examen de alergias",
+      "Exámenes de función hepática",
+      "Glucosa",
+      "Examen de perfil Hormonal"
+    ],
+    "accion": "Agendar",
+    "href": "schedule"
+  },
+  {
+    "categoria": "Imágenes Diagnósticas",
+    "servicios": [
+      "Radiografías",
+      "Ecografías",
+      "Ecocardiogramas",
+      "Ultrasonidos",
+      "Densitometría ósea",
+      "Electroencefalograma",
+      "Resonancias magnéticas"
+    ],
+    "accion": "Agendar",
+    "href": "schedule"
+  }
+]

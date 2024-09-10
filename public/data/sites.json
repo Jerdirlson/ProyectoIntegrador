@@ -2,7 +2,8 @@
   {
     "title": "Medicina general",
     "summary": "Atención integral para prevenir, diagnosticar y tratar enfermedades comunes, mejorando tu salud y bienestar.",
-    "img": "/images/home/fisioterapia.jpg"
+    "img": "/images/home/fisioterapia.jpg",
+    "nameSpace": "dashboard"
   },
   {
     "title": "Medicina interna",

@@ -1,18 +1,20 @@
 <script setup lang="ts">
-// import { useRouter } from 'vue-router';
+import {useRouter} from "vue-router";
 
 interface ServiceCardProps {
   title: string;
   summary: string;
   img: string;
+  nameSpace: string;
 }
 
-defineProps<ServiceCardProps>();
-// const router = useRouter();
-//
-// const handleService = (service: string) => {
-//   router.push({ path: '/agendamiento', state: { service } });
-// };
+const props = defineProps<ServiceCardProps>();
+const router = useRouter();
+
+const goToLink = () => {
+  router.push({name: props.nameSpace});
+};
+
 </script>
 
 <template>
@@ -21,7 +23,8 @@ defineProps<ServiceCardProps>();
       <img :src="img" class="h-full w-full object-cover rounded-xl" />
     </div>
     <div
-        class="relative group duration-500 overflow-hidden cursor-pointer group h-auto mx-2 px-4 py-10 -translate-y-10 flex flex-col items-center justify-center rounded-xl bg-white bg-clip-border text-gray-700 hover:duration-700 duration-700 shadow-md text-sm 2xl:text-xl xl:text-lg lg:text-base"
+        class="relative group duration-500 overflow-hidden cursor-pointer group h-auto mx-2 px-4 py-10 -translate-y-10 flex flex-col items-center justify-center rounded-xl bg-white bg-clip-border text-gray-700 hover:duration-700 shadow-md text-sm 2xl:text-xl xl:text-lg lg:text-base"
+        @click="goToLink"
     >
       <div class="flex flex-col items-center gap-2">
         <h1 class="text-[#0B2D64] font-bold text-center">{{ title }}</h1>

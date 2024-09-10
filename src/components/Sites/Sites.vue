@@ -2,7 +2,7 @@
 import {onMounted, ref} from "vue";
 import ItemSpecialities from "@/components/Sites/ItemSites.vue";
 
-const services = ref<{ title: string, summary: string, image : string }[]>([]);
+const services = ref<{ title: string, summary: string, image : string, nameSpace: string }[]>([]);
 
 onMounted(async () => {
   try {
@@ -32,6 +32,7 @@ onMounted(async () => {
             :title="service.title"
             :summary="service.summary"
             :img="service.img"
+            :nameSpace="service.nameSpace"
         />
       </div>
       <div class="flex h-1/5 justify-center items-center">
@@ -43,7 +44,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>
