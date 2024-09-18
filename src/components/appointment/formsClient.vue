@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import { reactive } from 'vue';
+
+const formData = reactive({
+  nombres: '',
+  apellidos: '',
+  tipoDocumento: 'C.C',
+  numeroDocumento: '',
+  telefono: '',
+  correo: ''
+});
+
+const submitForm = () => {
+  console.log('Datos del formulario:', formData);
+  // Aquí puedes agregar la lógica para enviar los datos al servidor
+};
+</script>
+
 <template>
   <form @submit.prevent="submitForm" class="max-w-5xl mx-auto mt-12 p-6 space-y-8">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -43,21 +61,3 @@
     </div>
   </form>
 </template>
-
-<script setup>
-import { reactive } from 'vue';
-
-const formData = reactive({
-  nombres: '',
-  apellidos: '',
-  tipoDocumento: 'C.C',
-  numeroDocumento: '',
-  telefono: '',
-  correo: ''
-});
-
-const submitForm = () => {
-  console.log('Datos del formulario:', formData);
-  // Aquí puedes agregar la lógica para enviar los datos al servidor
-};
-</script>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import AppointmentLayout from "@/layouts/AppointmentLayout.vue";
 import StepperComponent from "@/components/Stepper/StepperComponent.vue";
 import SelectDateAppointment from "@/components/appointment/SelectDateAppointment.vue";
 import formsClient from "@/components/appointment/formsClient.vue";

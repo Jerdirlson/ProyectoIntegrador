@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const isVisible = window.location.pathname !== '/';
+console.log(isVisible);
 
 </script>
 
@@ -11,8 +13,11 @@
       <li><a href="#" class="hover:text-gray-700">Contact</a></li>
     </ul>
 
-    <div id="image-user" class="flex items-center">
-      <div class="skeleton rounded-full bg-gray-300 w-10 h-10"></div>
+    <div v-if="isVisible" id="image-user" class="flex flex-wrap items-center h-full w-full">
+      <div class="flex h-3/4 w-full items-center justify-center">
+<!--        <div class="flex skeleton rounded-full bg-gray-300 w-10 h-10"></div>-->
+        <img class="flex" src="/svg/chevron-direction-bottom-icon.svg" alt="icon"/>
+      </div>
     </div>
   </div>
 </template>
