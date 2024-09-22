@@ -5,7 +5,7 @@ console.log(isVisible);
 </script>
 
 <template>
-  <div class="flex h-full">
+  <div class="flex h-full ">
     <ul class="flex pr-8 space-x-4 justify-center items-center gap-7">
       <li><a href="#" class="hover:text-gray-700">Home</a></li>
       <li><a href="#" class="hover:text-gray-700">About</a></li>
