@@ -7,7 +7,7 @@ import AppointmentPage from "@/components/appointment/AppointmentPage.vue";
 
 <template>
   <AppointmentLayout>
-    <div class="flex flex-col w-4/5 h-4/5 justify-center items-center bg-neutral-200 rounded-3xl">
+    <div class="flex flex-col w-4/5 h-4/5 justify-center items-center bg-neutral-100 rounded-3xl">
       <div class="flex h-1/6 w-full justify-center items-center flex-col">
         <h1 class="flex h-3/5 justify-center items-center text-3xl font-bold">
           Agendamiento de cita

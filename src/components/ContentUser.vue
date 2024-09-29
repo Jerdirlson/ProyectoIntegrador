@@ -1,7 +1,17 @@
 <script setup lang="ts">
-const isVisible = window.location.pathname !== '/';
-console.log(isVisible);
+import { ref } from 'vue';
+import LoginModal from "@/components/Loggin/LoginModal.vue";
 
+const isVisible = window.location.pathname !== '/';
+const isLoginVisible = ref(false);
+
+const openLoginModal = () => {
+  isLoginVisible.value = true;
+};
+
+const closeLoginModal = () => {
+  isLoginVisible.value = false;
+};
 </script>
 
 <template>
@@ -15,11 +25,12 @@ console.log(isVisible);
 
     <div v-if="isVisible" id="image-user" class="flex flex-wrap items-center h-full w-1/6">
       <div class="flex h-3/4 w-full items-center justify-center">
-<!--        <div class="flex skeleton rounded-full bg-gray-300 w-10 h-10"></div>-->
-        <img class="flex" src="/svg/chevron-direction-bottom-icon.svg" alt="icon"/>
+        <a href="#" @click="openLoginModal" class="flex skeleton rounded-full bg-gray-300 w-10 h-10" ></a>
+<!--        <img class="flex" src="/svg/chevron-direction-bottom-icon.svg" alt="icon"/>-->
       </div>
     </div>
   </div>
+  <LoginModal v-if="isLoginVisible" @close="closeLoginModal" />
 </template>
 
 <style scoped>

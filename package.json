@@ -17,6 +17,8 @@
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/vue3": "^6.1.15",
     "@popperjs/core": "^2.11.8",
+    "@vueuse/core": "^11.1.0",
+    "axios": "^1.7.7",
     "pinia": "^2.1.7",
     "v-calendar": "^3.1.2",
     "vue": "^3.4.29",
