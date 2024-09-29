@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStepper } from '@/composables/UseStepper.vue';
+import { useStepper } from '@/composables/UseStepper.ts';
 
 const totalSteps = 4;
 const { currentStep, nextStep, prevStep, isFirstStep, isLastStep } = useStepper(totalSteps);

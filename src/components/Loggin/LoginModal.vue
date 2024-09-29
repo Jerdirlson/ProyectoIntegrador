@@ -3,6 +3,7 @@ import { defineProps, defineEmits, ref, onMounted } from 'vue';
 import Input from '@/components/Input.vue';
 import Button from "@/components/Button.vue";
 import {LoginService} from "@/service/LoginService";
+import {useAuth} from "@/composables/UseAuth";
 
 defineProps({
   isVisible: Boolean,
@@ -43,11 +44,11 @@ const send = async () => {
     // });
     return;
   }
-  const { data, status } = await LoginService({
+  const { data, status } = await useAuth().login({
     user: login.value.email,
     pwd: login.value.password
   });
-  console.log('yeye', data);
+  console.log('YEYEYEYYEYEYEYYE', data);
   const token = data;
   // setToken(token);
   if (status === 200) {
