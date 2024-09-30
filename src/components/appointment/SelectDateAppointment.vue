@@ -9,7 +9,6 @@ const selectedDate = ref(new Date())
 const startTime = ref('09:00')
 const selectedDoctor = ref('')
 
-// Lista de doctores (puedes cargar esto dinámicamente desde una API si lo necesitas)
 const doctors = [
   { id: 1, name: 'Dr. Juan Pérez' },
   { id: 2, name: 'Dra. María González' },
@@ -19,30 +18,27 @@ const doctors = [
 </script>
 
 <template>
-  <div class="w-full h-full px-14">
-    <div class="flex flex-wrap w-full h-full justify-center items-center">
-      <div id="calendar" class="flex h-2/3 w-3/5 p-4 align-center justify-center">
+  <div class="w-full h-full p-8">
+    <div class="flex flex-col lg:flex-row w-full h-full justify-center items-start space-y-8 lg:space-y-0 lg:space-x-12">
+      <div id="calendar" class="w-full lg:w-3/5 p-4">
         <Calendar
-            v-model="selectedDate"
-            :attributes="[{ highlight: true, dates: new Date() }]"
-            is-expanded
-            :columns="2"
+          v-model="selectedDate"
+          :attributes="[{ highlight: true, dates: new Date() }]"
+          is-expanded
+          :columns="2"
+          class="calendar-container"
         />
       </div>
-      <div class="flex flex-col h-full w-2/5 space-y-8 justify-center">
+      <div class="flex flex-col w-full lg:w-2/5 space-y-12">
         <div class="flex flex-col">
-          <div class="text-3xl font-bold mb-2">
-            Hora de inicio
-          </div>
-          <VueTimepicker v-model="startTime" format="HH:mm" />
+          <h2 class="text-2xl font-bold mb-4">Hora de inicio</h2>
+          <VueTimepicker v-model="startTime" format="HH:mm" class="w-full max-w-xs" />
         </div>
         <div class="flex flex-col">
-          <div class="text-3xl font-bold mb-2">
-            Especialista
-          </div>
+          <h2 class="text-2xl font-bold mb-4">Especialista</h2>
           <select
-              v-model="selectedDoctor"
-              class="doctor-select"
+            v-model="selectedDoctor"
+            class="doctor-select w-full max-w-xs"
           >
             <option value="" disabled>Seleccione un doctor</option>
             <option v-for="doctor in doctors" :key="doctor.id" :value="doctor.id">
@@ -55,17 +51,17 @@ const doctors = [
   </div>
 </template>
 
-<style>
-.vc-container {
-  height: 100%;
+<style scoped>
+.calendar-container {
+  height: 500px; /* Ajusta según necesites */
 }
 
 .vue__time-picker input.display-time {
-  font-size: 1.5rem;
-  padding: 0.5rem;
+  font-size: 1.25rem;
+  padding: 0.75rem;
   border: 2px solid #e2e8f0;
   border-radius: 0.5rem;
-  width: 150px;
+  width: 100%;
 }
 
 .vue__time-picker .dropdown {
@@ -83,11 +79,10 @@ const doctors = [
 }
 
 .doctor-select {
-  font-size: 1rem;
-  padding: 0.5rem;
+  font-size: 1.25rem;
+  padding: 0.75rem;
   border: 2px solid #e2e8f0;
   border-radius: 0.5rem;
-  width: 80%;
   background-color: white;
   cursor: pointer;
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useStepper } from '@/composables/UseStepper.ts';
 
-const totalSteps = 4;
+const totalSteps = 5;
 const { currentStep, nextStep, prevStep, isFirstStep, isLastStep } = useStepper(totalSteps);
 </script>
 
