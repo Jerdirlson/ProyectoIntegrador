@@ -2,7 +2,6 @@
 import { defineProps, defineEmits, ref, onMounted } from 'vue';
 import Input from '@/components/Input.vue';
 import Button from "@/components/Button.vue";
-import {LoginService} from "@/service/LoginService";
 import {useAuth} from "@/composables/UseAuth";
 
 defineProps({

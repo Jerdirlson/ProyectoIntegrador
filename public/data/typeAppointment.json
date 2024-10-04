@@ -12,7 +12,7 @@
       "Manejo de Enfermedades Comunes"
     ],
     "accion": "Agendar",
-    "href": "appointment"
+    "href": "appointment?type=general"
   },
   {
     "categoria": "Emergencias",
@@ -22,7 +22,7 @@
       "Atención de Urgencias y Emergencias BAJA"
     ],
     "accion": "Agendar",
-    "href": "appointment"
+    "href": "appointment?type=emergency"
   },
   {
     "categoria": "Laboratorios",
@@ -36,7 +36,7 @@
       "Examen de perfil Hormonal"
     ],
     "accion": "Agendar",
-    "href": "appointment"
+    "href": "appointment?type=laboratory"
   },
   {
     "categoria": "Imágenes Diagnósticas",
@@ -50,6 +50,6 @@
       "Resonancias magnéticas"
     ],
     "accion": "Agendar",
-    "href": "appointment"
+    "href": "appointment?type=diagnostic"
   }
 ]

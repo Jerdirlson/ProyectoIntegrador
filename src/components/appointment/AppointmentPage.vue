@@ -3,10 +3,12 @@ import { ref } from 'vue';
 import StepperComponent from "@/components/Stepper/StepperComponent.vue";
 import SelectDateAppointment from "@/components/appointment/SelectDateAppointment.vue";
 import formsClient from "@/components/appointment/formsClient.vue";
+import SelectSpecialtyComponent from "@/components/appointment/SelectSpecialtyComponent.vue";
+import SelectServiceComponnet from "@/components/appointment/SelectServiceComponnet.vue";
 
 const steps = ref([
-  SelectDateAppointment,
-  SelectDateAppointment,
+  SelectSpecialtyComponent,
+  SelectServiceComponnet,
   SelectDateAppointment,
   formsClient
 ]);

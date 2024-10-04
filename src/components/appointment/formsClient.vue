@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, toRefs } from 'vue';
 
 const formData = reactive({
   nombres: '',
@@ -12,7 +12,6 @@ const formData = reactive({
 
 const submitForm = () => {
   console.log('Datos del formulario:', formData);
-  // Aquí puedes agregar la lógica para enviar los datos al servidor
 };
 </script>
 

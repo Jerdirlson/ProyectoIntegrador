@@ -1,8 +1,22 @@
 <script setup lang="ts">
-
 import AppointmentLayout from "@/layouts/AppointmentLayout.vue";
-import StepperComponent from "@/components/Stepper/StepperComponent.vue";
 import AppointmentPage from "@/components/appointment/AppointmentPage.vue";
+import {onMounted, ref, watch} from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const type = ref('');
+
+
+const updateType = () => {
+  type.value = route.query.type as string || '';
+  console.log('Type updated:', type.value);
+};
+
+onMounted(updateType);
+
+watch(() => route.query.type, updateType);
+
 </script>
 
 <template>
@@ -24,5 +38,4 @@ import AppointmentPage from "@/components/appointment/AppointmentPage.vue";
 </template>
 
 <style scoped>
-
 </style>

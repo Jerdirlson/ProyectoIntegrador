@@ -1,8 +1,27 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useStepper } from '@/composables/UseStepper.ts';
-
+import router from "@/router";
+// Total de pasos
 const totalSteps = 4;
 const { currentStep, nextStep, prevStep, isFirstStep, isLastStep } = useStepper(totalSteps);
+
+const isModalVisible = ref(false);
+
+const email = ref(''); // Este valor debería venir del componente del formulario
+
+const handleNextStep = () => {
+  if (isLastStep()) {
+    isModalVisible.value = true;
+  } else {
+    nextStep();
+  }
+};
+
+const closeModal = () => {
+  isModalVisible.value = false;
+  router.push({ name: 'dashboard' });
+};
 </script>
 
 <template>
@@ -26,11 +45,19 @@ const { currentStep, nextStep, prevStep, isFirstStep, isLastStep } = useStepper(
 
       <button
           class="bg-blue-500 text-white px-4 py-2 rounded"
-          :disabled="isLastStep()"
-          @click="nextStep"
+          @click="handleNextStep"
       >
         Siguiente
       </button>
+    </div>
+
+    <!-- Modal flotante -->
+    <div v-if="isModalVisible" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+      <div class="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+        <h2 class="text-xl font-bold mb-4">Cita Agendada</h2>
+        <p class="mb-4">Su cita ha sido agendada exitosamente. Un correo de confirmación será enviado a el correo electronico registrado.</p>
+        <button @click="closeModal" class="bg-blue-500 text-white px-4 py-2 rounded">Cerrar</button>
+      </div>
     </div>
   </div>
 </template>
