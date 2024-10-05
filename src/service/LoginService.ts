@@ -12,3 +12,17 @@ export const LoginService = (data: ILoginService) => {
             return error;
         });
 }
+
+export const getUserService = async (token : string) => {
+    return axios.get(apiUrl + 'auth/validate', {
+        headers: {
+            'auth-token': `${token}`
+        }
+    })
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+          return error;
+      })
+};

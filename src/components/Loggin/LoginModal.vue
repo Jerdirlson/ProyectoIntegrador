@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, defineEmits, ref, onMounted } from 'vue';
+import {defineProps, defineEmits, ref, onMounted, toRaw} from 'vue';
 import Input from '@/components/Input.vue';
 import Button from "@/components/Button.vue";
 import {useAuth} from "@/composables/UseAuth";
@@ -47,16 +47,22 @@ const send = async () => {
     user: login.value.email,
     pwd: login.value.password
   });
-  console.log('YEYEYEYYEYEYEYYE', data);
-  const token = data;
-  // setToken(token);
+  const token = data.aws;
+  setToken(token);
+  if (useAuth().isTokenExpired(token)) {
+    // useAlert({
+    //   title: 'La sesión ha expirado',
+    //   description: 'La sesión ha expirado, por favor inicia sesión nuevamente'
+    // });
+    return;
+  }
+  const user = await useAuth().getUser(token);
   if (status === 200) {
     // router.visit('/dashboard');
-    emit('close'); // Cerrar modal al iniciar sesión
+    emit('close');
   }
 };
 
-// Función para enviar el formulario de registro
 const signup = async () => {
   const validated = validateForm();
   const validated2 = validateRegister();
@@ -77,9 +83,9 @@ const signup = async () => {
 };
 
 // Almacenar el token en el localStorage
-// const setToken = (token: string) => {
-//   window.localStorage.setItem('token', token);
-// };
+const setToken = (token: string) => {
+  window.localStorage.setItem('token', token);
+};
 
 const toggleStatus = () => {
   WindowStatus.value.access = WindowStatus.value.access === 0 ? 1 : 0;
