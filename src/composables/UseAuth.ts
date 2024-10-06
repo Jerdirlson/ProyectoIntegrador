@@ -1,19 +1,17 @@
-import {ref, computed, type Ref} from 'vue'
-import {getUserService, LoginService} from "@/service/LoginService";
-import type {ILoginService, userType} from "@/types/loginType";
-import {jwtDecode} from "jwt-decode";
-
+import { ref, computed } from 'vue'
+import { LoginService, getUserService } from "@/service/LoginService";
+import type { ILoginService, userType } from "@/types/loginType";
+import { jwtDecode } from "jwt-decode";
 
 export function useAuth() {
-    const user: Ref< userType| null> = ref(null);
-    const isAuthenticated = computed(() => !!user.value)
+    const user = ref<userType | null>(null);
+    const isAuthenticated = computed(() => !!user.value);
     const error = ref(null);
 
     const isTokenExpired = (token: string): boolean => {
         try {
             const decoded: any = jwtDecode(token);
-            const currentTime = Math.floor(Date.now() / 1000);
-            return decoded.exp < currentTime;
+            return decoded.exp < Date.now() / 1000;
         } catch (err) {
             console.error('Error decoding token:', err);
             return true;
@@ -22,42 +20,48 @@ export function useAuth() {
 
     const login = async (credentials: ILoginService) => {
         try {
-            const response = await LoginService(credentials)
-            if (!response.data) throw new Error('Respuesta de login inválida');
+            const response = await LoginService(credentials);
+            if (!response.data || !response.data.aws) throw new Error('Invalid login response');
+
+            const token = response.data.aws;
+            localStorage.setItem('token', token);
+
+            await fetchUser(token);
             return response;
         } catch (err) {
-            console.error('Error de login:', err);
-            error.value = err?.response?.data?.message || 'Error de autenticación';
+            error.value = err?.response?.data?.message || 'Authentication error';
             throw err;
         }
-    }
+    };
 
-    const getUser = async (token : string) : Promise<userType | null> => {
+    const fetchUser = async (token: string) => {
         try {
-            if (user.value) return user.value;
             const response = await getUserService(token);
-            if (response.data) {
-                user.value = response.data;
-            } else {
-                throw new Error('Respuesta de login inválida');
-            }
-            return user.value;
+            if (!response.data) throw new Error('Invalid user data');
+            user.value = response.data;
         } catch (err) {
-            console.error('Error de login:', err);
-            error.value = err?.response?.data?.message || 'Error de autenticación';
+            console.error('Error fetching user:', err);
+            error.value = err?.response?.data?.message || 'Error fetching user data';
             throw err;
         }
-    }
+    };
 
     const logout = () => {
-        user.value = null
-    }
+        user.value = null;
+        localStorage.removeItem('token');
+    };
 
-    // const updateUser = (newData) => {
-    //     if (user.value) {
-    //         user.value = { ...user.value, ...newData }
-    //     }
-    // }
+    const checkAuth = async () => {
+        const token = localStorage.getItem('token');
+        if (token && !isTokenExpired(token)) {
+            await fetchUser(token);
+        } else {
+            logout();
+        }
+    };
+
+    // Call checkAuth when the app initializes
+    checkAuth();
 
     return {
         user,
@@ -65,8 +69,7 @@ export function useAuth() {
         login,
         logout,
         isTokenExpired,
-        // updateUser,
-        getUser,
-        error
-    }
+        error,
+        checkAuth
+    };
 }

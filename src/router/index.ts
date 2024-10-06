@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
         title: 'La sesión ha expirado',
         description: 'La sesión ha expirado, por favor inicia sesión nuevamente'
       });
-      // next({ name: 'home' });
+      next({ name: 'home' });
     } else {
       next();
     }

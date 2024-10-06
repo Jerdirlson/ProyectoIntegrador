@@ -18,7 +18,6 @@ const { isAuthenticated } = useAuth();
 const isLoginModalVisible = ref(false);
 
 const goToLink = () => {
-  console.log('hola', isAuthenticated.value)
   if (isAuthenticated.value) {
     router.push({ name: 'appointment', query: { type: props.href.split('=')[1] } });
   } else {

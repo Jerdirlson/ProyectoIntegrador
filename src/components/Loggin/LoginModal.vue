@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import {defineProps, defineEmits, ref, onMounted, toRaw} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import Input from '@/components/Input.vue';
 import Button from "@/components/Button.vue";
-import {useAuth} from "@/composables/UseAuth";
+import { useAuth } from "@/composables/UseAuth";
 
-defineProps({
+const props = defineProps({
   isVisible: Boolean,
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'login-success']);
 
 const login = ref({
   email: '',
@@ -21,70 +21,35 @@ const WindowStatus = ref({
   access: 0
 });
 
-const validateForm = () => {
-  if (login.value.email === '') return false;
-  if (login.value.password === '') return false;
-  return true;
-};
+const { login: loginAuth, isAuthenticated } = useAuth();
 
-const validateRegister = () => {
-  if (login.value.nickname === '') return false;
-  if (login.value.name === '') return false;
-  return true;
-};
-
-// Función para enviar el formulario de login
 const send = async () => {
-  const validated = validateForm();
-  if (!validated) {
-    // useAlert({
-    //   title: 'Información de inicio de sesión incompleta',
-    //   description: 'No se ha completado el formulario'
-    // });
-    return;
-  }
-  const { data, status } = await useAuth().login({
-    user: login.value.email,
-    pwd: login.value.password
-  });
-  const token = data.aws;
-  setToken(token);
-  if (useAuth().isTokenExpired(token)) {
-    // useAlert({
-    //   title: 'La sesión ha expirado',
-    //   description: 'La sesión ha expirado, por favor inicia sesión nuevamente'
-    // });
-    return;
-  }
-  const user = await useAuth().getUser(token);
-  if (status === 200) {
-    // router.visit('/dashboard');
-    emit('close');
+  if (!validateForm()) return;
+
+  try {
+    const response = await loginAuth({
+      user: login.value.email,
+      pwd: login.value.password
+    });
+
+    if (response.status === 200) {
+      emit('login-success');
+      emit('close');
+    }
+  } catch (err) {
+    console.error('Error durante el login:', err);
   }
 };
 
 const signup = async () => {
-  const validated = validateForm();
-  const validated2 = validateRegister();
-  if (!validated || !validated2) {
-    // useAlert({
-    //   title: 'Información de registro incompleta',
-    //   description: 'No se ha completado el formulario'
-    // });
-    return;
-  }
-  // const { data, status } = await CreateUserService(login.value);
-  // const token = data.token;
-  // setToken(token);
-  // if (status === 200) {
-  //   router.visit('/dashboard');
-  //   emit('close'); // Cerrar modal al registrarse
-  // }
+  if (!validateForm()) return;
+  // Implement signup logic here
 };
 
-// Almacenar el token en el localStorage
-const setToken = (token: string) => {
-  window.localStorage.setItem('token', token);
+const validateForm = () => {
+  if (login.value.email === '' || login.value.password === '') return false;
+  return !(WindowStatus.value.access === 1 && (login.value.nickname === '' || login.value.name === ''));
+
 };
 
 const toggleStatus = () => {
@@ -92,17 +57,16 @@ const toggleStatus = () => {
 };
 
 const closeModal = () => {
-  console.log('close');
   emit('close');
 };
 
 onMounted(() => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const myParam = urlParams.get('meta');
-  if (myParam === 'register') {
-    WindowStatus.value.access = 1;
+  if (isAuthenticated.value) {
+    emit('login-success');
+    emit('close');
   }
 });
+
 </script>
 
 <template>
