@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/AdminEmergencies.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/AdminInvoices.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/AdminMenu.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/FinalUserRegistration.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/MedicalOrders.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/PaymentReceipt.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/Resume.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/admin/UserRegistration.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/AdminView.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/RegistroUsuario.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ProyectoIntegrador.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +37,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -98,7 +82,7 @@
       <workItem from="1728128941872" duration="2644000" />
       <workItem from="1728181044304" duration="10422000" />
       <workItem from="1728228458305" duration="135000" />
-      <workItem from="1728230252875" duration="4031000" />
+      <workItem from="1728230252875" duration="8209000" />
     </task>
     <servers />
   </component>

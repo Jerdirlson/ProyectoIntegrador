@@ -1,70 +1,28 @@
-<template>
-  <div class="flex flex-col h-screen">
-    <!-- Contenedor para los banners -->
-    <div class="flex">
-      <!-- Banner gris superior con botón "Salir" a la izquierda -->
-      <header class="bg-gray-200 text-gray-700 p-2 flex-grow">
-        <button 
-          class="hover:text-gray-900 transition-transform duration-300 hover:scale-105 hover:opacity-80 salir-btn flex items-center"
-          @click="salir"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9V5a3 3 0 00-3-3H4a3 3 0 00-3 3v14a3 3 0 003 3h3a3 3 0 003-3v-4m5-7l5 5m0 0l-5 5m5-5H9" />
-          </svg>
-          Salir
-        </button>
-      </header>
-
-      <!-- Banner azul a la derecha -->
-      <div class="bg-blue-600 text-white w-64 lg:w-1/5 p-2 flex items-center justify-center">
-        <img class="w-8 h-8 mr-2" viewBox="0 0 24 24" fill="none" src="/svg/logoSinLetras.svg" alt="Logo">
-      </div>
-    </div>
-
-    <div class="flex flex-1 overflow-hidden">
-      <!-- Contenido principal (slot) -->
-      <div class="flex-1 bg-gray-100 overflow-y-auto">
-        <slot></slot>
-      </div>
-
-      <!-- Sidebar a la derecha -->
-      <aside class="bg-blue-600 text-white w-64 lg:w-1/5 p-5 overflow-y-auto">
-        <nav class="flex-grow">
-          <ul>
-            <li v-for="(item, index) in menuItems" :key="index" class="mb-6">
-              <router-link :to="item.route" class="hover:text-blue-300 transition-colors duration-300">
-                {{ item.name }}
-              </router-link>
-            </li>
-            <!-- Logo -->
-            <li class="mt-8">
-              <img src="/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mx-auto" />
-            </li>
-          </ul>
-        </nav>
-      </aside>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Home, UserPlus, Calendar, Repeat, XCircle, Ambulance, FileText, Briefcase, CreditCard, Database, Users, Shield } from 'lucide-vue-next';
 
 const menuItems = ref([
-  { name: "Inicio", route: "/inicio" },
-  { name: "Registro Usuarios", route: "/registro-usuarios" },
-  { name: "Agendamiento Citas", route: "/agendamiento-citas" },
-  { name: "Re-agendamiento Citas", route: "/re-agendamiento-citas" },
-  { name: "Cancelación citas", route: "/cancelacion-citas" },
-  { name: "Emergencias", route: "/emergencias" },
-  { name: "Historial Medico", route: "/historial-medico" },
-  { name: "Hoja Vida", route: "/hoja-vida" },
-  { name: "Factura Electronica", route: "/factura-electronica" },
-  { name: "Colilla Pago", route: "/colilla-pago" },
-  { name: "ERP", route: "/erp" },
-  { name: "CRM", route: "/crm" },
-  { name: "AUDITORIA", route: "/auditoria" }
+  { name: "Inicio", route: "/inicio", icon: Home },
+  { name: "Registro Usuarios", route: "/registro-usuarios", icon: UserPlus },
+  { name: "Agendamiento Citas", route: "/agendamiento-citas", icon: Calendar },
+  { name: "Re-agendamiento Citas", route: "/re-agendamiento-citas", icon: Repeat },
+  { name: "Cancelación citas", route: "/cancelacion-citas", icon: XCircle },
+  { name: "Emergencias", route: "/emergencias", icon: Ambulance },
+  { name: "Historial Medico", route: "/historial-medico", icon: FileText },
+  { name: "Hoja Vida", route: "/hoja-vida", icon: Briefcase },
+  { name: "Factura Electronica", route: "/factura-electronica", icon: FileText },
+  { name: "Colilla Pago", route: "/colilla-pago", icon: CreditCard },
+  { name: "ERP", route: "/erp", icon: Database },
+  { name: "CRM", route: "/crm", icon: Users },
+  { name: "AUDITORIA", route: "/auditoria", icon: Shield }
 ]);
+
+const isMenuExpanded = ref(true);
+
+function toggleMenu() {
+  isMenuExpanded.value = !isMenuExpanded.value;
+}
 
 function salir() {
   alert("Saliendo...");
@@ -75,6 +33,73 @@ function salir() {
   }, 500);
 }
 </script>
+
+<template>
+  <div class="flex flex-col h-screen">
+    <header class="bg-gray-200 text-gray-700 p-2 flex justify-between items-center">
+      <button
+          class="hover:text-gray-900 transition-transform duration-300 hover:scale-105 hover:opacity-80 salir-btn flex items-center"
+          @click="salir"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9V5a3 3 0 00-3-3H4a3 3 0 00-3 3v14a3 3 0 003 3h3a3 3 0 003-3v-4m5-7l5 5m0 0l-5 5m5-5H9" />
+        </svg>
+        Salir
+      </button>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+      <div class="flex-1 bg-gray-100 overflow-y-auto">
+        <slot></slot>
+      </div>
+
+      <!-- Menú lateral -->
+      <aside
+          :class="[
+          'bg-blue-600 text-white flex flex-col transition-all duration-300',
+          isMenuExpanded ? 'w-64 lg:w-1/5' : 'w-16'
+        ]"
+      >
+        <div class="p-2 flex flex-col items-center">
+          <img v-if="isMenuExpanded" src="/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mb-2" />
+          <img v-else src="/svg/logoSinLetras.svg" alt="Logo Pequeño" class="h-8 mb-2" />
+          <div class="flex items-start ">
+            <button
+                @click="toggleMenu"
+                class="text-white hover:text-blue-300 transition-transform duration-300 hover:scale-105 mt-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="flex-grow overflow-y-auto">
+          <ul class="p-2">
+            <li
+                v-for="(item, index) in menuItems"
+                :key="index"
+                :class="[
+                  'flex mb-4',
+                  isMenuExpanded ? 'items-start justify-start' : 'items-center justify-center'
+                ]"
+            >
+              <router-link
+                  :to="item.route"
+                  class="flex items-center hover:text-blue-300 transition-colors duration-300"
+                  :title="item.name"
+              >
+                <component :is="item.icon" class="h-8 w-8" />
+                <span v-if="isMenuExpanded" class="text-lg ml-2">{{ item.name }}</span>
+              </router-link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 @keyframes salida {
