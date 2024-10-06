@@ -1,12 +1,30 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+// Variables reactivas
+const busqueda = ref('');
+const ordenesMedicas = ref([
+  { nombre: 'Juan David Muñoz', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'Maluma Baby', estado: 'Activo' },
+  { nombre: 'Sergio Mesa', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'Maluma Baby', estado: 'No Activo' },
+  { nombre: 'Fernando Vega', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'Blessd', estado: 'Activo' },
+  { nombre: 'Alex Montañez', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'J Balvin', estado: 'No Activo' },
+]);
+
+const ordenesFiltradas = ref([]); // Nueva propiedad para almacenar órdenes filtradas
+
+// Función para filtrar las órdenes médicas por CC
+const buscarPorCC = () => {
+  ordenesFiltradas.value = ordenesMedicas.value.filter(orden => orden.cc.includes(busqueda.value));
+};
+
+// Al montar el componente, inicializar las órdenes filtradas
+onMounted(() => {
+  ordenesFiltradas.value = ordenesMedicas.value;
+});
+</script>
+
 <template>
   <div class="flex flex-col h-screen">
-
-    <div class="flex">
-      
-
-    
-    </div>
-
     <div class="flex flex-1 overflow-hidden">
       <!-- Contenido principal con Órdenes Médicas -->
       <div class="flex-1 p-10 bg-gray-100 overflow-y-auto">
@@ -61,33 +79,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      busqueda: '',
-      ordenesMedicas: [
-        { nombre: 'Juan David Muñoz', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'Maluma Baby', estado: 'Activo' },
-        { nombre: 'Sergio Mesa', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'Maluma Baby', estado: 'No Activo' },
-        { nombre: 'Fernando Vega', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'Blessd', estado: 'Activo' },
-        { nombre: 'Alex Montañez', cc: '1253355', fechaOrden: '24/05/2024', doctor: 'J Balvin', estado: 'No Activo' },
-      ],
-      ordenesFiltradas: [] // Nueva propiedad para almacenar órdenes filtradas
-    };
-  },
-  methods: {
-    buscarPorCC() {
-      // Filtrar las órdenes médicas por CC
-      this.ordenesFiltradas = this.ordenesMedicas.filter(orden => orden.cc.includes(this.busqueda));
-    }
-  },
-  mounted() {
-    // Inicializar las órdenes filtradas con todas las órdenes médicas al cargar el componente
-    this.ordenesFiltradas = this.ordenesMedicas;
-  }
-};
-</script>
 
 <style scoped>
 /* Animaciones */

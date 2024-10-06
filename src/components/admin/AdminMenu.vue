@@ -1,3 +1,37 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const menuOpen = ref(false);
+const menuGrid = [
+  'Registro de usuarios',
+  'Agenda de citas',
+  'Re-agenda de citas',
+  'Cancelación de citas',
+  'Emergencias',
+  'Historial médico',
+  'Hoja Vida',
+  'Factura Electrónica',
+  'Colilla Pago',
+  'Planificación de recursos empresariales (ERP)',
+  'Gestión de relaciones con el cliente (CRM)',
+  'AUDITORÍAS'
+];
+
+// Función para alternar el estado del menú
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
+// Función para salir con animación
+const salir = () => {
+  alert("Saliendo...");
+  document.querySelector(".salir-btn").classList.add("animate-salida"); // Usamos document porque no hay acceso a $el
+  setTimeout(() => {
+    // Lógica adicional para salir o redirigir
+  }, 500);
+};
+</script>
+
 <template>
   <div class="flex flex-col h-screen">
    
@@ -36,43 +70,6 @@
     </button>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      menuOpen: false,
-      menuGrid: [
-        'Registro de usuarios',
-        'Agenda de citas',
-        'Re-agenda de citas',
-        'Cancelación de citas',
-        'Emergencias',
-        'Historial médico',
-        'Hoja Vida',
-        'Factura Electrónica',
-        'Colilla Pago',
-        'Planificación de recursos empresariales (ERP)',
-        'Gestión de relaciones con el cliente (CRM)',
-        'AUDITORÍAS'
-      ],
-      
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    },
-    salir() {
-      alert("Saliendo...");
-      this.$el.querySelector(".salir-btn").classList.add("animate-salida");
-      setTimeout(() => {
-        // Lógica adicional para salir o redirigir
-      }, 500);
-    }
-  }
-};
-</script>
 
 <style scoped>
 /* Animación para el botón de Salir */

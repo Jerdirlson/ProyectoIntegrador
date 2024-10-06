@@ -1,28 +1,25 @@
-<script>
-export default {
-  data() {
-    return {
-      menuOpen: false,
-      isAttention: true, // Inicialmente se establece en true para atención presencial
-      isSpecialist: false, // Inicialmente se establece en false para no mostrar búsqueda de especialista
-      patientDocument: '', // Para almacenar el número de documento del paciente
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    },
-    salir() {
-      // Lógica para la acción de salir
-      setTimeout(() => {
-        // Lógica adicional para salir o redirigir
-      }, 500); // Ajusta el tiempo para la duración de la animación
-    },
-    buscarCita() {
-      // Lógica para buscar la cita por cédula
-      console.log(`Buscando cita para el documento: ${this.patientDocument}`);
-    },
-  },
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const menuOpen = ref(false);
+const isAttention = ref(true); // Inicialmente en true para atención presencial
+const isSpecialist = ref(false); // Inicialmente en false para no mostrar búsqueda de especialista
+const patientDocument = ref(''); // Para almacenar el número de documento del paciente
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
+const salir = () => {
+  // Lógica para la acción de salir
+  setTimeout(() => {
+    // Lógica adicional para salir o redirigir
+  }, 500); // Ajusta el tiempo para la duración de la animación
+};
+
+const buscarCita = () => {
+  // Lógica para buscar la cita por cédula
+  console.log(`Buscando cita para el documento: ${patientDocument.value}`);
 };
 </script>
 

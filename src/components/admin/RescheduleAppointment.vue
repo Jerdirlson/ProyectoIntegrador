@@ -1,16 +1,12 @@
-<script>
-export default {
-  data() {
-    return {
-      cedula: '', // Campo para la búsqueda por cédula
-    };
-  },
-  methods: {
-    buscarCita() {
-      // Lógica para buscar cita por cédula
-      alert(`Buscando cita para cédula: ${this.cedula}`);
-    },
-  },
+<script setup lang="ts">
+import { ref } from 'vue';
+
+// Variable reactiva
+const cedula = ref(''); // Campo para la búsqueda por cédula
+
+// Función para buscar cita por cédula
+const buscarCita = () => {
+  alert(`Buscando cita para cédula: ${cedula.value}`);
 };
 </script>
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/shims-vue.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/AgendarCita.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/CancelarCita.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/ColillaDepago.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/PaymentReceipt.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/EmergenciasAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/AdminEmergencies.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/FacturasAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/AdminInvoices.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/HojaDeVida.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/Resume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/MenuAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/AdminMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/OrdenesMedicas.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/MedicalOrders.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/ReagendarCita.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/RegistroUsuario.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/UserRegistration.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/RegistroUsuarioFinal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/FinalUserRegistration.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/RegistroUsuaru+Hojadevida.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/AdminView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/AdminView.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="Vue Composition API Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2mlIyvBdYZhe3IVi9V3rOwGpjT1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "origin/Origin/Feat/Fernando",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "/home/jerdirlsons/.nvm/versions/node/v18.19.0/bin/node",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "settings.nodejs",
+    "ts.external.directory.path": "/home/jerdirlsons/u/proyectoIntegrador/ProyectoIntegrador/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="" />
+      <created>1727644993701</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1727644993701</updated>
+      <workItem from="1727644994746" duration="2988000" />
+      <workItem from="1727698931917" duration="5000" />
+      <workItem from="1727781404429" duration="2942000" />
+      <workItem from="1727789125783" duration="15405000" />
+      <workItem from="1727875905889" duration="605000" />
+      <workItem from="1728049789070" duration="20387000" />
+      <workItem from="1728085540874" duration="25000" />
+      <workItem from="1728128941872" duration="2644000" />
+      <workItem from="1728181044304" duration="10422000" />
+      <workItem from="1728228458305" duration="135000" />
+      <workItem from="1728230252875" duration="3650000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

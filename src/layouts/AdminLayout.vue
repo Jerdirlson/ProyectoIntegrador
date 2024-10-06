@@ -17,7 +17,7 @@
 
       <!-- Banner azul a la derecha -->
       <div class="bg-blue-600 text-white w-64 lg:w-1/5 p-2 flex items-center justify-center">
-        <img class="w-8 h-8 mr-2" viewBox="0 0 24 24" fill="none" src="../../public/svg/logoSinLetras.svg" alt="Logo">
+        <img class="w-8 h-8 mr-2" viewBox="0 0 24 24" fill="none" src="/svg/logoSinLetras.svg" alt="Logo">
       </div>
     </div>
 
@@ -38,7 +38,7 @@
             </li>
             <!-- Logo -->
             <li class="mt-8">
-              <img src="../../public/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mx-auto" />
+              <img src="/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mx-auto" />
             </li>
           </ul>
         </nav>

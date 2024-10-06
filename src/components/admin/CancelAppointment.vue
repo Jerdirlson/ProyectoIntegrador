@@ -1,42 +1,39 @@
-<script>
-export default {
-  data() {
-    return {
-      menuOpen: false,
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    },
-    cancelarCita() {
-      alert("Cita cancelada.");
-    },
-    salir() {
-      // Lógica para la acción de salir
-      alert("Saliendo...");
-      this.$el.querySelector(".salir-btn").classList.add("animate-salida");
-      setTimeout(() => {
-        // Lógica adicional para salir o redirigir
-      }, 500); // Ajusta el tiempo para la duración de la animación
-    }
-  }
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const menuOpen = ref(false);
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
+const cancelarCita = () => {
+  alert("Cita cancelada.");
+};
+
+const salir = () => {
+  alert("Saliendo...");
+  document.querySelector(".salir-btn").classList.add("animate-salida");
+  setTimeout(() => {
+    // Lógica adicional para salir o redirigir
+  }, 500); // Ajusta el tiempo para la duración de la animación
 };
 </script>
 
-
-
+<template>
+  <div>
+    <button @click="toggleMenu">Toggle Menu</button>
+    <ul v-if="menuOpen">
+      <li>Opción del menú</li>
+    </ul>
+    <button @click="cancelarCita">Cancelar Cita</button>
+    <button class="salir-btn" @click="salir">Salir</button>
+  </div>
+</template>
 
 
 <template>
   <div class="flex flex-col h-screen">
-    <!-- Contenedor para los banners -->
-    <div class="flex">
-      
-
-     
-    </div>
-
     <div class="flex flex-1 overflow-hidden">
       <!-- Contenido principal a la izquierda -->
       <div class="flex-1 p-10 overflow-y-auto bg-gray-100">

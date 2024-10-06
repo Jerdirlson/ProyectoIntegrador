@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+// Variables reactivas
+const patientDocument = ref('');
+const searchById = ref(false); // Estado del switch
+const invoices = ref([
+  { nombre: 'Juan David Muñoz', cc: '1253355', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Activo' },
+  { nombre: 'Sergio Mesa', cc: '1253356', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Activo' },
+  { nombre: 'Fernando Vega', cc: '1253357', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Activo' },
+  { nombre: 'Alex Montaflez', cc: '1253358', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Inactivo' },
+]);
+
+// Función para buscar cita
+const buscarCita = () => {
+  console.log(`Buscando cita para el ${searchById.value ? 'ID' : 'documento'}: ${patientDocument.value}`);
+  // Implementa la lógica de búsqueda aquí
+};
+</script>
+
 <template>
   <div class="flex flex-col h-screen">
     <div class="flex"></div>
@@ -72,29 +92,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      patientDocument: '',
-      searchById: false, // Estado del switch
-      invoices: [
-        { nombre: 'Juan David Muñoz', cc: '1253355', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Activo' },
-        { nombre: 'Sergio Mesa', cc: '1253356', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Activo' },
-        { nombre: 'Fernando Vega', cc: '1253357', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Activo' },
-        { nombre: 'Alex Montaflez', cc: '1253358', fechaCreacion: '24/05/2024', tipoUsuario: 'Paciente', estado: 'Inactivo' },
-      ],
-    };
-  },
-  methods: {
-    buscarCita() {
-      console.log(`Buscando cita para el ${this.searchById ? 'ID' : 'documento'}: ${this.patientDocument}`);
-      // Implementa la lógica de búsqueda aquí
-    },
-  },
-};
-</script>
 
 <style>
 .toggle-label {

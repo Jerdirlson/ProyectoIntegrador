@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+// Datos reactivas de los campos personales y de usuario
+const personalFields = ref([
+  { label: 'Nombres', type: 'text' },
+  { label: 'Apellidos', type: 'text' },
+  { label: 'Tipo de documento', type: 'text' },
+  { label: 'Número de documento', type: 'text' },
+  { label: 'Número de teléfono', type: 'tel' },
+  { label: 'Correo electrónico', type: 'email' },
+  { label: 'Dirección', type: 'text' },
+]);
+
+const userFields = ref([
+  { label: 'Salario', type: 'number' },
+  { label: 'Tipo Contrato', type: 'text' },
+  { label: 'Bono', type: 'number' },
+  { label: 'Cargo', type: 'text' },
+]);
+
+const roles = ref(['Seleccione un rol', 'Médico', 'Paciente', 'Administrativo']);
+</script>
+
 <template>
   <div class="flex flex-col h-screen">
     <div class="flex-1 overflow-hidden">
@@ -57,31 +81,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      personalFields: [
-        { label: 'Nombres', type: 'text' },
-        { label: 'Apellidos', type: 'text' },
-        { label: 'Tipo de documento', type: 'text' },
-        { label: 'Número de documento', type: 'text' },
-        { label: 'Número de teléfono', type: 'tel' },
-        { label: 'Correo electrónico', type: 'email' },
-        { label: 'Dirección', type: 'text' },
-      ],
-      userFields: [
-        { label: 'Salario', type: 'number' },
-        { label: 'Tipo Contrato', type: 'text' },
-        { label: 'Bono', type: 'number' },
-        { label: 'Cargo', type: 'text' },
-      ],
-      roles: ['Seleccione un rol', 'Médico', 'Paciente', 'Administrativo'],
-    };
-  },
-};
-</script>
 
 <style scoped>
   /* Establecer un tamaño máximo en la altura del contenido para forzar el scroll si se desborda */
