@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
 import {useAuth} from "@/composables/UseAuth";
 import {useAlert} from "@/composables/UseAlert";
 
@@ -9,53 +9,112 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AboutView.vue'),
     },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('../views/DashboardView.vue')
+      component: () => import('../views/DashboardView.vue'),
     },
     {
       path: '/schedule',
       name: 'schedule',
-      component: () => import('../views/ScheduleView.vue')
+      component: () => import('../views/ScheduleView.vue'),
     },
     {
       path: '/appointment',
       name: 'appointment',
       component: () => import('../views/AppointmentView.vue'),
       meta: { requiresAuth: true }
-    }
-  ]
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../views/AdminView.vue'),
+      children: [
+        {
+          path: 'schedule-appointment',
+          name: 'admin-schedule-appointment',
+          component: () => import('../components/admin/ScheduleAppointment.vue'),
+        },
+        {
+          path: '',
+          name: 'admin-dashboard',
+          component: () => import('../components/admin/AdminMenu.vue'),
+        },
+        {
+          path: 'cancel-appointment',
+          name: 'admin-cancel-appointment',
+          component: () => import('../components/admin/CancelAppointment.vue'),
+        },
+        {
+          path: 'payment-receipt',
+          name: 'admin-payment-receipt',
+          component: () => import('../components/admin/PaymentReceipt.vue'),
+        },
+        {
+          path: 'emergencies',
+          name: 'admin-emergencies',
+          component: () => import('../components/admin/AdminEmergencies.vue'),
+        },
+        {
+          path: 'invoices',
+          name: 'admin-invoices',
+          component: () => import('../components/admin/AdminInvoices.vue'),
+        },
+        {
+          path: 'resume',
+          name: 'admin-resume',
+          component: () => import('../components/admin/Resume.vue'),
+        },
+        {
+          path: 'medical-orders',
+          name: 'admin-medical-orders',
+          component: () => import('../components/admin/MedicalOrders.vue'),
+        },
+        {
+          path: 'reschedule-appointment',
+          name: 'admin-reschedule-appointment',
+          component: () => import('../components/admin/RescheduleAppointment.vue'),
+        },
+        {
+          path: 'user-registration',
+          name: 'admin-user-registration',
+          component: () => import('../components/admin/UserRegistration.vue'),
+        },
+        {
+          path: 'final-user-registration',
+          name: 'admin-final-user-registration',
+          component: () => import('../components/admin/FinalUserRegistration.vue'),
+        },
+      ],
+    },
+  ],
 });
 
 
 router.beforeEach((to, from, next) => {
-  const auth = useAuth();
-  const token = window.localStorage.getItem('token');
+    const auth = useAuth();
+    const token = window.localStorage.getItem('token');
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!token || auth.isTokenExpired(token)) {
-      useAlert({
-        title: 'La sesión ha expirado',
-        description: 'La sesión ha expirado, por favor inicia sesión nuevamente'
-      });
-      next({ name: 'home' });
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!token || auth.isTokenExpired(token)) {
+            useAlert({
+                title: 'La sesión ha expirado',
+                description: 'La sesión ha expirado, por favor inicia sesión nuevamente'
+            });
+            next({ name: 'home' });
+        } else {
+            next();
+        }
     } else {
-      next();
+        next();
     }
-  } else {
-    next();
-  }
 });
 
-export default router
+export default router;
