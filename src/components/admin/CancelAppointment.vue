@@ -11,25 +11,9 @@ const cancelarCita = () => {
   alert("Cita cancelada.");
 };
 
-const salir = () => {
-  alert("Saliendo...");
-  document.querySelector(".salir-btn").classList.add("animate-salida");
-  setTimeout(() => {
-    // Lógica adicional para salir o redirigir
-  }, 500); // Ajusta el tiempo para la duración de la animación
-};
 </script>
 
-<template>
-  <div>
-    <button @click="toggleMenu">Toggle Menu</button>
-    <ul v-if="menuOpen">
-      <li>Opción del menú</li>
-    </ul>
-    <button @click="cancelarCita">Cancelar Cita</button>
-    <button class="salir-btn" @click="salir">Salir</button>
-  </div>
-</template>
+
 
 
 <template>

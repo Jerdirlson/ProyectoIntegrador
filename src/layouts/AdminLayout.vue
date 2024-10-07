@@ -3,19 +3,19 @@ import { ref } from 'vue';
 import { Home, UserPlus, Calendar, Repeat, XCircle, Ambulance, FileText, Briefcase, CreditCard, Database, Users, Shield } from 'lucide-vue-next';
 
 const menuItems = ref([
-  { name: "Inicio", route: "/inicio", icon: Home },
-  { name: "Registro Usuarios", route: "/registro-usuarios", icon: UserPlus },
-  { name: "Agendamiento Citas", route: "/agendamiento-citas", icon: Calendar },
-  { name: "Re-agendamiento Citas", route: "/re-agendamiento-citas", icon: Repeat },
-  { name: "Cancelación citas", route: "/cancelacion-citas", icon: XCircle },
-  { name: "Emergencias", route: "/emergencias", icon: Ambulance },
-  { name: "Historial Medico", route: "/historial-medico", icon: FileText },
-  { name: "Hoja Vida", route: "/hoja-vida", icon: Briefcase },
-  { name: "Factura Electronica", route: "/factura-electronica", icon: FileText },
-  { name: "Colilla Pago", route: "/colilla-pago", icon: CreditCard },
-  { name: "ERP", route: "/erp", icon: Database },
-  { name: "CRM", route: "/crm", icon: Users },
-  { name: "AUDITORIA", route: "/auditoria", icon: Shield }
+  { name: "Inicio", route: "/admin", icon: Home },  // Cambiado a la ruta de inicio
+  { name: "Registro Usuarios", route: "/admin/user-registration", icon: UserPlus },  // Ruta para registro de usuarios
+  { name: "Agendamiento Citas", route: "/admin/schedule-appointment", icon: Calendar },  // Ruta para agendamiento
+  { name: "Re-agendamiento Citas", route: "/admin/reschedule-appointment", icon: Repeat },  // Ruta para re-agendamiento
+  { name: "Cancelación Citas", route: "/admin/cancel-appointment", icon: XCircle },  // Ruta para cancelación
+  { name: "Emergencias", route: "/admin/emergencies", icon: Ambulance },  // Ruta para emergencias
+  { name: "Historial Médico", route: "/admin/medical-orders", icon: FileText },  // Ruta para historial médico (si corresponde)
+  { name: "Hoja Vida", route: "/admin/", icon: Briefcase },  // Ruta para hoja de vida
+  { name: "Factura Electrónica", route: "/admin/invoices", icon: FileText },  // Ruta para factura electrónica
+  { name: "Colilla Pago", route: "/admin//payment-receipt", icon: CreditCard },  // Ruta para colilla de pago
+  { name: "ERP", route: "/admin", icon: Database },  // Ruta para el menú administrativo
+  { name: "CRM", route: "/crm", icon: Users },  // Ruta para CRM
+  { name: "Auditoría", route: "/auditoria", icon: Shield }  // Ruta para auditoría
 ]);
 
 const isMenuExpanded = ref(true);

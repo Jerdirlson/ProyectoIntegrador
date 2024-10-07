@@ -85,7 +85,7 @@ const router = createRouter({
         {
           path: 'user-registration',
           name: 'admin-user-registration',
-          component: () => import('../components/admin/UserRegistration.vue'),
+          component: () => import('../components/admin/FinalUserRegistration.vue'),
         },
         {
           path: 'final-user-registration',

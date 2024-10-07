@@ -32,7 +32,7 @@ const buscarCita = () => {
       <!-- Contenido principal a la izquierda -->
       <div class="flex-1 p-10 overflow-y-auto bg-gray-100">
         <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl mt-10">
-          <h2 class="text-2xl font-semibold mb-6 text-blue-600">Re-agendar cita</h2>
+          <h2 class="text-2xl font-semibold mb-6 text-blue-600">Agendar cita</h2>
 
           <!-- Campo para buscar cita por cédula -->
           <div class="mb-6">
