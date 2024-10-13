@@ -1,21 +1,25 @@
+
 <script setup lang="ts">
 import { ref } from 'vue';
 
+// Estado para el menú
 const menuOpen = ref(false);
-const menuGrid = [
-  'Registro de usuarios',
-  'Agenda de citas',
-  'Re-agenda de citas',
-  'Cancelación de citas',
-  'Emergencias',
-  'Historial médico',
-  'Hoja Vida',
-  'Factura Electrónica',
-  'Colilla Pago',
-  'Planificación de recursos empresariales (ERP)',
-  'Gestión de relaciones con el cliente (CRM)',
-  'AUDITORÍAS'
-];
+
+// Definición de los elementos del menú
+const menuItems = ref([
+  { name: "Registro Usuarios", route: "/admin/user-registration" },
+  { name: "Agendamiento Citas", route: "/admin/schedule-appointment" },
+  { name: "Re-agendamiento Citas", route: "/admin/reschedule-appointment" },
+  { name: "Cancelación Citas", route: "/admin/cancel-appointment" },
+  { name: "Emergencias", route: "/admin/emergencies" },
+  { name: "Historial Médico", route: "/admin/medical-orders" },
+  { name: "Hoja Vida", route: "/admin/resume" },
+  { name: "Factura Electrónica", route: "/admin/invoices" },
+  { name: "Colilla Pago", route: "/admin/payment-receipt" },
+  { name: "ERP", route: "/admin/erp" },
+  { name: "CRM", route: "/admin/crm" },
+  { name: "Auditoría", route: "admin/audit" },
+]);
 
 // Función para alternar el estado del menú
 const toggleMenu = () => {
@@ -25,38 +29,37 @@ const toggleMenu = () => {
 // Función para salir con animación
 const salir = () => {
   alert("Saliendo...");
-  document.querySelector(".salir-btn").classList.add("animate-salida"); // Usamos document porque no hay acceso a $el
+  document.querySelector(".salir-btn").classList.add("animate-salida");
   setTimeout(() => {
     // Lógica adicional para salir o redirigir
   }, 500);
 };
 </script>
 
+
 <template>
   <div class="flex flex-col h-screen">
-   
-    <div class="flex">
- 
-     
+    <div class="flex justify-center mt-20">
+      <h2 class="text-4xl font-bold text-center text-blue-600">
+        Bienvenidos al módulo administración
+      </h2>
     </div>
 
     <div class="flex flex-1 overflow-hidden">
-      <!-- Contenido principal, solo el menú -->
-      <div class="flex-1 p-10 bg-gray-100 overflow-hidden">
-        <h2 class="text-4xl font-bold text-center mb-12 text-blue-600">Bienvenidos al módulo administración</h2>
+      <!-- Contenedor del menú con barra de desplazamiento -->
+      <div class="flex-1 p-10 bg-gray-100 overflow-y-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          <div 
-            v-for="menu in menuGrid" 
-            :key="menu" 
+          <div
+            v-for="item in menuItems"
+            :key="item.name"
             class="bg-white shadow-lg rounded-lg p-8 flex items-center justify-center text-center text-black font-bold text-2xl hover:bg-blue-300 hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2"
           >
-            {{ menu }}
+            <router-link :to="item.route">{{ item.name }}</router-link>
           </div>
         </div>
       </div>
 
       <!-- Sidebar a la derecha -->
-   
     </div>
 
     <!-- Botón para abrir el menú en dispositivos móviles -->
@@ -70,6 +73,7 @@ const salir = () => {
     </button>
   </div>
 </template>
+
 
 <style scoped>
 /* Animación para el botón de Salir */
@@ -114,7 +118,8 @@ const salir = () => {
 }
 
 /* Quitar barra de desplazamiento */
-html, body {
+html,
+body {
   overflow: hidden; /* Esto oculta las barras de desplazamiento de toda la página */
 }
 
@@ -130,5 +135,16 @@ h2 {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   margin-top: 10px; /* Reducido a 1 cm */
   margin-bottom: 3cm; /* Margen inferior de 3 cm */
+}
+
+/* Estilo para la barra de desplazamiento */
+.overflow-y-auto {
+  max-height: calc(100vh - 150px); /* Ajusta la altura máxima según sea necesario */
+  overflow-y: auto; /* Agrega la barra de desplazamiento vertical */
+}
+
+.grid {
+  /* Añade espacio entre los elementos de la cuadrícula */
+  padding-bottom: 20px; /* Espacio en la parte inferior de la cuadrícula */
 }
 </style>

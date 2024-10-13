@@ -38,14 +38,19 @@ const router = createRouter({
       component: () => import('../views/AdminView.vue'),
       children: [
         {
+          path: '',
+          name: 'admin',
+          component: () => import('../components/admin/AdminMenu.vue'),
+        },
+        {
           path: 'schedule-appointment',
           name: 'admin-schedule-appointment',
           component: () => import('../components/admin/ScheduleAppointment.vue'),
         },
         {
-          path: '',
-          name: 'admin-dashboard',
-          component: () => import('../components/admin/AdminMenu.vue'),
+          path: 'audit',
+          name: 'audit',
+          component: () => import('../components/admin/audits.vue'),
         },
         {
           path: 'cancel-appointment',
@@ -85,12 +90,17 @@ const router = createRouter({
         {
           path: 'user-registration',
           name: 'admin-user-registration',
-          component: () => import('../components/admin/FinalUserRegistration.vue'),
+          component: () => import('../components/admin/UserRegistration.vue'),
         },
         {
-          path: 'final-user-registration',
-          name: 'admin-final-user-registration',
-          component: () => import('../components/admin/FinalUserRegistration.vue'),
+          path: 'crm',
+          name: 'crm',
+          component: () => import('../components/admin/CRM.vue'),
+        },
+        {
+          path: 'erp',
+          name: 'erp',
+          component: () => import('../components/admin/ERP.vue'),
         },
       ],
     },

@@ -1,16 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { obtenerEmergenciasDetalles } from '../../service/Adminservice';
 
-const pacientes = ref([
-  { nombre: 'Juan David Muñoz', cc: '1253355', horaLlegada: '6:30 PM', nivelEmergencia: 'Media', estado: 'Activo', doctorAsignado: 'Maluma Baby' },
-  { nombre: 'Sergio Mesa', cc: '1253355', horaLlegada: '7:20 PM', nivelEmergencia: 'Alta', estado: 'No Activo', doctorAsignado: 'Maluma Baby' },
-  { nombre: 'Fernando Vega', cc: '1253355', horaLlegada: '7:35 PM', nivelEmergencia: 'Baja', estado: 'Activo', doctorAsignado: 'Blessd' },
-  { nombre: 'Alex Montañez', cc: '1253355', horaLlegada: '7:52 PM', nivelEmergencia: 'Alta', estado: 'No Activo', doctorAsignado: 'J Balvin' },
-]);
+// Declaración de la referencia para almacenar los datos de los pacientes
+const pacientes = ref([]);
 
+// Función para generar filas vacías en la tabla
 const emptyRows = (count) => {
   return Array.from({ length: count });
 };
+
+// Función para cargar emergencias desde el backend
+const cargarEmergencias = async () => {
+  try {
+    const datos = await obtenerEmergenciasDetalles();
+    pacientes.value = datos.map((item) => ({
+      nombre: item['Nombre'],
+      cc: item['CC'],
+      horaLlegada: new Date(item['Hora de Llegada']).toLocaleTimeString(),
+      nivelEmergencia: item['Nivel de Emergencia'],
+      estado: item['Estado'],
+      doctorAsignado: item['Doctor Asignado']
+    }));
+  } catch (error) {
+    console.error('Error al cargar emergencias:', error);
+  }
+};
+
+// Llamada a la función al montar el componente
+onMounted(() => {
+  cargarEmergencias();
+});
 </script>
 
 <template>

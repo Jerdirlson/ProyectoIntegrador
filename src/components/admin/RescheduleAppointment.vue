@@ -1,18 +1,40 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { obtenerCitasCompletas } from '../../service/Adminservice'; // Asegúrate de ajustar la ruta al archivo de servicios
 
-// Variable reactiva
+// Variables reactivas
 const cedula = ref(''); // Campo para la búsqueda por cédula
+const cita = ref<any>(null); // Datos de la cita
+const fechaActual = ref(''); // Fecha actual de la cita
+const errorMensaje = ref(''); // Mensaje de error
 
 // Función para buscar cita por cédula
-const buscarCita = () => {
-  alert(`Buscando cita para cédula: ${cedula.value}`);
+const buscarCita = async () => {
+  if (!cedula.value) {
+    errorMensaje.value = "No existe una cita para la cedula buscada.";
+    return;
+  }
+
+  try {
+    // Llamada a la API para obtener la cita
+    const response = await obtenerCitasCompletas(cedula.value);
+    if (response && response.length > 0) {
+      cita.value = response[0]; // Asignamos el primer resultado a cita
+      // Actualizamos fechaActual con la fecha de la cita
+      fechaActual.value = cita.value.FechaHora.slice(0, 16); // Cortamos a 16 caracteres para que coincida con el formato datetime-local
+      errorMensaje.value = ''; // Limpiamos el mensaje de error
+    } else {
+      errorMensaje.value = "No se encontró la cita para la cédula proporcionada.";
+    }
+  } catch (error) {
+    console.error("Error al buscar la cita:", error);
+    errorMensaje.value = "No se pudo realizar la búsqueda. Inténtalo nuevamente.";
+  }
 };
 </script>
 
 <template>
   <div class="flex flex-col h-screen bg-gradient-to-r from-blue-50 to-blue-100">
-    <!-- Contenido principal -->
     <div class="flex flex-1 overflow-hidden">
       <div class="flex-1 p-10 overflow-y-auto bg-white rounded-tl-3xl shadow-xl">
         <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl mt-10 animate-fade-in">
@@ -27,62 +49,63 @@ const buscarCita = () => {
             </div>
           </div>
 
-          <!-- Información del paciente -->
-          <div class="mb-6">
+          <!-- Mensaje de error -->
+          <div v-if="errorMensaje" class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative animate-bounce" role="alert">
+            <span class="block sm:inline">{{ errorMensaje }}</span>
+          </div>
+
+          <!-- Información de la cita -->
+          <div v-if="cita" class="mb-6">
             <h3 class="text-lg font-semibold mb-4">Información del paciente</h3>
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <p class="text-sm text-gray-600">Nombre completo</p>
-                <p class="font-medium">Juan David Carvajal</p>
+                <p class="font-medium">{{ cita.NombreCompleto }}</p>
               </div>
               <div>
                 <p class="text-sm text-gray-600">Correo electrónico</p>
-                <p class="font-medium">correo@ejemplo.com</p>
+                <p class="font-medium">{{ cita.CorreoElectronico }}</p>
               </div>
               <div>
                 <p class="text-sm text-gray-600">Documento</p>
-                <p class="font-medium">9972406579</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Número de teléfono</p>
-                <p class="font-medium">3186719838</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">EPS</p>
-                <p class="font-medium">EjemploEps</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Tipo</p>
-                <p class="font-medium">C.C</p>
+                <p class="font-medium">{{ cita.Documento }}</p>
               </div>
             </div>
           </div>
 
           <!-- Información de la cita -->
-          <div class="mb-6">
+          <div v-if="cita" class="mb-6">
             <h3 class="text-lg font-semibold mb-4">Información de la cita</h3>
             <div class="grid grid-cols-2 gap-4">
-              <div class="col-span-2">
-                <label class="block text-sm text-gray-600 mb-1">Fecha y Hora</label>
-                <input type="date" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+              <div>
+                <label class="block text-sm text-gray-600 mb-1">Fecha Actual De la Cita</label>
+                <input type="datetime-local" v-model="cita.FechaHora" readonly class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               </div>
               <div>
-                <p class="text-sm text-gray-600">Atención</p>
-                <p class="font-medium">Presencial</p>
+                <label class="block text-sm text-gray-600 mb-1">Nueva Fecha y Hora de la cita </label>
+                <input type="datetime-local" v-model="cita.FechaHora" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               </div>
               <div>
                 <p class="text-sm text-gray-600">Tipo de cita</p>
-                <p class="font-medium">Medicina general</p>
+                <p class="font-medium">{{ cita.TipoCita }}</p>
               </div>
-              <div class="col-span-2">
+              <div>
+                <p class="text-sm text-gray-600">Valor de la consulta</p>
+                <p class="font-medium">$ {{ cita.ValorConsulta }}</p>
+              </div>
+              <div>
                 <p class="text-sm text-gray-600">Doctor</p>
-                <p class="font-medium">Dra. J. Santamaria</p>
+                <p class="font-medium">{{ cita.Doctor }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">ID Cita</p>
+                <p class="font-medium">{{ cita.IdCita }}</p> 
               </div>
             </div>
           </div>
 
           <!-- Botón Confirmar -->
-          <div class="flex justify-end">
+          <div v-if="cita" class="flex justify-end">
             <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 animate-pulse">
               Confirmar
             </button>
@@ -92,6 +115,10 @@ const buscarCita = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Los estilos permanecen sin cambios */
+</style>
 
 <style scoped>
 /* Animación de Bounce */

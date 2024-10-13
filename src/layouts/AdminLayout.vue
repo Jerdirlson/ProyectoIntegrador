@@ -10,12 +10,12 @@ const menuItems = ref([
   { name: "Cancelación Citas", route: "/admin/cancel-appointment", icon: XCircle },  // Ruta para cancelación
   { name: "Emergencias", route: "/admin/emergencies", icon: Ambulance },  // Ruta para emergencias
   { name: "Historial Médico", route: "/admin/medical-orders", icon: FileText },  // Ruta para historial médico (si corresponde)
-  { name: "Hoja Vida", route: "/admin/", icon: Briefcase },  // Ruta para hoja de vida
+  { name: "Hoja Vida", route: "/admin/resume", icon: Briefcase },  // Ruta para hoja de vida
   { name: "Factura Electrónica", route: "/admin/invoices", icon: FileText },  // Ruta para factura electrónica
-  { name: "Colilla Pago", route: "/admin//payment-receipt", icon: CreditCard },  // Ruta para colilla de pago
-  { name: "ERP", route: "/admin", icon: Database },  // Ruta para el menú administrativo
-  { name: "CRM", route: "/crm", icon: Users },  // Ruta para CRM
-  { name: "Auditoría", route: "/auditoria", icon: Shield }  // Ruta para auditoría
+  { name: "Colilla Pago", route: "/admin/payment-receipt", icon: CreditCard },  // Ruta para colilla de pago
+  { name: "ERP", route: "/admin/erp", icon: Database },  // Ruta para el menú administrativo
+  { name: "CRM", route: "/admin/crm", icon: Users },  // Ruta para CRM
+  { name: "Auditoría", route: "/admin/audit", icon: Shield }  // Ruta para auditoría
 ]);
 
 const isMenuExpanded = ref(true);
