@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import MainLayout from "@/layouts/MainLayout.vue";
-import TypeAppointment from "@/components/appointment/AppointmentCard.vue";
 import {onMounted, ref} from "vue";
 import AppointmentCard from "@/components/appointment/AppointmentCard.vue";
 
@@ -53,7 +52,3 @@ onMounted(async () => {
     </div>
   </MainLayout>
 </template>
-
-<style scoped>
-
-</style>

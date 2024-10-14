@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import {useAuth} from "@/composables/UseAuth";
-import {useAlert} from "@/composables/UseAlert";
+import {useToast} from "@/composables/UseToast";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!token || auth.isTokenExpired(token)) {
-            useAlert({
+            useToast({
                 title: 'La sesión ha expirado',
                 description: 'La sesión ha expirado, por favor inicia sesión nuevamente'
             });
