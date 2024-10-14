@@ -8,7 +8,6 @@ export const LoginService = (data: ILoginService) => {
             return response;
         })
         .catch(error => {
-            console.log('error ', error);
             return error;
         });
 }

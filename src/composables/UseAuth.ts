@@ -21,6 +21,7 @@ export function useAuth() {
     const login = async (credentials: ILoginService) => {
         try {
             const response = await LoginService(credentials);
+            if (response.status === 401) return response;
             if (!response.data || !response.data.aws) throw new Error('Invalid login response');
 
             const token = response.data.aws;

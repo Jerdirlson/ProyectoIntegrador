@@ -3,6 +3,7 @@ import {onMounted, ref, watch} from 'vue';
 import Input from '@/components/Input.vue';
 import Button from "@/components/Button.vue";
 import { useAuth } from "@/composables/UseAuth";
+import {useToast} from "@/composables/UseToast";
 
 const props = defineProps({
   isVisible: Boolean,
@@ -31,13 +32,21 @@ const send = async () => {
       user: login.value.email,
       pwd: login.value.password
     });
-
-    if (response.status === 200) {
-      emit('login-success');
-      emit('close');
+    if (response.status === 401) {
+      useToast({
+        title: 'Error',
+        description: 'Credenciales incorrectas',
+        type: 'error'
+      });
     }
-  } catch (err) {
-    console.error('Error durante el login:', err);
+    emit('login-success');
+    emit('close');
+  } catch (error) {
+    useToast({
+      title: 'Error',
+      description: 'Error en el servidor',
+      type: 'error'
+    });
   }
 };
 
