@@ -26,12 +26,22 @@ const router = createRouter({
       name: 'schedule',
       component: () => import('../views/ScheduleView.vue'),
     },
-    {
-      path: '/appointment',
-      name: 'appointment',
-      component: () => import('../views/AppointmentView.vue'),
-      meta: { requiresAuth: true }
+      {
+        path: '/mercadopago',
+        name: 'mercadopago',
+        component: () => import('../views/MercadoPagoView.vue'),
+        // This is a child route (branch) for the MercadoPago module.
+        // A layout will be used depending on the module, as it is a reusable method.
+        // URl para probar y ver la clase : http://localhost:5173/Mercadopago
+        children: [
+            {
+                path: '',
+                name: 'mercadopago',
+                component: () => import('../components/Mercadopago/MercadoPago.vue'),
+            },
+        ],
     },
+  
     {
       path: '/admin',
       name: 'admin',
