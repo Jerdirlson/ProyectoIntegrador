@@ -94,6 +94,11 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/operator',
+      name: 'operator',
+      component: () => import('../views/OperatorView.vue'),
+    }
   ],
 });
 

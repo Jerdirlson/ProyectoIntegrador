@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Alert.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Toast.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Loggin/LoginModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Loggin/LoginModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/composables/UseAlert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/UseToast.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/composables/UseAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/UseAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/MainLayout.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/LoginService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/LoginService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/DashboardView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/DashboardView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/OperatorView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/OperatorView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -3,7 +3,9 @@
 </script>
 
 <template>
-
+  <div>
+    vista operador
+  </div>
 </template>
 
 <style scoped>
