@@ -20,7 +20,29 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/DashboardView.vue'),
+    },
+    {
+      path: '/dashboardpatient',
+      name: 'dashboardpatient',
+      component: () => import('../views/DashboardUserView.vue'),
+      children : [
+    {
+      path: 'reschedule',
+      name: 'reschedule',
+      component: () => import('../views/RescheduleView.vue'),
     },
+    {
+      path: 'cancel',
+      name: 'cancel-quotes',
+      component: () => import('../views/CancelView.vue'),
+    },
+    {
+      path: 'see',
+      name: 'see-quotes',
+      component: () => import('../views/SeeView.vue'),
+    },
+  ]
+},
     {
       path: '/schedule',
       name: 'schedule',
