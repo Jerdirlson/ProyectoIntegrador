@@ -118,6 +118,58 @@ const router = createRouter({
       path: '/operator',
       name: 'operator',
       component: () => import('../views/OperatorView.vue'),
+      children: [
+        {
+          path: '',
+          name: 'operator',
+            component: () => import('../components/operator/OperatorMenu.vue'),
+        },
+        {
+          path: 'schedule-appointment',
+          name: 'operator-schedule-appointment',
+          component: () => import('../components/admin/ScheduleAppointment.vue'),
+        },
+        {
+          path: 'cancel-appointment',
+          name: 'operator-cancel-appointment',
+          component: () => import('../components/admin/CancelAppointment.vue'),
+        },
+        {
+          path: 'payment-receipt',
+          name: 'operator-payment-receipt',
+          component: () => import('../components/admin/PaymentReceipt.vue'),
+        },
+        {
+          path: 'emergencies',
+          name: 'operator-emergencies',
+          component: () => import('../components/admin/AdminEmergencies.vue'),
+        },
+        {
+          path: 'invoices',
+          name: 'operator-invoices',
+          component: () => import('../components/admin/AdminInvoices.vue'),
+        },
+        {
+          path: 'resume',
+          name: 'operator-resume',
+          component: () => import('../components/admin/Resume.vue'),
+        },
+        {
+          path: 'medical-orders',
+          name: 'operator-medical-orders',
+          component: () => import('../components/admin/MedicalOrders.vue'),
+        },
+        {
+          path: 'reschedule-appointment',
+          name: 'operator-reschedule-appointment',
+          component: () => import('../components/admin/RescheduleAppointment.vue'),
+        },
+        {
+          path: 'user-registration',
+          name: 'operator-user-registration',
+          component: () => import('../components/admin/UserRegistration.vue'),
+        },
+      ],
     }
   ],
 });

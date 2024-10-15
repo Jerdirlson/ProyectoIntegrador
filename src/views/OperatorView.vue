@@ -1,11 +1,12 @@
 <script setup lang="ts">
 
+import AdminLayout from "@/layouts/AdminLayout.vue";
 </script>
 
 <template>
-  <div>
-    vista operador
-  </div>
+  <AdminLayout :type="'menuOperator'">
+    <router-view />
+  </AdminLayout>
 </template>
 
 <style scoped>
