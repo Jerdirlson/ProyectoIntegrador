@@ -42,6 +42,65 @@ const router = createRouter({
         ],
     },
   
+
+
+    {
+      path:'/doc',
+      name: 'doc',
+      component: () => import('../views/Doctor/PrincipalDoc.vue'),
+      children: [
+      {
+        path: 'citas',
+        name: 'citas',
+        component: () => import('../views/Doctor/Doc.vue'),
+      },
+
+      {
+        path: 'H',
+        name: 'H',
+        component: () => import('../views/HistoriaC.vue'),
+      },
+      {
+        path: 'C',
+        name: 'C',
+        component: () => import('../views/Orden.vue'),
+      },
+      {
+        path:'docdate',
+        name: 'docdate',
+        component: () => import('../views/Doctor/DateDoc.vue'),
+        props: true, // Permite pasar parámetros como props
+
+      },
+      {
+        path:'docinfo',
+        name: 'docinfo',
+        component: () => import('../views/Doctor/patientinfo.vue'),
+      },
+      {
+        path:'dochistory',
+        name: 'dochistory',
+        component: () => import('../views/Doctor/MedicalHistory.vue'),
+      },
+      {
+        path:'docorder',
+        name: 'docorder',
+        component: () => import('../views/Doctor/MedicalOrder.vue'),
+      },
+      {
+        path:'docemergency',
+        name: 'docemergency',
+        component: () => import('../views/Doctor/DocEmergency.vue'),
+      },
+      {
+        path:'emergencypatient',
+        name: 'emergencypatient',
+        component: () => import('../views/Doctor/EmergencyPatient.vue'),
+      },
+    ],
+  },
+
+
     {
       path: '/admin',
       name: 'admin',

@@ -61,7 +61,7 @@ function salir() {
         ]"
       >
         <div class="p-2 flex flex-col items-center">
-          <img v-if="isMenuExpanded" src="/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mb-2" />
+          <img v-if="isMenuExpanded" src="/svg/LogoVitamed-09.svg" alt="Logo" class="h-16 mb-2" />
           <img v-else src="/svg/logoSinLetras.svg" alt="Logo Pequeño" class="h-8 mb-2" />
           <div class="flex items-start ">
             <button
