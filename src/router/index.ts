@@ -26,26 +26,41 @@ const router = createRouter({
       name: 'schedule',
       component: () => import('../views/ScheduleView.vue'),
     },
-    {
-      path: '/appointment',
-      name: 'appointment',
-      component: () => import('../views/AppointmentView.vue'),
-      meta: { requiresAuth: true }
+      {
+        path: '/mercadopago',
+        name: 'mercadopago',
+        component: () => import('../views/MercadoPagoView.vue'),
+        // This is a child route (branch) for the MercadoPago module.
+        // A layout will be used depending on the module, as it is a reusable method.
+        // URl para probar y ver la clase : http://localhost:5173/Mercadopago
+        children: [
+            {
+                path: '',
+                name: 'mercadopago',
+                component: () => import('../components/Mercadopago/MercadoPago.vue'),
+            },
+        ],
     },
+  
     {
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue'),
       children: [
         {
+          path: '',
+          name: 'admin',
+          component: () => import('../components/admin/AdminMenu.vue'),
+        },
+        {
           path: 'schedule-appointment',
           name: 'admin-schedule-appointment',
           component: () => import('../components/admin/ScheduleAppointment.vue'),
         },
         {
-          path: '',
-          name: 'admin-dashboard',
-          component: () => import('../components/admin/AdminMenu.vue'),
+          path: 'audit',
+          name: 'audit',
+          component: () => import('../components/admin/audits.vue'),
         },
         {
           path: 'cancel-appointment',
@@ -88,9 +103,14 @@ const router = createRouter({
           component: () => import('../components/admin/UserRegistration.vue'),
         },
         {
-          path: 'final-user-registration',
-          name: 'admin-final-user-registration',
-          component: () => import('../components/admin/FinalUserRegistration.vue'),
+          path: 'crm',
+          name: 'crm',
+          component: () => import('../components/admin/CRM.vue'),
+        },
+        {
+          path: 'erp',
+          name: 'erp',
+          component: () => import('../components/admin/ERP.vue'),
         },
       ],
     },

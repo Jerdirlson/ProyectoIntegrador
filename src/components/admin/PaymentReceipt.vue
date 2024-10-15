@@ -1,25 +1,39 @@
-<script setup lang="ts">
+<script setup lang="ts"> 
 import { ref } from 'vue';
+import { obtenerColillas } from '../../service/Adminservice'; // Asegúrate de importar la función adecuada
 
 // Variables reactivas
 const searchById = ref(false);
 const searchQuery = ref('');
-const colillas = ref([
-  { nombre: 'Juan David Muñoz', cc: '1253355', fechaColilla: '24/05/2024', idColilla: 1, estado: 'Activo' },
-  { nombre: 'Sergio Mesa', cc: '1253356', fechaColilla: '24/05/2024', idColilla: 2, estado: 'Inactivo' },
-  { nombre: 'Fernando Vega', cc: '1253357', fechaColilla: '24/05/2024', idColilla: 3, estado: 'Activo' },
-  { nombre: 'Alex Montaflez', cc: '1253358', fechaColilla: '24/05/2024', idColilla: 4, estado: 'Activo' },
-]);
+const colillas = ref([]);
+const mensajeError = ref('');
 
 // Función para buscar
-const buscar = () => {
-  const searchField = searchById.value ? 'idColilla' : 'cc';
-  console.log(`Buscando por ${searchField} para: ${searchQuery.value}`);
-  // Implementar lógica de búsqueda aquí
+const buscar = async () => {
+  try {
+    if (searchQuery.value.trim() === '') {
+      console.error('Por favor, ingrese una cédula o ID.');
+      mensajeError.value = 'Por favor, ingrese una cédula o ID.'; // Mostrar mensaje de error
+      return; // Salir si el campo de búsqueda está vacío
+    }
+
+    const searchField = searchById.value ? 'idColilla' : 'cc';
+    const response = await obtenerColillas(searchQuery.value); // Obtener colillas del servicio
+
+    // Mapear los datos devueltos a la estructura deseada
+    colillas.value = response.map((item) => ({
+      nombre: item['Nombre'], // Ajusta el campo según la respuesta de tu API
+      cc: item['CC'], // Ajusta el campo según la respuesta de tu API
+      fechaColilla: new Date(item['Fecha Colilla']).toLocaleDateString(), // Ajusta el campo según la respuesta de tu API
+      idColilla: item['ID Colilla'], // Ajusta el campo según la respuesta de tu API
+      estado: item['Estado'] // Ajusta el campo según la respuesta de tu API
+    }));
+  } catch (error) {
+    console.error('Error al buscar colillas:', error);
+    mensajeError.value = 'No se encotraron datos con esta cedula .'; // Mostrar mensaje de error
+  }
 };
 </script>
-
-
 <template>
   <div class="flex flex-col h-screen">
     <div class="flex"></div>
@@ -28,7 +42,7 @@ const buscar = () => {
       <div class="flex-1 p-10 overflow-hidden bg-gray-100">
         <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl mt-10">
           <h2 class="text-2xl font-semibold mb-6 text-blue-600">Colilla de Pago</h2>
-          
+
           <!-- Switch personalizado para buscar por ID o CC -->
           <div class="mb-6">
             <div class="flex items-center">
@@ -60,6 +74,11 @@ const buscar = () => {
             </div>
           </div>
 
+          <!-- Mensaje de error -->
+          <div v-if="mensajeError" class="mb-4 p-4 bg-red-100 text-red-800 rounded-lg animate-fadeIn">
+            {{ mensajeError }}
+          </div>
+
           <!-- Información de la tabla -->
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -73,6 +92,9 @@ const buscar = () => {
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
+              <tr v-if="colillas.length === 0">
+                <td colspan="6" class="px-6 py-4 text-center text-gray-500">No hay datos disponibles.</td>
+              </tr>
               <tr v-for="(colilla, index) in colillas" :key="index">
                 <td class="px-6 py-4 whitespace-nowrap">{{ colilla.nombre }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ colilla.cc }}</td>
@@ -120,5 +142,25 @@ const buscar = () => {
 
 .toggle-checkbox {
   display: none; /* Ocultar el checkbox */
+}
+
+.toggle-circle.translate-x-5 {
+  transform: translateX(30px);
+}
+
+/* Animación para el mensaje de error */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
 }
 </style>

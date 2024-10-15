@@ -1,77 +1,135 @@
-<script setup lang="ts">
+}<script setup lang="ts">
 import { ref } from 'vue';
+import { obtenerCitasCompletas, cancelarCitaPorId } from '../../service/Adminservice'; // Asegúrate de que la ruta sea correcta
 
 const menuOpen = ref(false);
+const documento = ref('');
+const pacienteInfo = ref(null);
+const error = ref(false);
+const loading = ref(false);
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
-const cancelarCita = () => {
-  alert("Cita cancelada.");
+const buscarCita = async () => {
+  loading.value = true;
+  error.value = false;
+  try {
+    const response = await obtenerCitasCompletas(documento.value);
+    if (response && response.length > 0) {
+      pacienteInfo.value = response[0]; // Asumimos que queremos la primera cita
+    } else {
+      error.value = true; // Si no hay citas encontradas
+      pacienteInfo.value = null;
+    }
+  } catch (err) {
+    console.error('Error al buscar la cita:', err);
+    error.value = true; // En caso de error
+  } finally {
+    loading.value = false;
+  }
 };
 
-const salir = () => {
-  alert("Saliendo...");
-  document.querySelector(".salir-btn").classList.add("animate-salida");
-  setTimeout(() => {
-    // Lógica adicional para salir o redirigir
-  }, 500); // Ajusta el tiempo para la duración de la animación
+
+
+const cancelarCita = async () => {
+  if (!pacienteInfo.value || !pacienteInfo.value.IdCita) {
+    alert("No hay cita seleccionada.");
+    return;
+  }
+
+  const idCita = pacienteInfo.value.IdCita; // Obtener el ID de la cita
+  console.log('Cancelando la cita con ID:', idCita);
+  loading.value = true;
+
+  try {
+    // Llamar a la función para cancelar la cita
+    const response = await cancelarCitaPorId(idCita); 
+
+    // Verificar la respuesta
+    if (response) {
+      alert("Cita cancelada exitosamente.");
+      pacienteInfo.value = null; // Limpiar la información del paciente
+    }
+  } catch (err) {
+    console.error('Error en la solicitud de cancelación:', err);
+    alert("Error en la solicitud de cancelación.");
+  } finally {
+    loading.value = false;
+  }
 };
+
 </script>
 
 <template>
-  <div>
-    <button @click="toggleMenu">Toggle Menu</button>
-    <ul v-if="menuOpen">
-      <li>Opción del menú</li>
-    </ul>
-    <button @click="cancelarCita">Cancelar Cita</button>
-    <button class="salir-btn" @click="salir">Salir</button>
-  </div>
-</template>
-
-
-<template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen bg-white">
     <div class="flex flex-1 overflow-hidden">
-      <!-- Contenido principal a la izquierda -->
-      <div class="flex-1 p-10 overflow-y-auto bg-gray-100">
+      <div class="flex-1 p-10 overflow-y-auto">
         <div class="bg-white shadow-lg rounded-lg p-8 transform transition-all duration-500 hover:scale-105 hover:shadow-2xl mt-10 animate-fade-in">
           <div class="flex justify-center mb-6">
             <h2 class="text-4xl font-bold text-blue-600">Cancelar Cita</h2>
           </div>
 
-          <!-- Contenedor del formulario de cancelar cita -->
-          <div class="bg-white p-6 rounded-lg shadow-lg mx-auto w-full max-w-lg animate-bounce-in">
+          <div class="bg-white p-6 rounded-lg shadow-lg mx-auto w-full max-w-lg">
             <div class="flex items-center mb-4">
-              <label class="block text-gray-700" for="documento">Número de documento</label>
-              <input type="text" id="documento" placeholder="Ingrese el número de documento" class="border border-gray-300 rounded-md p-3 w-full ml-2 transition-transform duration-300 hover:scale-105" />
-              <button class="bg-blue-600 text-white py-2 px-4 rounded ml-2 hover:bg-blue-500 transition duration-300">
+              <label class="block text-gray-700 font-semibold" for="documento">Número de documento</label>
+              <input
+                type="text"
+                v-model="documento"
+                id="documento"
+                placeholder="Ingrese el número de documento"
+                class="border border-gray-300 rounded-md p-3 w-full ml-2 transition-transform duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                class="bg-blue-600 text-white py-2 px-4 rounded ml-2 hover:bg-blue-500 transition duration-300 transform hover:scale-105"
+                @click="buscarCita"
+              >
                 Buscar
               </button>
             </div>
 
-            <p class="mb-4 font-semibold text-lg text-gray-800">Paciente: Juan David Carvajal</p>
-            <div class="mb-6 p-4 border border-gray-300 rounded-lg">
-              <p class="font-semibold"><strong>Información de la cita:</strong></p>
-              <p>Hora: 4:15 PM</p>
-              <p>Doctor: Dr. xxx</p>
-              <p>Consultorio: xx-x</p>
-              <p>Valor: $xx</p>
-            </div>
+            <template v-if="loading">
+              <div class="flex justify-center mb-4">
+                <div class="animate-spin h-5 w-5 border-4 border-blue-600 border-t-transparent rounded-full"></div>
+                <p class="ml-2">Cargando...</p>
+              </div>
+            </template>
 
-            <button class="bg-red-600 text-white py-3 px-6 rounded w-full hover:bg-red-500 transition duration-300 transform hover:scale-105">
-              Cancelar cita
-            </button>
+            <template v-if="error">
+              <p class="mb-4 font-semibold text-lg text-red-600">No se encontraron citas para este documento.</p>
+            </template>
+
+            <template v-if="pacienteInfo">
+              <div class="mb-4 p-4 border border-gray-300 rounded-lg shadow-md bg-blue-50">
+                <div class="mb-4">
+                  <p class="font-semibold text-gray-800"><strong>Información Paciente:</strong></p>
+                  <p class="font-semibold text-gray-800">Paciente: <span class="text-blue-600">{{ pacienteInfo.NombreCompleto }}</span></p>
+                  <p class="font-semibold text-gray-800">Correo: <span class="text-blue-600">{{ pacienteInfo.CorreoElectronico }}</span></p>
+                  <p class="font-semibold text-gray-800">Documento: <span class="text-blue-600">{{ pacienteInfo.Documento }}</span></p>
+                </div>
+                <div>
+                  <p class="font-semibold text-gray-800"><strong>Información de la cita:</strong></p>
+                  <p class="font-semibold text-gray-800">ID Cita: <span class="text-blue-600">{{ pacienteInfo.IdCita }}</span></p>
+                  <p>Hora: <span class="font-semibold text-blue-600">{{ pacienteInfo.FechaHora }}</span></p>
+                  <p>Tipo de Cita: <span class="font-semibold text-blue-600">{{ pacienteInfo.TipoCita }}</span></p>
+                  <p>Valor: <span class="font-semibold text-blue-600">${{ pacienteInfo.ValorConsulta }}</span></p>
+                  <p>Doctor: <span class="font-semibold text-blue-600">{{ pacienteInfo.Doctor }}</span></p>
+                </div>
+              </div>
+
+              <button
+                class="bg-red-600 text-white py-3 px-6 rounded w-full hover:bg-red-500 transition duration-300 transform hover:scale-105"
+                @click="cancelarCita"
+              >
+                Cancelar cita
+              </button>
+            </template>
           </div>
         </div>
       </div>
-
-   
     </div>
 
-    <!-- Botón de "Cancelar Cita" en la parte inferior en color celeste -->
     <button
       class="lg:hidden fixed bottom-4 right-4 z-50 bg-blue-600 text-white p-4 rounded-full focus:outline-none transition-all duration-300 hover:bg-blue-500 hover:scale-110"
       @click="cancelarCita"
@@ -84,24 +142,7 @@ const salir = () => {
   </div>
 </template>
 
-
 <style scoped>
-/* Animación para el botón de Salir */
-@keyframes salida {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.7);
-    opacity: 0;
-  }
-}
-
-.animate-salida {
-  animation: salida 0.5s forwards;
-}
-
 /* Animación para el cuadro de "Cancelar Cita" */
 @keyframes fade-in {
   0% {
@@ -118,19 +159,13 @@ const salir = () => {
   animation: fade-in 0.5s forwards;
 }
 
-/* Animación para el contenedor del formulario */
-@keyframes bounce-in {
-  0% {
-    transform: scale(0.95);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+/* Animación para el spinner de carga */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.animate-bounce-in {
-  animation: bounce-in 0.3s forwards;
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 </style>
