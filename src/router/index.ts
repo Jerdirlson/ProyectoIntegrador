@@ -115,6 +115,16 @@ const router = createRouter({
       ],
     },
     {
+      path: '/user/sedes',
+      name: 'Sedes',
+      component: () => import('../components/user/Locations.vue'),
+    },
+    {
+      path: '/user/contact-us',
+      name: 'ContactUs',
+      component: () => import('../components/user/ContactUs.vue'),
+    },    
+    {
       path: '/operator',
       name: 'operator',
       component: () => import('../views/OperatorView.vue'),
