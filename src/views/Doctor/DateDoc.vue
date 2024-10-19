@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import Header from '@/layouts/HeaderDoc.vue';
-import Footer from '@/layouts/FooterDoc.vue';
 import Date from '@/components/doctor/Date.vue';
-import SidebarDoc from '@/layouts/SidebarDoc.vue';
 import Obser from '@/components/doctor/obser.vue';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const patient = ref(route.params.patient);
 </script>
 
 <template>
   <div class="flex flex-col">
      <main class="flex flex-1">
       <div class="content-section flex-grow">
-        <Date />
+        <Date :patient="patient" />
         <br>
         <Obser />
       </div>
     </main>
-
   </div>
 </template>
 

@@ -2,14 +2,12 @@
   <div class="medical-history-container">
     <h2 class="title">Historia Médica</h2>
 
-    <!-- Formulario para buscar el documento del paciente -->
     <div class="patient-document">
       <label for="document">Documento del paciente</label>
       <input type="text" id="document" v-model="patientDocument" placeholder="Ingresa el documento" />
-      <button class="btn-search" @click="buscarPaciente">Buscar</button> <!-- Aquí se llama a buscarPaciente -->
+      <button class="btn-search" @click="buscarPaciente">Buscar</button> 
     </div>
 
-    <!-- Información del paciente -->
     <div class="patient-info" v-if="patientName">
       <div class="info-row">
         <span class="label">Paciente:</span>
@@ -18,11 +16,9 @@
       <div class="info-row">
         <span class="label">Historia Médica:</span>
         <div class="action-buttons">
-          <button class="btn-view" @click="viewMedicalHistory">VER</button>
-          <router-link to="H">
-            <button class="btn-edit">EDITAR</button>
-          </router-link>
-          <button class="btn-create" @click="createMedicalHistory">CREAR</button>
+          <button class="btn-view" @click="VerHistoriaClinica">VER</button>
+          <button class="btn-view" @click="editarHistoriaClinica">EDITAR</button>
+          <button class="btn-create" @click="crearHistoria">CREAR</button>
         </div>
       </div>
     </div>
@@ -31,21 +27,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getUsuarioPorCC, getHistoriaClinicaPorCC } from '@/service/DoctorService';
+import { getUsuarioPorCC, getHistoriaClinicaPorCC, getHistoriaClinicaPorCCc } from '@/service/DoctorService';
+import { useRouter } from 'vue-router';
 
 const buscarPaciente = async () => {
   try {
     const usuario = await getUsuarioPorCC(patientDocument.value);
     if (usuario) {
       patientName.value = usuario.nombreUsuario;
-      
-      const historiaClinica = await getHistoriaClinicaPorCC(patientDocument.value);
+      const historiaClinica = await getHistoriaClinicaPorCC(patientDocument.value); 
       if (historiaClinica) {
-        // Aquí rediriges a la página de edición
-        router.push({
-          path: '/editar-historia-medica', // Asegúrate de que esta ruta esté definida en tu router
-          query: { id: historiaClinica.idHistoria_Medica } // Puedes pasar datos como parámetros
-        });
+        patientData.value = historiaClinica;
       } else {
         alert('No se encontró historia clínica para este paciente');
       }
@@ -57,10 +49,68 @@ const buscarPaciente = async () => {
   }
 };
 
+interface PatientData {
+  idHistoria_Medica: string; 
+}
+
+const VerHistoriaClinica = async () => {
+  if (patientDocument.value) {
+    try {
+      // Realizar la petición para obtener el PDF de la historia clínica
+      const pdfBlob = await getHistoriaClinicaPorCCc(patientDocument.value);
+
+      // Crear URL del blob y descargar el archivo PDF
+      const fileURL = window.URL.createObjectURL(pdfBlob);
+      const fileLink = document.createElement('a');
+      fileLink.href = fileURL;
+      fileLink.setAttribute('download', `historia_clinica_${patientDocument.value}.pdf`);
+      document.body.appendChild(fileLink);
+      fileLink.click();
+
+      // Limpiar el DOM y liberar la URL creada
+      document.body.removeChild(fileLink);
+      window.URL.revokeObjectURL(fileURL);
+    } catch (error) {
+      console.error('Error al obtener la historia clínica:', error);
+      alert('No se pudo obtener la historia clínica. Por favor, intente de nuevo.');
+    }
+  } else {
+    alert('Por favor, ingrese el documento del paciente antes de ver la historia clínica.');
+  }
+};
+
+
+const editarHistoriaClinica = () => {
+  if (patientData.value) {
+    const ccPaciente = patientDocument.value; 
+
+    router.push({
+      path: '/doc/H',
+      query: { cc: ccPaciente } 
+    });
+  } else {
+    console.error('No se encontró datos del paciente.');
+  }
+};
+
+const crearHistoria = () => {
+  if (patientData.value) {
+    const ccPaciente = patientDocument.value; 
+
+    router.push({
+      path: '/doc/hcc',
+      query: { cc: ccPaciente } 
+    });
+  } else {
+    console.error('No se encontró datos del paciente.');
+  }
+};
+
+const patientData = ref<PatientData | null>(null);
+const router = useRouter();
 
 const patientDocument = ref('');
 const patientName = ref('');
-const patientData = ref(null);
 
 </script>
 

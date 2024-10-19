@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Header from '@/layouts/HeaderDoc.vue';
-import Footer from '@/layouts/FooterDoc.vue';
-import SidebarDoc from '@/layouts/SidebarDoc.vue';
 import MedicalHistory from '@/components/doctor/MedicalHist.vue';
 </script>
 

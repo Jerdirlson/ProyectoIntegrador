@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { getOrdenMedicaPorCC, updateOrdenMedica } from '@/service/DoctorService'; // Asegúrate de tener esta función en tu servicio
+import { useRoute } from 'vue-router';
 
 // Definir todos los campos como variables reactivas
 const idOrden_Medica = ref('');
@@ -9,21 +11,62 @@ const fecha = ref('');
 const diagnostico = ref('');
 const ordenes = ref('');
 const recomendaciones = ref('');
+// Obtener el CC del paciente de la ruta (query o params)
+const route = useRoute();
 
-// Función para manejar el envío del formulario
-const submitForm = () => {
-  const formData = {
-    idOrden_Medica: idOrden_Medica.value,
-    idCita: idCita.value,
-    estadoOM: estadoOM.value,
-    fecha: fecha.value,
-    diagnostico: diagnostico.value,
-    ordenes: ordenes.value,
-    recomendaciones: recomendaciones.value,
-  };
-  console.log('Datos de la orden médica:', formData);
-  // Aquí puedes añadir la lógica para enviar los datos al backend
+const cargarOrdenMedica = async () => {
+  const ccPaciente = route.query.cc; // Obtener el CC del paciente desde la query
+  if (typeof ccPaciente === 'string' || typeof ccPaciente === 'number') {
+    try {
+      // Llamar al servicio con el CC del paciente
+      const ordenMedica = await getOrdenMedicaPorCC(ccPaciente); 
+
+      if (ordenMedica) {
+        // Asignar los valores del objeto ordenMedica a las variables reactivas
+        idOrden_Medica.value = ordenMedica.idOrden_Medica || '';
+        idCita.value = ordenMedica.idCita || '';
+        estadoOM.value = ordenMedica.estadoOM || '';
+        fecha.value = ordenMedica.fecha ? new Date(ordenMedica.fecha).toISOString().split('T')[0] : '';
+        diagnostico.value = ordenMedica.diagnostico || '';
+        ordenes.value = ordenMedica.ordenes || '';
+        recomendaciones.value = ordenMedica.recomendaciones || '';
+      } else {
+        console.error('No se encontró la orden médica');
+      }
+    } catch (error) {
+      console.error('Error al cargar la orden médica:', error);
+    }
+  } else {
+    console.error('CC de paciente inválido:', ccPaciente);
+  }
 };
+
+// Cargar la orden médica al montar el componente
+onMounted(() => {
+  cargarOrdenMedica();
+});
+
+const submitForm = async () => {
+  // Crear un objeto formData con los valores del formulario
+  const formData = {
+    idCita: Number(idCita.value),  // Asegúrate de que sea un número
+    estadoOM: Number(estadoOM.value),  // Asegúrate de que sea un número
+    diagnostico: diagnostico.value,  // String
+    ordenes: ordenes.value,  // String
+    recomendaciones: recomendaciones.value,  // String
+  };
+  
+  try {
+    // Llamar a la función updateOrdenMedica con el ID y el objeto formData
+    const response = await updateOrdenMedica(String(idOrden_Medica.value), formData);
+    console.log('Orden médica actualizada:', response);
+    alert('Orden médica actualizada correctamente');
+  } catch (error) {
+    console.error('Error al actualizar la orden médica:', error);
+    alert('Error al actualizar la orden médica. Revisa la consola para más detalles.');
+  }
+};
+
 </script>
 
 <template>
@@ -71,7 +114,7 @@ const submitForm = () => {
         </div>
       </div>
 
-      <button type="submit" class="submit-button">Enviar</button>
+      <button type="submit" class="submit-button">Actualizar Orden Médica</button>
     </form>
   </div>
 </template>

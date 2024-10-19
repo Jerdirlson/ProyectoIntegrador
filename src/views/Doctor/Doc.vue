@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import SidebarDoc from '@/layouts/SidebarDoc.vue';
 import Citas from '@/components/doctor/AppointmentDay.vue';
-import Header from '@/layouts/HeaderDoc.vue';
-import Footer from '@/layouts/FooterDoc.vue';
 </script>
 
 <template>

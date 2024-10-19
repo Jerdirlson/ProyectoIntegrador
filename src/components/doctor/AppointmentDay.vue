@@ -1,49 +1,3 @@
-<template>
-  <div class="container">
-    <div class="table-container">
-      <h2>Todas las citas</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Paciente</th>
-            <th>CC</th>
-            <th>Hora</th>
-            <th>Género</th>
-            <th>Historial clínico</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="cita in citas" :key="cita.idCita">
-            <td>{{ cita.nombreUsuario }} {{ cita.apellidoUsuario }}</td>
-            <td>{{ cita.CC }}</td>
-            <td>{{ cita.hora }}</td>
-            <td>{{ cita.sexo }}</td>
-            <a href="H" @click="verHistoriaClinica(cita.idHistoria_Medica)" class="view-link">Ver</a>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div :class="['appointment-card', isActiveAppointment ? 'active-appointment' : '']">
-      <h3>Siguiente cita</h3>
-      <br />
-      <table v-if="nextAppointment" class="next-appointment-table">
-        <tbody>
-          <tr>
-            <td>{{ nextAppointment.nombreUsuario }} {{ nextAppointment.apellidoUsuario }}</td>
-            <td>{{ nextAppointment.hora }}</td>
-            <td>{{ nextAppointment.sexo }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="appointment-actions" v-if="nextAppointment">
-        <button v-if="showCancelButton" @click="cancelAppointment" class="cancel-btn">Cancelar</button>
-        <button @click="receiveAppointment" class="receive-btn">Recibir</button>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { getPacientesAsignadosAlDoctor } from '@/service/DoctorService';
@@ -101,7 +55,7 @@ const showCancelButton = computed(() => isActiveAppointment.value);
 const receiveAppointment = () => {
   if (nextAppointment.value) {
     router.push({ 
-      name: 'docdate', 
+      name: 'docdate',
       params: { 
         patient: nextAppointment.value 
       } 
@@ -109,30 +63,58 @@ const receiveAppointment = () => {
   }
 };
 
-
-// Función para calcular la edad del paciente a partir de su fecha de nacimiento
-const calcularEdad = (fechaNacimiento) => {
-  const hoy = new Date();
-  const nacimiento = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - nacimiento.getFullYear();
-  const mes = hoy.getMonth() - nacimiento.getMonth();
-
-  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-    edad--;
-  }
-
-  return edad;
-};
-
-
-const cancelAppointment = () => {
-  console.log('Cita cancelada.');
-};
-
 onMounted(() => {
   cargarPacientesDelDoctor();
 });
 </script>
+
+<template>
+  <div class="container">
+    <div class="table-container">
+      <h2>Todas las citas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Paciente</th>
+            <th>CC</th>
+            <th>Hora</th>
+            <th>Género</th>
+            <th>Historial clínico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="cita in citas" :key="cita.idCita">
+            <td>{{ cita.nombreUsuario }} {{ cita.apellidoUsuario }}</td>
+            <td>{{ cita.CC }}</td>
+            <td>{{ cita.hora }}</td>
+            <td>{{ cita.sexo }}</td>
+            <a href="H" @click="verHistoriaClinica(cita.idHistoria_Medica)" class="view-link">Ver</a>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Card con la siguiente cita -->
+    <div :class="['appointment-card', isActiveAppointment ? 'active-appointment' : '']">
+      <h3>Siguiente cita</h3>
+      <br />
+      <table v-if="nextAppointment" class="next-appointment-table">
+        <tbody>
+          <tr>
+            <td>{{ nextAppointment.nombreUsuario }} {{ nextAppointment.apellidoUsuario }}</td>
+            <td>{{ nextAppointment.hora }}</td>
+            <td>{{ nextAppointment.sexo }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Botón "Recibir" que navega a la vista separada -->
+      <div class="appointment-actions" v-if="nextAppointment">
+        <button v-if="showCancelButton" @click="cancelAppointment" class="cancel-btn">Cancelar</button>
+        <button @click="receiveAppointment" class="receive-btn">Recibir</button>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .container {

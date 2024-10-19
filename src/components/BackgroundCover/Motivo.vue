@@ -1,7 +1,9 @@
 <template>
     <div class="motivo-container">
-      <div class="motivo-title-container">
-        <h2 class="motivo-title">MOTIVO</h2>
+      <div class="flex absolute h-14 w-96 bg-white -left-6 top-[2450px] rounded-3xl justify-center items-center">
+        <p class="text-2xl font-bold text-black">
+          MOTIVO
+        </p>
       </div>
       <div class="motivo-content">
         <br>

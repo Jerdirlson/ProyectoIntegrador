@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import SidebarDoc from '@/layouts/SidebarDoc.vue';
-import Header from '@/layouts/HeaderDoc.vue';
-import Footer from '@/layouts/FooterDoc.vue';
 import Obser from '@/components/doctor/obseremergency.vue';
 import DateE from '@/components/doctor/DateEmergency.vue';
 </script>

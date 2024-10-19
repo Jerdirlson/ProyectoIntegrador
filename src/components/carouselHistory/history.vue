@@ -35,12 +35,12 @@
   export default {
     data() {
       return {
-        activeText: 'left', // Muestra el texto del punto izquierdo por defecto
+        activeText: 'left',
       };
     },
     methods: {
       showText(position) {
-        this.activeText = position; // Actualiza el texto basado en el punto clicado
+        this.activeText = position; 
       },
     }
   };
@@ -53,7 +53,6 @@
     align-items: center; /* Mantener elementos centrados */
   }
   
-  /* Estilo para el título "Historia" */
   .historia-title {
     font-size: 2rem; /* Tamaño del título */
     color: black; /* Color del texto */

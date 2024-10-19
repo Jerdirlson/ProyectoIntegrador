@@ -1,14 +1,11 @@
 <template>
   <div class="patient-info-container">
     <h3 class="title">Consultar información de paciente</h3>
-
     <div class="search-bar">
       <label for="documento">Documento del paciente</label>
       <input type="text" id="documento" v-model="document" placeholder="Ingrese el documento" />
       <button class="search-button" @click="buscarPaciente">Buscar</button>
     </div>
-
-    <!-- Información del paciente -->
     <div class="patient-details" v-if="patient">
       <div class="patient-data">
         <h4>{{ patient.nombreUsuario }}</h4>
@@ -16,15 +13,14 @@
         <p><strong>Correo Electrónico:</strong> {{ patient.emailUsuario }}</p>
         <p><strong>CC:</strong> {{ patient.CC }}</p>
       </div>
-
       <div class="patient-actions">
         <div class="action">
           <p>Historia Médica</p>
-          <button @click="H">Consultar</button>
+          <button @click="consultarHistoriaMedica">Consultar</button>
         </div>
         <div class="action">
           <p>Orden Médica</p>
-          <button @click="C">Consultar</button>
+          <button @click="consultarOrdenMedica">Consultar</button>
         </div>
       </div>
     </div>
@@ -33,33 +29,79 @@
 
 <script>
 import { ref } from 'vue';
-import { getUsuarioPorCC } from '@/service/DoctorService';
+import { useRouter } from 'vue-router';
+import { getUsuarioPorCC, getHistoriaClinicaPorCC, getOrdenMedicaPorCC } from '@/service/DoctorService';
 
 export default {
   setup() {
-    const document = ref('');
+    const router = useRouter();
+    const document = ref(''); 
     const patient = ref(null);
+    const historiaClinica = ref(null);
+    const ordenMedica = ref(null);
 
     const buscarPaciente = async () => {
       try {
         const usuario = await getUsuarioPorCC(document.value);
+        
         if (usuario) {
-          patient.value = usuario;  // Asignar los datos del paciente
+          patient.value = usuario;
+          const [historia, orden] = await Promise.all([
+            getHistoriaClinicaPorCC(document.value),
+            getOrdenMedicaPorCC(document.value)
+          ]);
+          historiaClinica.value = historia ? historia : null;
+          ordenMedica.value = orden ? orden : null;
+          if (!historia) {
+            alert('No se encontró la historia clínica para este paciente');
+          }
+          
+          if (!orden) {
+            alert('No se encontró la orden médica para este paciente');
+          }
+          
         } else {
           alert('Paciente no encontrado');
           patient.value = null;
+          historiaClinica.value = null;
+          ordenMedica.value = null;
         }
       } catch (error) {
-        console.error('Error al buscar el paciente:', error);
-        alert('Error al buscar el paciente');
+        console.error('Error al buscar el paciente, la historia clínica o la orden médica:', error);
+        alert('Error al buscar el paciente. Revisa la consola para más detalles.');
       }
     };
 
+    const consultarHistoriaMedica = () => {
+      if (historiaClinica.value) {
+        router.push({ 
+          path: '/doc/hci', 
+          query: { cc: document.value }
+        });
+      } else {
+        alert('No hay historia médica disponible para este paciente');
+      }
+    };
+
+    const consultarOrdenMedica = () => {
+      if (historiaClinica.value) {
+        router.push({ 
+          path: '/doc/ome', 
+          query: { cc: document.value }
+        });
+      } else {
+        alert('No hay historia médica disponible para este paciente');
+      }
+    };
 
     return {
-      document,
+      document, 
       patient,
+      historiaClinica,
+      ordenMedica,
       buscarPaciente,
+      consultarHistoriaMedica,
+      consultarOrdenMedica
     };
   },
 };

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { getHistoriaClinicaPorCC } from '@/service/DoctorService';
+import { getHistoriaClinicaPorCC, updateHistoriaClinica } from '@/service/DoctorService';
 import { useRoute } from 'vue-router';
 
 // Definir todos los campos como variables reactivas
@@ -32,51 +32,66 @@ const firma_digital_doctor = ref('');
 // Obtener el ID del usuario de la ruta (query o params)
 const route = useRoute();
 
-// Función para cargar la historia clínica
 const cargarHistoriaMedica = async () => {
-  const idUsuarioCC = route.query.id || route.params.id;
-  if (idUsuarioCC) {
+  const ccPaciente = route.query.cc; // Obtener el CC del paciente desde la query
+  if (typeof ccPaciente === 'string' || typeof ccPaciente === 'number') {
     try {
-      const historiaClinica = await getHistoriaClinicaPorCC(idUsuarioCC);
-      
-      // Precargar los datos en los campos del formulario
-      idHistoria_Medica.value = historiaClinica.idHistoria_Medica || '';
-      tipoSangre.value = historiaClinica.tipoSangre || '';
-      genero.value = historiaClinica.genero || '';
-      fecha_Nac.value = historiaClinica.fecha_Nac ? new Date(historiaClinica.fecha_Nac).toISOString().split('T')[0] : '';
-      discapacidad.value = historiaClinica.discapacidad || '';
-      fecha_Rev.value = historiaClinica.fecha_Rev ? new Date(historiaClinica.fecha_Rev).toISOString().split('T')[0] : '';
-      hora_Rev.value = historiaClinica.hora_Rev || '';
-      motivo.value = historiaClinica.motivo || '';
-      descripcion_Motivo.value = historiaClinica.descripcion_Motivo || '';
-      presion_Sangre.value = historiaClinica.presion_Sangre || '';
-      presion_Sangre_Prom.value = historiaClinica.presion_Sangre_Prom || '';
-      pulso.value = historiaClinica.pulso || '';
-      saturacion.value = historiaClinica.saturacion || '';
-      altura.value = historiaClinica.altura || '';
-      peso.value = historiaClinica.peso || '';
-      perinatales.value = historiaClinica.perinatales || '';
-      patologicos.value = historiaClinica.patologicos || '';
-      quirurgicos.value = historiaClinica.quirurgicos || '';
-      vacunas.value = historiaClinica.vacunas || '';
-      familiares.value = historiaClinica.familiares || '';
-      conclusion.value = historiaClinica.conclusion || '';
-      diagnostico.value = historiaClinica.diagnostico || '';
-      tratamiento.value = historiaClinica.tratamiento || '';
-      firma_digital_doctor.value = historiaClinica.firma_digital_doctor || '';
-      
+      // Llamar al servicio con el CC del paciente
+      const historiaClinica = await getHistoriaClinicaPorCC(ccPaciente); 
+
+      if (historiaClinica) {
+        // Guardar el idHistoria_Medica
+        idHistoria_Medica.value = historiaClinica.idHistoria_Medica;
+
+        // Asignar los valores del objeto historiaClinica a las variables reactivas
+        tipoSangre.value = historiaClinica.tipoSangre || '';
+        genero.value = historiaClinica.genero || '';
+        fecha_Nac.value = historiaClinica.fecha_Nac
+          ? new Date(historiaClinica.fecha_Nac).toISOString().split('T')[0]
+          : '';
+        discapacidad.value = historiaClinica.discapacidad || '';
+        fecha_Rev.value = historiaClinica.fecha_Rev
+          ? new Date(historiaClinica.fecha_Rev).toISOString().split('T')[0]
+          : '';
+        hora_Rev.value = historiaClinica.hora_Rev || '';
+        motivo.value = historiaClinica.motivo || '';
+        descripcion_Motivo.value = historiaClinica.descripcion_Motivo || '';
+        presion_Sangre.value = historiaClinica.presion_Sangre || '';
+        presion_Sangre_Prom.value = historiaClinica.presion_Sangre_Prom || '';
+        pulso.value = historiaClinica.pulso || '';
+        saturacion.value = historiaClinica.saturacion || '';
+        altura.value = historiaClinica.altura || '';
+        peso.value = historiaClinica.peso || '';
+        perinatales.value = historiaClinica.perinatales || '';
+        patologicos.value = historiaClinica.patologicos || '';
+        quirurgicos.value = historiaClinica.quirurgicos || '';
+        vacunas.value = historiaClinica.vacunas || '';
+        familiares.value = historiaClinica.familiares || '';
+        conclusion.value = historiaClinica.conclusion || '';
+        diagnostico.value = historiaClinica.diagnostico || '';
+        tratamiento.value = historiaClinica.tratamiento || '';
+        firma_digital_doctor.value = historiaClinica.firma_digital_doctor || '';
+      } else {
+        console.error('No se encontró la historia clínica');
+      }
     } catch (error) {
       console.error('Error al cargar la historia clínica:', error);
     }
+  } else {
+    console.error('CC de paciente inválido:', ccPaciente);
   }
 };
 
 // Cargar la historia médica al montar el componente
-onMounted(cargarHistoriaMedica);
+onMounted(() => {
+  cargarHistoriaMedica();
+});
 
 // Función para manejar el envío del formulario
-const submitForm = () => {
-  const formData = {
+const submitForm = async () => {
+  console.log("Enviando formulario"); // Verificación
+  console.log("ID de Historia Médica:", idHistoria_Medica.value); // Verificación del ID  const formData = {
+    const formData = {
     idHistoria_Medica: idHistoria_Medica.value,
     tipoSangre: tipoSangre.value,
     genero: genero.value,
@@ -102,11 +117,19 @@ const submitForm = () => {
     tratamiento: tratamiento.value,
     firma_digital_doctor: firma_digital_doctor.value,
   };
-  console.log('Datos del formulario:', formData);
-  // Aquí puedes añadir la lógica para enviar los datos al backend
-};
-</script>
 
+  try {
+    const response = await updateHistoriaClinica(Number(idHistoria_Medica.value), formData);
+    console.log('Historia clínica actualizada exitosamente:', response);
+    alert('Historia clínica actualizada correctamente');
+    // Opcional: Redireccionar o actualizar la UI según sea necesario
+  } catch (error) {
+    console.error('Error al actualizar la historia clínica:', error.response || error);
+    alert('Error al actualizar la historia clínica. Revisa la consola para más detalles.');
+  }
+};
+
+</script>
 
 <template>
   <div class="form-container">
@@ -114,10 +137,6 @@ const submitForm = () => {
       <h2>Formulario de Historia Médica</h2>
 
       <div class="form-row">
-        <div class="form-group">
-          <label>ID Historia Médica:</label>
-          <input v-model="idHistoria_Medica" type="text" required />
-        </div>
         <div class="form-group">
           <label>Tipo de Sangre:</label>
           <input v-model="tipoSangre" type="text" required />
@@ -252,7 +271,6 @@ const submitForm = () => {
     </form>
   </div>
 </template>
-
 
 <style scoped>
 .form-container {

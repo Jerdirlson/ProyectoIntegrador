@@ -29,38 +29,89 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getUsuarioPorCC } from '@/service/DoctorService';
+import { getUsuarioPorCC, getOrdenMedicaPorCC, getOrdenMedicaPorCCc, createOrdenMedica } from '@/service/DoctorService';
+import { useRouter } from 'vue-router'; 
 
-const patientDocument = ref('');
-const patientName = ref('');
-const patientData = ref(null);
+async function viewMedicalHistory() {
+  if (patientDocument.value) {
+    try {
+      const pdfBlob = await getOrdenMedicaPorCCc(patientDocument.value);
+      
+      // Crear URL del blob y descargar
+      const fileURL = window.URL.createObjectURL(pdfBlob);
+      const fileLink = document.createElement('a');
+      fileLink.href = fileURL;
+      fileLink.setAttribute('download', `orden_medica_${patientDocument.value}.pdf`);
+      document.body.appendChild(fileLink);
+      fileLink.click();
+      document.body.removeChild(fileLink);
+      window.URL.revokeObjectURL(fileURL);
+    } catch (error) {
+      console.error('Error al obtener la orden médica:', error);
+      alert('No se pudo obtener la orden médica. Por favor, intente de nuevo.');
+    }
+  } else {
+    alert('Por favor, ingrese el documento del paciente antes de ver la orden médica.');
+  }
+}
 
 const buscarPaciente = async () => {
   try {
     const usuario = await getUsuarioPorCC(patientDocument.value);
     if (usuario) {
       patientName.value = usuario.nombreUsuario;
-      patientData.value = usuario;
+      const historiaClinica = await getOrdenMedicaPorCC(patientDocument.value);
+      if (historiaClinica) {
+        patientData.value = historiaClinica; 
+      } else {
+        alert('No se encontró orden medica para este paciente');
+      }
     } else {
       alert('Paciente no encontrado');
     }
   } catch (error) {
-    alert('Error al buscar el paciente');
     console.error(error);
   }
 };
 
-function viewMedicalHistory() {
-  alert("Mostrando orden médica");
+const patientDocument = ref('');
+const patientName = ref('');
+
+const patientData = ref<PatientData | null>(null);
+const router = useRouter();
+
+
+interface PatientData {
+  idOrden_Medica: string; // O el tipo adecuado (puede ser number o cualquier otro tipo)
+  // Agrega más propiedades según sea necesario
 }
 
-function editMedicalHistory() {
-  alert("Editando orden médica");
-}
+const editMedicalHistory = () => {
+  if (patientData.value) {
+    // Asumiendo que patientDocument tiene el CC del paciente
+    const ccPaciente = patientDocument.value; // Asegúrate de que esto tenga el valor correcto
 
-function createMedicalHistory() {
-  alert("Creando orden médica");
-}
+    router.push({
+      path: '/doc/ordenE',
+      query: { cc: ccPaciente } // Enviar el CC del paciente en la query
+    });
+  } else {
+    console.error('No se encontró datos del paciente.');
+  }
+};
+
+const createMedicalHistory = () => {
+  if (patientDocument.value) {
+    // Redirige a la vista de creación de orden médica, pasando el documento del paciente
+    router.push({
+      path: '/doc/ordenC',
+      query: { cc: patientDocument.value } // Enviar el CC del paciente en la query
+    });
+  } else {
+    alert('Por favor, ingrese el documento del paciente para crear una orden médica.');
+  }
+};
+
 </script>
 
 <style scoped>

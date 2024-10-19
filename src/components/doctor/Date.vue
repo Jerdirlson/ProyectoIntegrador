@@ -1,9 +1,9 @@
 <template>
     <div class="patient-card">
       <div class="patient-info">
-        <span>Paciente: <strong>{{ patient.name }}</strong></span>
-        <span>Edad: <strong>{{ patient.age }}</strong></span>
-        <span>CC: <strong>{{ patient.cc }}</strong></span>
+        <span>Paciente: </span>
+        <span>Género: </span>
+        <span>CC: </span>
       </div>
       <div class="medical-info">
         <div class="section">
@@ -28,28 +28,14 @@
   
   <script>
   export default {
-    data() {
-      return {
-        patient: {
-          name: '',
-          age: '',
-          cc: '',
-        },
-      };
+    props: {
+      patient: {
+        type: Object,
+        required: true,
+      },
     },
     mounted() {
-      // Asegúrate de que el nombre del route es correcto
-      const patient = this.$route.params.patient;
-      
-      if (patient) {
-        this.patient.name = `${patient.nombreUsuario} ${patient.apellidoUsuario}`;
-        this.patient.cc = patient.CC;
-  
-        // Calcular la edad a partir de la fecha de nacimiento
-        const birthDate = new Date(patient.fecha_nacimiento);
-        const age = new Date().getFullYear() - birthDate.getFullYear();
-        this.patient.age = age;
-      }
+      console.log(this.patient);  // Agrega este log para verificar si se reciben los datos
     },
     methods: {
       viewMedicalHistory() {
