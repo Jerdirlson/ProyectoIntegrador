@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import MainLayout from "@/layouts/MainLayout.vue";
-import { ref } from "vue";
+import { useRouter } from "vue-router"; // Importamos el enrutador
 
-const type = ref("");
+const router = useRouter(); // Inicializamos el enrutador
 
-// Función para manejar las acciones del selector
-const manejarCita = () => {
-  switch (type.value) {
+const manejarCita = (accion: string) => {
+  switch (accion) {
     case "agendar":
-      alert("Redirigiendo a la página de Agendar Cita...");
+      router.push("/dashboard"); // Redirigir a la página de agendar cita
       break;
     case "cancelar":
-      alert("Redirigiendo a la página de Cancelar Cita...");
+      router.push("/patient/cancel-appointment"); // Redirigir a la página de cancelar cita
       break;
     case "reagendar":
-      alert("Redirigiendo a la página de Re-Agendar Cita...");
+      router.push("/patient/reschedule-appointment"); // Redirigir a la página de reagendar cita
       break;
     case "ver":
-      alert("Redirigiendo a la página de Ver mis citas...");
+      router.push("/patient/see-appointment"); // Redirigir a la página de ver citas
       break;
     default:
       alert("Por favor seleccione una acción válida.");
@@ -27,44 +25,59 @@ const manejarCita = () => {
 </script>
 
 <template>
-  <MainLayout>
-    <div class="w-full h-[calc(100vh-9rem)]">
-      <div class="w-full h-full p-16">
-        <div class="flex flex-col h-full w-full">
-          
-          <!-- Barra de Atención arriba -->
-          <div class="flex absolute h-14 w-96 bg-primary -left-6 top-50 rounded-3xl justify-center items-center">
-            <p class="flex w-1/2 text-2xl font-bold text-neutral-200">
-              Atención
-            </p>
-          </div>
-          
-          <!-- Texto "Selecciona una acción..." con más espacio arriba -->
-          <div class="flex flex-col w-full h-1/6 px-18 gap-y-7 mt-16">
-            <div class="text-2xl mt-10">
-              Selecciona una acción para manejar tus citas.
-            </div>
-          </div>
-          
-          <!-- Selector de acciones -->
-          <div class="flex flex-col justify-center items-center mt-10">
-            <h2 class="text-3xl font-bold mb-6">Manejo de Citas</h2>
-            <select v-model="type" class="border border-gray-300 rounded-lg p-2 mb-4">
-              <option value="">Selecciona una acción</option>
-              <option value="agendar">Agendar</option>
-              <option value="cancelar">Cancelar</option>
-              <option value="reagendar">Re-Agendar</option>
-              <option value="ver">Ver mis citas</option>
-            </select>
-            <button class="bg-green-500 text-white px-4 py-2 rounded" @click="manejarCita">
-              Seleccionar Acción
-            </button>
-          </div>
-          
+  <div class="flex flex-col min-h-screen bg-gray-100">
+    <!-- Sección de Atención -->
+    <div class="flex mt-6">
+      <div class="bg-primary text-neutral-200 p-4 w-64 rounded-lg ml-10">
+        <h2 class="text-xl font-bold">Atención</h2>
+      </div>
+    </div>
+
+    <!-- Texto de advertencia -->
+  <div class="text-left ml-10"> <!-- Agregamos ml-10 para darle margen a la izquierda -->
+    <p class="text-lg">
+      Por favor, gestiona tus citas médicas de manera oportuna. Elige una opción a continuación para continuar.
+    </p>
+  </div>
+
+    <!-- Contenedor principal con el logo y botones -->
+    <div class="flex-grow flex justify-center items-center mt-1"> 
+      <div class="bg-white shadow-lg rounded-lg p-10 w-3/5">
+        <!-- Imagen -->
+        <div class="flex justify-center mb-6">
+          <img src="/svg/logoSinLetras.svg" alt="Logo" class="h-16 w-auto">
+        </div>
+
+        <!-- Línea divisoria -->
+        <hr class="border-gray-300 mb-6">
+
+        <!-- Manejo de Citas -->
+        <div class="text-center mb-6">
+          <p class="text-gray-600 text-2xl font-semibold">Manejo de Citas</p>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="grid grid-cols-2 gap-6">
+          <button class="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
+            @click="manejarCita('agendar')">
+            Agendar
+          </button>
+          <button class="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
+            @click="manejarCita('cancelar')">
+            Cancelar
+          </button>
+          <button class="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
+            @click="manejarCita('reagendar')">
+            Re-Agendar
+          </button>
+          <button class="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
+            @click="manejarCita('ver')">
+            Ver mis citas
+          </button>
         </div>
       </div>
     </div>
-  </MainLayout>
+  </div>
 </template>
 
 <style scoped>

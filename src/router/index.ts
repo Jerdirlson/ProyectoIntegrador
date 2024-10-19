@@ -1,7 +1,7 @@
+import { useAuth } from "@/composables/UseAuth";
+import { useToast } from "@/composables/UseToast";
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import {useAuth} from "@/composables/UseAuth";
-import {useToast} from "@/composables/UseToast";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,27 +22,32 @@ const router = createRouter({
       component: () => import('../views/DashboardView.vue'),
     },
     {
-      path: '/dashboardpatient',
-      name: 'dashboardpatient',
+      path: '/patient',
+      name: 'patient',
       component: () => import('../views/DashboardUserView.vue'),
-      children : [
-    {
-      path: 'reschedule',
-      name: 'reschedule',
-      component: () => import('../views/RescheduleView.vue'),
+      children: [
+        {
+          path: '',
+          name: 'dashboardpatient',
+          component: () => import('../components/DashboardUser/SelectorType.vue'),
+        },
+        {
+          path: 'see-appointment',
+          name: 'patient-see-appointment',
+          component: () => import('../views/SeeAppointment.vue'),
+        },
+        {
+          path: 'cancel-appointment',
+          name: 'patient-cancel-appointment',
+          component: () => import('../views/CancelAppointment.vue'),
+        },
+        {
+          path: 'reschedule-appointment',
+          name: 'patient-reschedule-appointment',
+          component: () => import('../views/RescheduleAppointment.vue'),
+        }
+      ]
     },
-    {
-      path: 'cancel',
-      name: 'cancel-quotes',
-      component: () => import('../views/CancelView.vue'),
-    },
-    {
-      path: 'see',
-      name: 'see-quotes',
-      component: () => import('../views/SeeView.vue'),
-    },
-  ]
-},
     {
       path: '/schedule',
       name: 'schedule',

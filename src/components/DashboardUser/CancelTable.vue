@@ -13,11 +13,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Si no hay citas, muestra un mensaje en una fila -->
-        <tr v-if="citas.length === 0">
-        </tr>
-
-        <!-- Si hay citas, renderiza las filas -->
         <tr v-for="(cita, index) in citas" :key="index">
           <td>{{ cita.nombrePaciente || 'N/A' }}</td>
           <td>{{ cita.hora || 'N/A' }}</td>
@@ -26,7 +21,7 @@
           <td>{{ cita.cc || 'N/A' }}</td>
           <td>{{ cita.nombreDoctor || 'N/A' }}</td>
           <td>
-            <button @click="$emit('reagendar', cita.idCita)" class="bg-green-500 text-white py-2 px-4 rounded">Re-agendar</button>
+            <button @click="$emit('cancelar', cita.idCita)" class="bg-red-500 text-white py-2 px-4 rounded">Cancelar</button>
           </td>
         </tr>
       </tbody>
@@ -37,6 +32,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
+// Definir la interfaz para las citas
 interface Cita {
   nombrePaciente: string;
   hora: string;
@@ -46,6 +42,7 @@ interface Cita {
   nombreDoctor: string;
 }
 
+// Recibir las citas como prop
 const props = defineProps<{
   citas: Cita[];
 }>();
