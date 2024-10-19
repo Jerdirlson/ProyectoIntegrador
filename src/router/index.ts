@@ -115,12 +115,12 @@ const router = createRouter({
       ],
     },
     {
-      path: '/user/sedes',
+      path: '/sedes',
       name: 'Sedes',
       component: () => import('../components/user/Locations.vue'),
     },
     {
-      path: '/user/contact-us',
+      path: '/contact-us',
       name: 'ContactUs',
       component: () => import('../components/user/ContactUs.vue'),
     },    
