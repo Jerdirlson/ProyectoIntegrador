@@ -1,0 +1,37 @@
+<script setup lang="ts">
+import Order from '@/components/doctor/Order.vue';
+</script>
+
+<template>
+    <div class="flex flex-col min-h-screen relative">
+      <main class="flex flex-1 relative">
+        <div class="content-container flex-grow">
+          <div class="flex justify-center items-center h-full">
+            <Order />
+          </div>
+        </div>
+      </main>
+    </div>
+</template>
+
+<style scoped>
+.sidebar-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.content-container {
+  margin-right: auto;
+  margin-left: auto; 
+  padding-right: 14rem;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+</style>
+

@@ -3,7 +3,7 @@ import AdminLayout from "@/layouts/AdminLayout.vue";
 </script>
 
 <template>
-  <AdminLayout>
+  <AdminLayout :type="'menuAdmin'">
     <div class="flex justify-center items-center h-screen">
       <div class=" w-full h-full p-6 rounded shadow-lg">
       <!--  <MenuAdmin/>-->

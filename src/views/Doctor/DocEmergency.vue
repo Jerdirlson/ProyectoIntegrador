@@ -1,0 +1,41 @@
+<script setup lang="ts">
+import Emergency from '@/components/doctor/Emergency.vue';
+import EmergencyEnco from '@/components/doctor/EmergencyEnco.vue';
+</script>
+
+<template>
+    <div class="flex flex-col min-h-screen relative">
+      <main class="flex flex-1 relative">
+        <div class="content-container flex-grow">
+          <div class="flex flex-col justify-center items-center h-full">
+            <Emergency />
+            <br>
+            <EmergencyEnco /> 
+          </div>
+        </div>
+      </main>
+    </div>
+</template>
+
+
+<style scoped>
+.sidebar-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.content-container {
+  margin-right: auto;
+  margin-left: auto; 
+  padding-right: 14rem;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+</style>
+

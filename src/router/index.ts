@@ -68,7 +68,81 @@ const router = createRouter({
             },
         ],
     },
-  
+
+    {
+      path:'/doc',
+      name: 'doc',
+      component: () => import('../views/PrincipalDoc.vue'),
+      children: [
+      {
+        path: 'citas',
+        name: 'citas',
+        component: () => import('../views/Doctor/Doc.vue'),
+      },
+      {
+        path: 'H',
+        name: 'H',
+        component: () => import('../views/Doctor/HistoriaCEdit.vue'),
+      },
+      {
+        path: 'ordenE',
+        name: 'Oe',
+        component: () => import('../views/Doctor/OrdenEdit.vue'),
+      },
+      {
+      path: 'ordenC',
+      name: 'Oc',
+      component: () => import('../views/Doctor/OrdenCrear.vue'),
+      },
+      {
+        path:'docdate',
+        name: 'docdate',
+        component: () => import('../views/Doctor/DateDoc.vue'),
+      },
+      {
+        path:'hci',
+        name: 'Hci',
+        component: () => import('../views/Doctor/HClinicaInfo.vue'),
+      },
+      {
+        path:'hcc',
+        name: 'Hcc',
+        component: () => import('../views/Doctor/HCcreate.vue'),
+      },
+      {
+        path:'ome',
+        name: 'ome',
+        component: () => import('../views/Doctor/OrdenInfo.vue'),
+      },
+      {
+        path:'docinfo',
+        name: 'docinfo',
+        component: () => import('../views/Doctor/patientinfo.vue'),
+      },
+      {
+        path:'dochistory',
+        name: 'dochistory',
+        component: () => import('../views/Doctor/MedicalHistory.vue'),
+      },
+      {
+        path:'docorder',
+        name: 'docorder',
+        component: () => import('../views/Doctor/MedicalOrder.vue'),
+      },
+      {
+        path:'docemergency',
+        name: 'docemergency',
+        component: () => import('../views/Doctor/DocEmergency.vue'),
+      },
+      {
+        path:'emergencypatient',
+        name: 'emergencypatient',
+        component: () => import('../views/Doctor/EmergencyPatient.vue'),
+      },
+    ],
+  },
+
+
     {
       path: '/admin',
       name: 'admin',
@@ -141,6 +215,73 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/sedes',
+      name: 'Sedes',
+      component: () => import('../components/user/Locations.vue'),
+    },
+    {
+      path: '/contact-us',
+      name: 'ContactUs',
+      component: () => import('../components/user/ContactUs.vue'),
+    },    
+    {
+      path: '/operator',
+      name: 'operator',
+      component: () => import('../views/OperatorView.vue'),
+      children: [
+        {
+          path: '',
+          name: 'operator',
+            component: () => import('../components/operator/OperatorMenu.vue'),
+        },
+        {
+          path: 'schedule-appointment',
+          name: 'operator-schedule-appointment',
+          component: () => import('../components/admin/ScheduleAppointment.vue'),
+        },
+        {
+          path: 'cancel-appointment',
+          name: 'operator-cancel-appointment',
+          component: () => import('../components/admin/CancelAppointment.vue'),
+        },
+        {
+          path: 'payment-receipt',
+          name: 'operator-payment-receipt',
+          component: () => import('../components/admin/PaymentReceipt.vue'),
+        },
+        {
+          path: 'emergencies',
+          name: 'operator-emergencies',
+          component: () => import('../components/admin/AdminEmergencies.vue'),
+        },
+        {
+          path: 'invoices',
+          name: 'operator-invoices',
+          component: () => import('../components/admin/AdminInvoices.vue'),
+        },
+        {
+          path: 'resume',
+          name: 'operator-resume',
+          component: () => import('../components/admin/Resume.vue'),
+        },
+        {
+          path: 'medical-orders',
+          name: 'operator-medical-orders',
+          component: () => import('../components/admin/MedicalOrders.vue'),
+        },
+        {
+          path: 'reschedule-appointment',
+          name: 'operator-reschedule-appointment',
+          component: () => import('../components/admin/RescheduleAppointment.vue'),
+        },
+        {
+          path: 'user-registration',
+          name: 'operator-user-registration',
+          component: () => import('../components/admin/UserRegistration.vue'),
+        },
+      ],
+    }
   ],
 });
 

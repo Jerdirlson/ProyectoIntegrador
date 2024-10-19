@@ -1,24 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Home, UserPlus, Calendar, Repeat, XCircle, Ambulance, FileText, Briefcase, CreditCard, Database, Users, Shield } from 'lucide-vue-next';
-
-const menuItems = ref([
-  { name: "Inicio", route: "/admin", icon: Home },  // Cambiado a la ruta de inicio
-  { name: "Registro Usuarios", route: "/admin/user-registration", icon: UserPlus },  // Ruta para registro de usuarios
-  { name: "Agendamiento Citas", route: "/admin/schedule-appointment", icon: Calendar },  // Ruta para agendamiento
-  { name: "Re-agendamiento Citas", route: "/admin/reschedule-appointment", icon: Repeat },  // Ruta para re-agendamiento
-  { name: "Cancelación Citas", route: "/admin/cancel-appointment", icon: XCircle },  // Ruta para cancelación
-  { name: "Emergencias", route: "/admin/emergencies", icon: Ambulance },  // Ruta para emergencias
-  { name: "Historial Médico", route: "/admin/medical-orders", icon: FileText },  // Ruta para historial médico (si corresponde)
-  { name: "Hoja Vida", route: "/admin/resume", icon: Briefcase },  // Ruta para hoja de vida
-  { name: "Factura Electrónica", route: "/admin/invoices", icon: FileText },  // Ruta para factura electrónica
-  { name: "Colilla Pago", route: "/admin/payment-receipt", icon: CreditCard },  // Ruta para colilla de pago
-  { name: "ERP", route: "/admin/erp", icon: Database },  // Ruta para el menú administrativo
-  { name: "CRM", route: "/admin/crm", icon: Users },  // Ruta para CRM
-  { name: "Auditoría", route: "/admin/audit", icon: Shield }  // Ruta para auditoría
-]);
+import {ref} from 'vue';
+import {menuOperario, menuAdmin} from "@/utils/menu";
+import type {menuType} from "@/utils/menu";
 
 const isMenuExpanded = ref(true);
+
+const props = defineProps<{
+  type?: menuType;
+}>();
+
+const typeMenuSelected = props.type === "menuAdmin" ? menuAdmin : menuOperario;
 
 function toggleMenu() {
   isMenuExpanded.value = !isMenuExpanded.value;
@@ -61,7 +52,7 @@ function salir() {
         ]"
       >
         <div class="p-2 flex flex-col items-center">
-          <img v-if="isMenuExpanded" src="/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mb-2" />
+          <img v-if="isMenuExpanded" src="/svg/LogoVitamed-09.svg" alt="Logo" class="h-16 mb-2" />
           <img v-else src="/svg/logoSinLetras.svg" alt="Logo Pequeño" class="h-8 mb-2" />
           <div class="flex items-start ">
             <button
@@ -78,7 +69,7 @@ function salir() {
         <nav class="flex-grow overflow-y-auto">
           <ul class="p-2">
             <li
-                v-for="(item, index) in menuItems"
+                v-for="(item, index) in typeMenuSelected"
                 :key="index"
                 :class="[
                   'flex mb-4',

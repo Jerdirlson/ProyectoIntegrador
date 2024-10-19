@@ -4,6 +4,8 @@ import Input from '@/components/Input.vue';
 import Button from "@/components/Button.vue";
 import { useAuth } from "@/composables/UseAuth";
 import {useToast} from "@/composables/UseToast";
+import type {userType} from "@/types/loginType";
+import router from "@/router";
 
 const props = defineProps({
   isVisible: Boolean,
@@ -39,6 +41,8 @@ const send = async () => {
         type: 'error'
       });
     }
+
+    validateRol(response);
     emit('login-success');
     emit('close');
   } catch (error) {
@@ -53,6 +57,23 @@ const send = async () => {
 const signup = async () => {
   if (!validateForm()) return;
   // Implement signup logic here
+};
+
+const validateRol = (user : userType) => {
+  console.log('yeye',user);
+  if (user.idRol === 1) {
+    //admin
+    console.log('admin');
+    router.push({name: 'admin'});
+  }
+  if (user.idRol === 2) {
+    //operator
+    router.push({name: 'operator'});
+  }
+  if (user.idRol === 3) {
+    //medic
+  }
+
 };
 
 const validateForm = () => {
