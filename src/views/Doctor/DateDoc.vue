@@ -11,7 +11,7 @@ const patient = ref(route.params.patient);
   <div class="flex flex-col">
      <main class="flex flex-1">
       <div class="content-section flex-grow">
-        <Date :patient="patient" />
+        <Date />
         <br>
         <Obser />
       </div>

@@ -80,44 +80,44 @@ const router = createRouter({
         component: () => import('../views/Doctor/Doc.vue'),
       },
       {
-        path: 'H',
+        path: 'editarhistoriaclinica',
         name: 'H',
         component: () => import('../views/Doctor/HistoriaCEdit.vue'),
       },
       {
-        path: 'ordenE',
-        name: 'Oe',
-        component: () => import('../views/Doctor/OrdenEdit.vue'),
-      },
-      {
-      path: 'ordenC',
-      name: 'Oc',
-      component: () => import('../views/Doctor/OrdenCrear.vue'),
-      },
-      {
-        path:'docdate',
-        name: 'docdate',
-        component: () => import('../views/Doctor/DateDoc.vue'),
-      },
-      {
-        path:'hci',
-        name: 'Hci',
-        component: () => import('../views/Doctor/HClinicaInfo.vue'),
-      },
-      {
-        path:'hcc',
+        path:'crearhistoriaclinica',
         name: 'Hcc',
         component: () => import('../views/Doctor/HCcreate.vue'),
       },
       {
-        path:'ome',
-        name: 'ome',
-        component: () => import('../views/Doctor/OrdenInfo.vue'),
+        path: 'editarordenmedica',
+        name: 'Oe',
+        component: () => import('../views/Doctor/OrdenEdit.vue'),
+      },
+      {
+      path: 'crearordenmedica',
+      name: 'Oc',
+      component: () => import('../views/Doctor/OrdenCrear.vue'),
+      },
+      {
+        path:'citasiguiente',
+        name: 'citasiguiente',
+        component: () => import('../views/Doctor/DateDoc.vue'),
       },
       {
         path:'docinfo',
         name: 'docinfo',
         component: () => import('../views/Doctor/patientinfo.vue'),
+      },
+      {
+        path:'historialclinicoinfo',
+        name: 'Hci',
+        component: () => import('../views/Doctor/HClinicaInfo.vue'),
+      },
+      {
+        path:'ordenmedicainfo',
+        name: 'ome',
+        component: () => import('../views/Doctor/OrdenInfo.vue'),
       },
       {
         path:'dochistory',
@@ -135,9 +135,14 @@ const router = createRouter({
         component: () => import('../views/Doctor/DocEmergency.vue'),
       },
       {
-        path:'emergencypatient',
-        name: 'emergencypatient',
-        component: () => import('../views/Doctor/EmergencyPatient.vue'),
+        path:'ordenmedicacita',
+        name: 'ordenmedicacita',
+        component: () => import('../views/Doctor/ordenMCita.vue'),
+      },
+      {
+        path:'historiaclinica',
+        name: 'historiaclinica',
+        component: () => import('../views/Doctor/hclinicaCita.vue'),
       },
     ],
   },
