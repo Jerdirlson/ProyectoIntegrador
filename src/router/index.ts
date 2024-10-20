@@ -47,6 +47,11 @@ const router = createRouter({
       name: 'doc',
       component: () => import('../views/PrincipalDoc.vue'),
       children: [
+        {
+          path: '',
+          name: 'principal',
+          component: () => import('../views/Doctor/DocMenu.vue'),
+        },
       {
         path: 'citas',
         name: 'citas',

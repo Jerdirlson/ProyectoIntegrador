@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-
 const apiUrlHojaVida = 'http://localhost:3002/api/hoja-vida/'; 
 const apiUrlEmergencias = 'http://localhost:3002/api/emergenciasdetalles';
 const apiUrlFacturas = 'http://localhost:3002/api/facturas/';
 const apiUrlColillas = 'http://localhost:3002/api/colillas/'; 
+const apiUrlColillasP = 'http://localhost:3002/api/colillaPago/'; 
 const apiUrlOrdenesMedicas = 'http://localhost:3002/api/ordenes-medicas/'; 
 const apiUrlCitas = 'http://localhost:3002/api/citas/completas/';
 const apiUrlDoctor = 'http://localhost:3002/api/doctor/';
@@ -21,6 +21,18 @@ const apiUrlResumenFinanciero = 'http://localhost:3002/api/resumen-financiero';
 
 const apiUrlResumenCRM = 'http://localhost:3002/api/resumen-crm';
 const apiUrlCitasPorEspecialidad = 'http://localhost:3002/api/citas-por-especialidad';
+
+export const obtenerColillaPDF = async (idColilla: string) => {
+  try {
+    const response = await axios.get(`${apiUrlColillasP}pdf/${idColilla}`, {
+      responseType: 'blob'
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el PDF de la colilla:', error);
+    throw error;
+  }
+};
 
 export const obtenerResumenCRM = async () => {
   try {
