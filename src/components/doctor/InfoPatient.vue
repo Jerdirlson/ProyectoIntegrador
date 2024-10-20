@@ -75,7 +75,7 @@ export default {
     const consultarHistoriaMedica = () => {
       if (historiaClinica.value) {
         router.push({ 
-          path: '/doc/hci', 
+          path: '/doc/historialclinicoinfo', 
           query: { cc: document.value }
         });
       } else {
@@ -86,7 +86,7 @@ export default {
     const consultarOrdenMedica = () => {
       if (historiaClinica.value) {
         router.push({ 
-          path: '/doc/ome', 
+          path: '/doc/ordenmedicainfo', 
           query: { cc: document.value }
         });
       } else {

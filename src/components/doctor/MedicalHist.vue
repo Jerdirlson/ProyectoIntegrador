@@ -85,7 +85,7 @@ const editarHistoriaClinica = () => {
     const ccPaciente = patientDocument.value; 
 
     router.push({
-      path: '/doc/H',
+      path: '/doc/editarhistoriaclinica',
       query: { cc: ccPaciente } 
     });
   } else {
@@ -98,7 +98,7 @@ const crearHistoria = () => {
     const ccPaciente = patientDocument.value; 
 
     router.push({
-      path: '/doc/hcc',
+      path: '/doc/crearhistoriaclinica',
       query: { cc: ccPaciente } 
     });
   } else {

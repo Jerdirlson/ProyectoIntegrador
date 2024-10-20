@@ -37,7 +37,6 @@ async function viewMedicalHistory() {
     try {
       const pdfBlob = await getOrdenMedicaPorCCc(patientDocument.value);
       
-      // Crear URL del blob y descargar
       const fileURL = window.URL.createObjectURL(pdfBlob);
       const fileLink = document.createElement('a');
       fileLink.href = fileURL;
@@ -82,18 +81,16 @@ const router = useRouter();
 
 
 interface PatientData {
-  idOrden_Medica: string; // O el tipo adecuado (puede ser number o cualquier otro tipo)
-  // Agrega más propiedades según sea necesario
+  idOrden_Medica: string; 
 }
 
 const editMedicalHistory = () => {
   if (patientData.value) {
-    // Asumiendo que patientDocument tiene el CC del paciente
     const ccPaciente = patientDocument.value; // Asegúrate de que esto tenga el valor correcto
 
     router.push({
-      path: '/doc/ordenE',
-      query: { cc: ccPaciente } // Enviar el CC del paciente en la query
+      path: '/doc/editarordenmedica',
+      query: { cc: ccPaciente } 
     });
   } else {
     console.error('No se encontró datos del paciente.');
@@ -102,10 +99,9 @@ const editMedicalHistory = () => {
 
 const createMedicalHistory = () => {
   if (patientDocument.value) {
-    // Redirige a la vista de creación de orden médica, pasando el documento del paciente
     router.push({
-      path: '/doc/ordenC',
-      query: { cc: patientDocument.value } // Enviar el CC del paciente en la query
+      path: '/doc/crearordenmedica',
+      query: { cc: patientDocument.value }
     });
   } else {
     alert('Por favor, ingrese el documento del paciente para crear una orden médica.');
