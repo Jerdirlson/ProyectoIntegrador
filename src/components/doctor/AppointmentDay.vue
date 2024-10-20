@@ -1,73 +1,3 @@
-<script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import { getPacientesAsignadosAlDoctor } from '@/service/DoctorService';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-const citas = ref([]);
-
-const cargarPacientesDelDoctor = async () => {
-  try {
-    const idDoctor = '111';
-    const pacientes = await getPacientesAsignadosAlDoctor(idDoctor);
-    citas.value = pacientes; 
-  } catch (error) {
-    console.error('Error al cargar los pacientes:', error);
-  }
-};
-
-const nextAppointment = computed(() => {
-  const currentDateTime = new Date();
-  let closestAppointment = null;
-
-  for (const cita of citas.value) {
-    const [hours, minutes] = cita.hora.split(':');
-    const appointmentTime = new Date();
-    appointmentTime.setHours(parseInt(hours), parseInt(minutes), 0);
-
-    const tenMinutesAfter = new Date(appointmentTime.getTime() + 10 * 60000);
-    
-    if (currentDateTime <= tenMinutesAfter) {
-      if (!closestAppointment || appointmentTime < new Date(closestAppointment.hora)) {
-        closestAppointment = cita;
-      }
-    }
-  }
-  return closestAppointment;
-});
-
-const isActiveAppointment = computed(() => {
-  if (!nextAppointment.value) return false;
-
-  const appointmentHour = new Date();
-  const [hours, minutes] = nextAppointment.value.hora.split(':');
-  appointmentHour.setHours(parseInt(hours), parseInt(minutes), 0);
-
-  const currentHour = new Date();
-  const tenMinutesAfter = new Date(appointmentHour.getTime() + 10 * 60000);
-  
-  return currentHour <= tenMinutesAfter;
-});
-
-const showCancelButton = computed(() => isActiveAppointment.value);
-
-const receiveAppointment = () => {
-  if (nextAppointment.value) {
-    router.push({ 
-      name: 'docdate',
-      params: { 
-        patient: nextAppointment.value 
-      } 
-    });
-  }
-};
-
-onMounted(() => {
-  cargarPacientesDelDoctor();
-});
-</script>
-
 <template>
   <div class="container">
     <div class="table-container">
@@ -88,13 +18,14 @@ onMounted(() => {
             <td>{{ cita.CC }}</td>
             <td>{{ cita.hora }}</td>
             <td>{{ cita.sexo }}</td>
-            <a href="H" @click="verHistoriaClinica(cita.idHistoria_Medica)" class="view-link">Ver</a>
+            <td>
+              <a href="#" @click.prevent="verHistoriaClinica(cita.CC)" class="view-link">Ver</a>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
     
-    <!-- Card con la siguiente cita -->
     <div :class="['appointment-card', isActiveAppointment ? 'active-appointment' : '']">
       <h3>Siguiente cita</h3>
       <br />
@@ -107,14 +38,104 @@ onMounted(() => {
           </tr>
         </tbody>
       </table>
-      <!-- Botón "Recibir" que navega a la vista separada -->
+
       <div class="appointment-actions" v-if="nextAppointment">
-        <button v-if="showCancelButton" @click="cancelAppointment" class="cancel-btn">Cancelar</button>
+        <button v-if="showCancelButton" @click="" class="cancel-btn">Cancelar</button>
         <button @click="receiveAppointment" class="receive-btn">Recibir</button>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { getPacientesAsignadosAlDoctor, getHistoriaClinicaPorCCc } from '@/service/DoctorService';
+
+const router = useRouter();
+const citas = ref<Cita[]>([]); // Esto define citas como un arreglo de objetos Cita
+
+const cargarPacientesDelDoctor = async () => {
+  try {
+    const idDoctor = '111';
+    const pacientes = await getPacientesAsignadosAlDoctor(idDoctor);
+    citas.value = pacientes; 
+  } catch (error) {
+    console.error('Error al cargar los pacientes:', error);
+  }
+};
+
+const nextAppointment = computed(() => {
+  const currentDateTime = new Date();
+  let closestAppointment = null;
+  for (const cita of citas.value) {
+    const [hours, minutes] = cita.hora.split(':');
+    const appointmentTime = new Date();
+    appointmentTime.setHours(parseInt(hours), parseInt(minutes), 0);
+    const tenMinutesAfter = new Date(appointmentTime.getTime() + 10 * 60000);
+    
+    if (currentDateTime <= tenMinutesAfter) {
+      if (!closestAppointment || appointmentTime < new Date(closestAppointment.hora)) {
+        closestAppointment = cita;
+      }
+    }
+  }
+  return closestAppointment;
+});
+
+const isActiveAppointment = computed(() => {
+  if (!nextAppointment.value) return false;
+  const appointmentHour = new Date();
+  const [hours, minutes] = nextAppointment.value.hora.split(':');
+  appointmentHour.setHours(parseInt(hours), parseInt(minutes), 0);
+  const currentHour = new Date();
+  const tenMinutesAfter = new Date(appointmentHour.getTime() + 10 * 60000);
+  
+  return currentHour <= tenMinutesAfter;
+});
+
+const showCancelButton = computed(() => isActiveAppointment.value);
+
+const receiveAppointment = () => {
+  if (nextAppointment.value) {
+    console.log('Guardando los datos de la siguiente cita en sessionStorage');
+    sessionStorage.setItem('patientData', JSON.stringify(nextAppointment.value));
+    router.push({ name: 'citasiguiente' }); // Redirige sin parámetros
+  }
+};
+
+
+const verHistoriaClinica = async (CC: string) => {
+  try {
+    const pdfBlob = await getHistoriaClinicaPorCCc(CC);
+
+    const fileURL = window.URL.createObjectURL(pdfBlob);
+
+    window.open(fileURL, '_blank');
+
+    setTimeout(() => {
+      window.URL.revokeObjectURL(fileURL);
+    }, 100);
+  } catch (error) {
+    console.error('Error al obtener la historia clínica:', error);
+    alert('No se pudo obtener la historia clínica. Por favor, intente de nuevo.');
+  }
+};
+
+interface Cita {
+  idCita: number;
+  nombreUsuario: string;
+  apellidoUsuario: string;
+  CC: string;
+  hora: string;
+  sexo: string;
+}
+
+
+onMounted(() => {
+  cargarPacientesDelDoctor();
+});
+</script>
 
 <style scoped>
 .container {

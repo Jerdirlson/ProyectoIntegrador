@@ -1,6 +1,26 @@
 import axios from 'axios';
 const apiUrl = import.meta.env.VITE_API_URL;
 
+export const enqueueDoctor = async (idDoc: string) => {
+  try {
+    const response = await axios.get(`${apiUrl}doctor/encolar/${idDoc}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al encolar al doctor:', error);
+    throw error;
+  }
+};
+
+export const popDoctor = async (idDoc: string) => {
+  try {
+    const response = await axios.get(`${apiUrl}doctor/pop/${idDoc}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al desencolar al doctor:', error);
+    throw error;
+  }
+};
+
 export const createOrdenMedica = async (ordenMedica: { idCita: number; estadoOM: number; diagnostico: string; ordenes: string; recomendaciones: string }) => {
   try {
     const response = await axios.post(`${apiUrl}ordenes-medicas/create`, ordenMedica, {
@@ -12,7 +32,6 @@ export const createOrdenMedica = async (ordenMedica: { idCita: number; estadoOM:
     throw error;
   }
 };
-
 
 export const getHistoriaClinicaPorCCc = async (idUsuarioCC: string) => {
   try {

@@ -1,38 +1,39 @@
 <template>
-    <div class="emergency-card">
-      <h4>Emergencia</h4>
-      <div class="card-content">
-        <div class="emergency-info">
-          <span class="name">{{ emergency.nombre }}</span>
-          <span class="level">{{ emergency.nivel }}</span>
-          <span class="time">{{ emergency.hora }}</span>
-          <span class="doctor">{{ emergency.doctor }}</span>
-        </div>
-      </div>
-      <div class="footer">
-        <button @click="enqueue" class="enqueue-btn">ENCOLAR</button>
-      </div>
+  <div class="emergency-card">
+    <h4>Encolar emergencia</h4>
+    <div class="footer">
+      <button @click="handleEnqueue" class="enqueue-btn" :disabled="isLoading">
+        {{ isLoading ? 'PROCESANDO...' : 'ENCOLAR' }}
+      </button>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        emergency: {
-          nombre: 'Juan David Muñoz',
-          nivel: 'Alta',
-          hora: '6:30 PM',
-          doctor: 'NA',
-        },
-      };
-    },
-    methods: {
-      enqueue() {
-      },
-    },
-  };
-  </script>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { enqueueDoctor, popDoctor } from '@/service/DoctorService';
+
+const isLoading = ref(false);
+const idDoc = '111';
+
+const handleEnqueue = async () => {
+  isLoading.value = true;
+  try {
+    await enqueueDoctor(idDoc);
+    console.log('Doctor encolado exitosamente');
+
+    const result = await popDoctor(idDoc);
+    console.log('Resultado de pop:', result);
+
+    alert('Proceso completado: Doctor encolado y desencolado');
+  } catch (error) {
+    console.error('Error en el proceso:', error);
+    alert('Ocurrió un error en el proceso');
+  } finally {
+    isLoading.value = false;
+  }
+};
+</script>
   
   <style scoped>
   .emergency-card {
