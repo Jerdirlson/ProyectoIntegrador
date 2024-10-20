@@ -1,0 +1,717 @@
+[
+  {
+    "id": 1,
+    "servicio": "Consultas de Medicina General",
+    "precio": 18000
+  },
+  {
+    "id": 2,
+    "servicio": "Exámenes físicos",
+    "precio": 30000
+  },
+  {
+    "id": 3,
+    "servicio": "Evaluaciones Preventivas y de Salud",
+    "precio": 30000
+  },
+  {
+    "id": 4,
+    "servicio": "Manejo de Enfermedades Crónicas",
+    "precio": 35000
+  },
+  {
+    "id": 5,
+    "servicio": "Consejería en Estilo de Vida y Prevención de Enfermedades",
+    "precio": 15000
+  },
+  {
+    "id": 6,
+    "servicio": "Vacunación",
+    "precio": 5000
+  },
+  {
+    "id": 7,
+    "servicio": "Procedimientos Menores de Medicina General",
+    "precio": 20000
+  },
+  {
+    "id": 8,
+    "servicio": "Manejo de Enfermedades Comunes",
+    "precio": 22000
+  },
+  {
+    "id": 9,
+    "servicio": "Atención de Urgencias y Emergencias",
+    "precio": 40000
+  },
+  {
+    "id": 10,
+    "servicio": "Examen de sangre",
+    "precio": 12000
+  },
+  {
+    "id": 11,
+    "servicio": "Examen de Orina",
+    "precio": 10000
+  },
+  {
+    "id": 12,
+    "servicio": "Examen de Heces",
+    "precio": 10000
+  },
+  {
+    "id": 13,
+    "servicio": "Examen de alergias",
+    "precio": 25000
+  },
+  {
+    "id": 14,
+    "servicio": "Exámenes de función hepática",
+    "precio": 30000
+  },
+  {
+    "id": 15,
+    "servicio": "Glucosa",
+    "precio": 8000
+  },
+  {
+    "id": 16,
+    "servicio": "Examen de perfil Hormonal",
+    "precio": 28000
+  },
+  {
+    "id": 17,
+    "servicio": "Radiografías",
+    "precio": 50000
+  },
+  {
+    "id": 18,
+    "servicio": "Ecografías",
+    "precio": 60000
+  },
+  {
+    "id": 19,
+    "servicio": "Ecocardiogramas",
+    "precio": 70000
+  },
+  {
+    "id": 20,
+    "servicio": "Ultrasonidos",
+    "precio": 65000
+  },
+  {
+    "id": 21,
+    "servicio": "Densitometría ósea",
+    "precio": 55000
+  },
+  {
+    "id": 22,
+    "servicio": "Electroencefalograma",
+    "precio": 70000
+  },
+  {
+    "id": 23,
+    "servicio": "Resonancias magnéticas",
+    "precio": 150000
+  },
+  {
+    "id": 24,
+    "servicio": "Radiografías",
+    "precio": 50000
+  },
+  {
+    "id": 25,
+    "servicio": "Resonancia Magnética",
+    "precio": 150000
+  },
+  {
+    "id": 26,
+    "servicio": "Ecografías Musculoesqueléticas",
+    "precio": 60000
+  },
+  {
+    "id": 27,
+    "servicio": "Electromiografía",
+    "precio": 70000
+  },
+  {
+    "id": 28,
+    "servicio": "Evaluación de composición corporal",
+    "precio": 25000
+  },
+  {
+    "id": 29,
+    "servicio": "Evaluación de flexibilidad",
+    "precio": 20000
+  },
+  {
+    "id": 30,
+    "servicio": "Evaluación de movilidad articular",
+    "precio": 25000
+  },
+  {
+    "id": 31,
+    "servicio": "Fisioterapia",
+    "precio": 35000
+  },
+  {
+    "id": 32,
+    "servicio": "Terapia ocupacional",
+    "precio": 30000
+  },
+  {
+    "id": 33,
+    "servicio": "Terapia de masajes",
+    "precio": 25000
+  },
+  {
+    "id": 34,
+    "servicio": "Acupuntura",
+    "precio": 40000
+  },
+  {
+    "id": 35,
+    "servicio": "Ejercicios de bajo impacto",
+    "precio": 15000
+  },
+  {
+    "id": 36,
+    "servicio": "Psicoterapia",
+    "precio": 18000
+  },
+  {
+    "id": 37,
+    "servicio": "Rehabilitación postquirúrgica",
+    "precio": 50000
+  },
+  {
+    "id": 38,
+    "servicio": "Ajustes quiroprácticos",
+    "precio": 35000
+  },
+  {
+    "id": 39,
+    "servicio": "Manipulación de extremidades",
+    "precio": 30000
+  },
+  {
+    "id": 40,
+    "servicio": "Tracción espinal",
+    "precio": 40000
+  },
+  {
+    "id": 41,
+    "servicio": "Terapia de onda de choques",
+    "precio": 60000
+  },
+  {
+    "id": 42,
+    "servicio": "Terapia con células madre",
+    "precio": 120000
+  },
+  {
+    "id": 43,
+    "servicio": "Inmovilizaciones",
+    "precio": 30000
+  },
+  {
+    "id": 44,
+    "servicio": "Prótesis y Ortesis",
+    "precio": 80000
+  },
+  {
+    "id": 45,
+    "servicio": "Artroscopia",
+    "precio": 120000
+  },
+  {
+    "id": 46,
+    "servicio": "Cirugía de reemplazo articular",
+    "precio": 200000
+  },
+  {
+    "id": 47,
+    "servicio": "Reparación de tendones",
+    "precio": 150000
+  },
+  {
+    "id": 48,
+    "servicio": "Fusión vertebral",
+    "precio": 180000
+  },
+  {
+    "id": 49,
+    "servicio": "Atención de Urgencias y Emergencias",
+    "precio": 40000
+  },
+  {
+    "id": 50,
+    "servicio": "Psicoterapia individual",
+    "precio": 18000
+  },
+  {
+    "id": 51,
+    "servicio": "Terapia de pareja",
+    "precio": 36000
+  },
+  {
+    "id": 52,
+    "servicio": "Terapia familiar",
+    "precio": 36000
+  },
+  {
+    "id": 53,
+    "servicio": "Terapia de grupo",
+    "precio": 36000
+  },
+  {
+    "id": 54,
+    "servicio": "Consulta psiquiatria",
+    "precio": 18000
+  },
+  {
+    "id": 55,
+    "servicio": "Evaluación psicologica",
+    "precio": 18000
+  },
+  {
+    "id": 56,
+    "servicio": "Diagnostico de trastornos mentales",
+    "precio": 18000
+  },
+  {
+    "id": 57,
+    "servicio": "Tratamiento de trastornos mentales",
+    "precio": 18000
+  },
+  {
+    "id": 58,
+    "servicio": "Evalación de salud mental",
+    "precio": 18000
+  },
+  {
+    "id": 59,
+    "servicio": "Depresión",
+    "precio": 18000
+  },
+  {
+    "id": 60,
+    "servicio": "Ansiedad",
+    "precio": 18000
+  },
+  {
+    "id": 61,
+    "servicio": "Trastorno bipolar",
+    "precio": 18000
+  },
+  {
+    "id": 62,
+    "servicio": "Esquizofrenia",
+    "precio": 18000
+  },
+  {
+    "id": 63,
+    "servicio": "Trastorno alimentarios",
+    "precio": 18000
+  },
+  {
+    "id": 64,
+    "servicio": "Trastorno de estres postraumatico",
+    "precio": 18000
+  },
+  {
+    "id": 65,
+    "servicio": "Trastorno de personalidad",
+    "precio": 18000
+  },
+  {
+    "id": 66,
+    "servicio": "Atención de Urgencias y Emergencias",
+    "precio": 40000
+  },
+  {
+    "id": 67,
+    "servicio": "Examen ginecológico anual",
+    "precio": 20000
+  },
+  {
+    "id": 68,
+    "servicio": "Vacunación contra el Virus del Papiloma Humano (VPH)",
+    "precio": 15000
+  },
+  {
+    "id": 69,
+    "servicio": "Ecografía Ginecológica",
+    "precio": 40000
+  },
+  {
+    "id": 70,
+    "servicio": "Diagnóstico y Tratamiento de Infecciones",
+    "precio": 25000
+  },
+  {
+    "id": 71,
+    "servicio": "Manejo de Trastornos Menstruales",
+    "precio": 22000
+  },
+  {
+    "id": 72,
+    "servicio": "Evaluación y Diagnóstico de Infertilidad",
+    "precio": 30000
+  },
+  {
+    "id": 73,
+    "servicio": "Tratamientos de Fertilidad",
+    "precio": 50000
+  },
+  {
+    "id": 74,
+    "servicio": "Conservación de Fertilidad",
+    "precio": 45000
+  },
+  {
+    "id": 75,
+    "servicio": "Asistencia en la Donación de Óvulos y Espermatozoides",
+    "precio": 60000
+  },
+  {
+    "id": 76,
+    "servicio": "Tratamiento de Trastornos Hormonales",
+    "precio": 35000
+  },
+  {
+    "id": 77,
+    "servicio": "Seguimiento y Soporte Psicológico",
+    "precio": 20000
+  },
+  {
+    "id": 78,
+    "servicio": "Asesoramiento sobre Enfermedades de Transmisión Sexual (ETS)",
+    "precio": 18000
+  },
+  {
+    "id": 79,
+    "servicio": "Métodos Anticonceptivos",
+    "precio": 15000
+  },
+  {
+    "id": 80,
+    "servicio": "Citología",
+    "precio": 18000
+  },
+  {
+    "id": 81,
+    "servicio": "Ecografías Obstétricas",
+    "precio": 45000
+  },
+  {
+    "id": 82,
+    "servicio": "Pruebas Diagnósticas y de Detección",
+    "precio": 30000
+  },
+  {
+    "id": 83,
+    "servicio": "Manejo de Embarazos de Alto Riesgo",
+    "precio": 60000
+  },
+  {
+    "id": 84,
+    "servicio": "Atención Postparto Inmediata",
+    "precio": 25000
+  },
+  {
+    "id": 85,
+    "servicio": "Control Postparto",
+    "precio": 20000
+  },
+  {
+    "id": 86,
+    "servicio": "Atención de Urgencias y Emergencias",
+    "precio": 40000
+  },
+  {
+    "id": 87,
+    "servicio": "Electrofisiología",
+    "precio": 70000
+  },
+  {
+    "id": 88,
+    "servicio": "Cardiología Nuclear",
+    "precio": 120000
+  },
+  {
+    "id": 89,
+    "servicio": "Ecocardiografía",
+    "precio": 80000
+  },
+  {
+    "id": 90,
+    "servicio": "Neurología Cognitiva",
+    "precio": 60000
+  },
+  {
+    "id": 91,
+    "servicio": "Neurofisiología",
+    "precio": 80000
+  },
+  {
+    "id": 92,
+    "servicio": "Neurología del Desarrollo",
+    "precio": 70000
+  },
+  {
+    "id": 93,
+    "servicio": "Hepatología",
+    "precio": 90000
+  },
+  {
+    "id": 94,
+    "servicio": "Endoscopía",
+    "precio": 110000
+  },
+  {
+    "id": 95,
+    "servicio": "Diabetes",
+    "precio": 40000
+  },
+  {
+    "id": 96,
+    "servicio": "Osteoporosis",
+    "precio": 40000
+  },
+  {
+    "id": 97,
+    "servicio": "Tiroides",
+    "precio": 40000
+  },
+  {
+    "id": 98,
+    "servicio": "Diálisis",
+    "precio": 150000
+  },
+  {
+    "id": 99,
+    "servicio": "Hipertensión",
+    "precio": 30000
+  },
+  {
+    "id": 100,
+    "servicio": "Hemostasia",
+    "precio": 50000
+  },
+  {
+    "id": 101,
+    "servicio": "Transfusión Sanguínea",
+    "precio": 70000
+  },
+  {
+    "id": 102,
+    "servicio": "Oncología Médica",
+    "precio": 150000
+  },
+  {
+    "id": 103,
+    "servicio": "Radioterapia",
+    "precio": 180000
+  },
+  {
+    "id": 104,
+    "servicio": "Artritis Reumatoide",
+    "precio": 60000
+  },
+  {
+    "id": 105,
+    "servicio": "Lupus",
+    "precio": 60000
+  },
+  {
+    "id": 106,
+    "servicio": "Esclerosis Múltiple",
+    "precio": 70000
+  },
+  {
+    "id": 107,
+    "servicio": "Enfermedades Infecciosas Emergentes",
+    "precio": 80000
+  },
+  {
+    "id": 108,
+    "servicio": "VIH/SIDA",
+    "precio": 90000
+  },
+  {
+    "id": 109,
+    "servicio": "Enfermedades Hepáticas Virales",
+    "precio": 75000
+  },
+  {
+    "id": 110,
+    "servicio": "Cirrosis Hepática",
+    "precio": 85000
+  },
+  {
+    "id": 111,
+    "servicio": "Atención de Urgencias y Emergencias",
+    "precio": 0
+  },
+  {
+    "id": 112,
+    "servicio": "Ecocardiogramas",
+    "precio": 70000
+  },
+  {
+    "id": 113,
+    "servicio": "Cateterismo cardiaco",
+    "precio": 150000
+  },
+  {
+    "id": 114,
+    "servicio": "Electroencefalograma",
+    "precio": 80000
+  },
+  {
+    "id": 115,
+    "servicio": "Tratamiento de trastornos",
+    "precio": 60000
+  },
+  {
+    "id": 116,
+    "servicio": "Fisioterapia",
+    "precio": 40000
+  },
+  {
+    "id": 117,
+    "servicio": "Endoscopia",
+    "precio": 110000
+  },
+  {
+    "id": 118,
+    "servicio": "Pruebas de intolerancia",
+    "precio": 50000
+  },
+  {
+    "id": 119,
+    "servicio": "Espirometria",
+    "precio": 30000
+  },
+  {
+    "id": 120,
+    "servicio": "Soporte respiratorio",
+    "precio": 80000
+  },
+  {
+    "id": 121,
+    "servicio": "Manejo del asma",
+    "precio": 40000
+  },
+  {
+    "id": 122,
+    "servicio": "Dialisis",
+    "precio": 150000
+  },
+  {
+    "id": 123,
+    "servicio": "Manejo de infecciones urinarias",
+    "precio": 45000
+  },
+  {
+    "id": 124,
+    "servicio": "Control de hipertensión",
+    "precio": 30000
+  },
+  {
+    "id": 125,
+    "servicio": "Exámenes de visión",
+    "precio": 30000
+  },
+  {
+    "id": 126,
+    "servicio": "Tratamiento del estrabismo",
+    "precio": 50000
+  },
+  {
+    "id": 127,
+    "servicio": "Manejo de ambliopía",
+    "precio": 45000
+  },
+  {
+    "id": 128,
+    "servicio": "Transfusiones de sangre y plaquetas",
+    "precio": 70000
+  },
+  {
+    "id": 129,
+    "servicio": "Tratamientos para hemofilia",
+    "precio": 100000
+  },
+  {
+    "id": 130,
+    "servicio": "Terapias para hemoglobinopatías",
+    "precio": 90000
+  },
+  {
+    "id": 131,
+    "servicio": "Pruebas de alergias",
+    "precio": 50000
+  },
+  {
+    "id": 132,
+    "servicio": "Inmunoterapia",
+    "precio": 60000
+  },
+  {
+    "id": 133,
+    "servicio": "Manejo de inmunodeficiencias",
+    "precio": 80000
+  },
+  {
+    "id": 134,
+    "servicio": "Aplicación de selladores dentales",
+    "precio": 20000
+  },
+  {
+    "id": 135,
+    "servicio": "Fluorización",
+    "precio": 15000
+  },
+  {
+    "id": 136,
+    "servicio": "Revisiones dentales regulares",
+    "precio": 10000
+  },
+  {
+    "id": 137,
+    "servicio": "Cuidados intensivos neonatales",
+    "precio": 150000
+  },
+  {
+    "id": 138,
+    "servicio": "Monitoreo y soporte respiratorio",
+    "precio": 120000
+  },
+  {
+    "id": 139,
+    "servicio": "Nutrición neonatal",
+    "precio": 80000
+  },
+  {
+    "id": 140,
+    "servicio": "Atención de Urgencias y Emergencias",
+    "precio": 0
+  },
+  {
+    "id": 141,
+    "servicio": "Consulta General",
+    "precio": 50000
+  },
+  {
+    "id": 142,
+    "servicio": "Ecocardiograma",
+    "precio": 150000
+  },
+  {
+    "id": 143,
+    "servicio": "Cirugia",
+    "precio": 50000000
+  }
+]

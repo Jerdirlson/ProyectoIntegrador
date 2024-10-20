@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useAuth } from "@/composables/UseAuth";
 import LoginModal from "@/components/Loggin/LoginModal.vue";
+import router from "@/router";
 
 const { isAuthenticated, user, logout, checkAuth } = useAuth();
 
@@ -24,6 +25,7 @@ const toggleUserMenu = () => {
 
 const handleLogout = () => {
   logout();
+  router.push({ name: 'home' });
   isUserMenuVisible.value = false;
 };
 

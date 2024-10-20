@@ -50,5 +50,5 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-  </MainLayout>
+    </MainLayout>
 </template>

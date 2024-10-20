@@ -54,9 +54,6 @@ export const obtenerCitasPorEspecialidad = async () => {
   }
 };
 
-
-
-
 export const obtenerResumenFinanciero = async () => {
   try {
     const response = await axios.get(apiUrlResumenFinanciero);
@@ -80,8 +77,6 @@ export const obtenerFacturaPDF = async (idCita: number) => {
   }
 };
 
-
-
 export const obtenerAuditorias = async (tipoAuditoria :string) => {
   try {
     const response = await axios.get(`${urlAuditorias}/${tipoAuditoria}`);
@@ -91,6 +86,7 @@ export const obtenerAuditorias = async (tipoAuditoria :string) => {
     throw error; 
   }
 };
+
 export const crearHojaVida = async (hojaVidaJSON: object) => {
   const response = await fetch(CrearHojadevidaurl, {
     method: 'POST',
