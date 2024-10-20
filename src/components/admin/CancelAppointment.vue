@@ -1,4 +1,4 @@
-}<script setup lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue';
 import { obtenerCitasCompletas, cancelarCitaPorId } from '../../service/Adminservice'; // Asegúrate de que la ruta sea correcta
 

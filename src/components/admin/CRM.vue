@@ -142,6 +142,7 @@ onMounted(() => {
 .animated-gradient {
   background: linear-gradient(270deg, #3b82f6, #8b5cf6, #ec4899);
   background-size: 600% 600%;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientShift 10s ease infinite;

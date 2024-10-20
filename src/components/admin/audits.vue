@@ -1,7 +1,6 @@
 
 
 <script>
-import axios from 'axios';
 import { obtenerAuditorias } from '../../service/Adminservice';
 
 export default {
