@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DashboardUser/SelectorType.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DashboardUser/SelectorType.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/Adminservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Adminservice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/SeeAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SeeAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +36,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Sedes-Contactanos",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -56,12 +50,12 @@
     "ts.external.directory.path": "/home/jerdirlsons/u/proyectoIntegrador/ProyectoIntegrador/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Composition API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Composition API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
