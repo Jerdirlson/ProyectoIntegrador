@@ -1,36 +1,76 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { obtenerCitasCompletas } from '../../service/Adminservice'; // Asegúrate de ajustar la ruta al archivo de servicios
+import { obtenerCitasCompletas } from '../../service/Adminservice';
+import axios from "axios"; // Asegúrate de ajustar la ruta al archivo de servicios
 
 // Variables reactivas
 const cedula = ref(''); // Campo para la búsqueda por cédula
-const cita = ref<any>(null); // Datos de la cita
-const fechaActual = ref(''); // Fecha actual de la cita
+const citas = ref([]); // Almacenar todas las citas
+const citaSeleccionada = ref<any>(null); // Cita seleccionada por el usuario para re-agendar
 const errorMensaje = ref(''); // Mensaje de error
+const apiUrl = import.meta.env.VITE_API_URL;
 
-// Función para buscar cita por cédula
-const buscarCita = async () => {
+// Función para buscar citas por cédula
+const buscarCitas = async () => {
   if (!cedula.value) {
-    errorMensaje.value = "No existe una cita para la cedula buscada.";
+    errorMensaje.value = "Debe ingresar una cédula para buscar.";
     return;
   }
 
   try {
-    // Llamada a la API para obtener la cita
+    // Llamada a la API para obtener las citas
     const response = await obtenerCitasCompletas(cedula.value);
     if (response && response.length > 0) {
-      cita.value = response[0]; // Asignamos el primer resultado a cita
-      // Actualizamos fechaActual con la fecha de la cita
-      fechaActual.value = cita.value.FechaHora.slice(0, 16); // Cortamos a 16 caracteres para que coincida con el formato datetime-local
-      errorMensaje.value = ''; // Limpiamos el mensaje de error
+      citas.value = response; // Asignar todas las citas encontradas
+      errorMensaje.value = ''; // Limpiar el mensaje de error
     } else {
-      errorMensaje.value = "No se encontró la cita para la cédula proporcionada.";
+      errorMensaje.value = "No se encontraron citas para la cédula proporcionada.";
+      citas.value = []; // Limpiar las citas si no se encuentra nada
     }
   } catch (error) {
-    console.error("Error al buscar la cita:", error);
+    console.error("Error al buscar las citas:", error);
     errorMensaje.value = "No se pudo realizar la búsqueda. Inténtalo nuevamente.";
   }
 };
+
+// Función para seleccionar una cita para re-agendar
+const seleccionarCita = (cita) => {
+  citaSeleccionada.value = { ...cita }; // Crear una copia de la cita seleccionada
+};
+
+const confirmarReagendacion = async () => {
+  if (!citaSeleccionada.value || !citaSeleccionada.value.IdCita || !citaSeleccionada.value.NuevaFecha || !citaSeleccionada.value.NuevaHora) {
+    alert('Faltan datos para re-agendar la cita.');
+    return;
+  }
+
+  try {
+    const idCita = citaSeleccionada.value.IdCita;
+    const nuevaFecha = citaSeleccionada.value.NuevaFecha; // Nueva fecha
+    const nuevaHora = citaSeleccionada.value.NuevaHora;   // Nueva hora
+
+    console.log('Re-agendando la cita con ID:', idCita, 'a la fecha:', nuevaFecha, 'y hora:', nuevaHora);
+
+    // Realizar la solicitud PUT al backend enviando la fecha y la hora por separado
+    const response = await axios.put(`${apiUrl}citas/cita/${idCita}`, {
+      nuevaFecha: nuevaFecha,
+      nuevaHora: nuevaHora
+    });
+
+    if (response.status === 200) {
+      alert('Cita re-agendada exitosamente');
+      // Aquí puedes realizar acciones adicionales como limpiar el formulario o actualizar la lista de citas
+    } else {
+      alert('Error al re-agendar la cita');
+    }
+  } catch (error) {
+    console.error('Error al re-agendar la cita:', error);
+    alert('Error en el proceso de re-agendación');
+  }
+};
+
+
+
 </script>
 
 <template>
@@ -42,10 +82,10 @@ const buscarCita = async () => {
 
           <!-- Campo de búsqueda por cédula -->
           <div class="mb-6">
-            <label for="cedula" class="block text-sm font-medium text-gray-600 mb-2">Buscar cita por cédula</label>
+            <label for="cedula" class="block text-sm font-medium text-gray-600 mb-2">Buscar citas por cédula</label>
             <div class="flex">
               <input v-model="cedula" type="text" id="cedula" placeholder="Ingrese la cédula" class="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-300">
-              <button @click="buscarCita" class="ml-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transform hover:scale-105 transition-transform duration-300">Buscar</button>
+              <button @click="buscarCitas" class="ml-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transform hover:scale-105 transition-transform duration-300">Buscar</button>
             </div>
           </div>
 
@@ -54,71 +94,57 @@ const buscarCita = async () => {
             <span class="block sm:inline">{{ errorMensaje }}</span>
           </div>
 
-          <!-- Información de la cita -->
-          <div v-if="cita" class="mb-6">
-            <h3 class="text-lg font-semibold mb-4">Información del paciente</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <p class="text-sm text-gray-600">Nombre completo</p>
-                <p class="font-medium">{{ cita.NombreCompleto }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Correo electrónico</p>
-                <p class="font-medium">{{ cita.CorreoElectronico }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Documento</p>
-                <p class="font-medium">{{ cita.Documento }}</p>
-              </div>
-            </div>
+          <!-- Lista de citas -->
+          <div v-if="citas.length > 0" class="mb-6">
+            <h3 class="text-lg font-semibold mb-4">Citas encontradas</h3>
+            <ul>
+              <li v-for="cita in citas" :key="cita.IdCita" class="mb-4 p-4 border border-gray-300 rounded-lg shadow-md bg-blue-50">
+                <div class="mb-2">
+                  <p class="font-semibold text-gray-800">Paciente: <span class="text-blue-600">{{ cita.NombreCompleto }}</span></p>
+                  <p class="font-semibold text-gray-800">Correo: <span class="text-blue-600">{{ cita.CorreoElectronico }}</span></p>
+                  <p class="font-semibold text-gray-800">Documento: <span class="text-blue-600">{{ cita.Documento }}</span></p>
+                </div>
+                <div>
+                  <p class="font-semibold text-gray-800">ID Cita: <span class="text-blue-600">{{ cita.IdCita }}</span></p>
+                  <p>Hora: <span class="font-semibold text-blue-600">{{ cita.FechaHora }}</span></p>
+                  <p>Tipo de Cita: <span class="font-semibold text-blue-600">{{ cita.TipoCita }}</span></p>
+                  <p>Doctor: <span class="font-semibold text-blue-600">{{ cita.Doctor }}</span></p>
+                </div>
+                <button @click="seleccionarCita(cita)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition duration-300 transform hover:scale-105">
+                  Re-agendar esta cita
+                </button>
+              </li>
+            </ul>
           </div>
 
-          <!-- Información de la cita -->
-          <div v-if="cita" class="mb-6">
-            <h3 class="text-lg font-semibold mb-4">Información de la cita</h3>
+          <!-- Re-agendar la cita seleccionada -->
+          <div v-if="citaSeleccionada" class="mb-6">
+            <h3 class="text-lg font-semibold mb-4">Re-agendar cita seleccionada</h3>
             <div class="grid grid-cols-2 gap-4">
+              <!-- Input para la nueva fecha -->
               <div>
-                <label class="block text-sm text-gray-600 mb-1">Fecha Actual De la Cita</label>
-                <input type="datetime-local" v-model="cita.FechaHora" readonly class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                <label class="block text-sm text-gray-600 mb-1">Nueva Fecha</label>
+                <input type="date" v-model="citaSeleccionada.NuevaFecha" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               </div>
+              <!-- Input para la nueva hora -->
               <div>
-                <label class="block text-sm text-gray-600 mb-1">Nueva Fecha y Hora de la cita </label>
-                <input type="datetime-local" v-model="cita.FechaHora" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Tipo de cita</p>
-                <p class="font-medium">{{ cita.TipoCita }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Valor de la consulta</p>
-                <p class="font-medium">$ {{ cita.ValorConsulta }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">Doctor</p>
-                <p class="font-medium">{{ cita.Doctor }}</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-600">ID Cita</p>
-                <p class="font-medium">{{ cita.IdCita }}</p> 
+                <label class="block text-sm text-gray-600 mb-1">Nueva Hora</label>
+                <input type="time" v-model="citaSeleccionada.NuevaHora" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               </div>
             </div>
-          </div>
 
-          <!-- Botón Confirmar -->
-          <div v-if="cita" class="flex justify-end">
-            <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 animate-pulse">
-              Confirmar
-            </button>
+            <!-- Botón Confirmar Re-agendación -->
+            <div class="flex justify-end mt-4">
+              <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 animate-pulse" @click="confirmarReagendacion">
+                Confirmar Re-agendación
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Los estilos permanecen sin cambios */
-</style>
 
 <style scoped>
 /* Animación de Bounce */

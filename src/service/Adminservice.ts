@@ -1,9 +1,11 @@
 import axios from 'axios';
+import {useToast} from "@/composables/UseToast";
 
 const apiUrlHojaVida = 'http://localhost:3002/api/hoja-vida/'; 
 const apiUrlEmergencias = 'http://localhost:3002/api/emergenciasdetalles';
 const apiUrlFacturas = 'http://localhost:3002/api/facturas/';
 const apiUrlColillas = 'http://localhost:3002/api/colillas/'; 
+const apiUrlColillasP = 'http://localhost:3002/api/colillaPago/'; 
 const apiUrlOrdenesMedicas = 'http://localhost:3002/api/ordenes-medicas/'; 
 const apiUrlCitas = 'http://localhost:3002/api/citas/completas/';
 const apiUrlDoctor = 'http://localhost:3002/api/doctor/';
@@ -20,6 +22,18 @@ const apiUrlResumenFinanciero = 'http://localhost:3002/api/resumen-financiero';
 
 const apiUrlResumenCRM = 'http://localhost:3002/api/resumen-crm';
 const apiUrlCitasPorEspecialidad = 'http://localhost:3002/api/citas-por-especialidad';
+
+export const obtenerColillaPDF = async (idColilla: string) => {
+  try {
+    const response = await axios.get(`${apiUrlColillasP}pdf/${idColilla}`, {
+      responseType: 'blob'
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el PDF de la colilla:', error);
+    throw error;
+  }
+};
 
 export const obtenerResumenCRM = async () => {
   try {
@@ -97,7 +111,6 @@ export const crearUsuario = async (usuarioJSON: object) => {
   return response.json(); // Retornar el JSON de la respuesta
 };
 
-// Función para obtener doctor por cédula
 export const obtenerDoctorPorCedula = async (cedula: string) => {
   try {
     const response = await axios.get(`${apiUrlDoctor}${cedula}`);
@@ -223,3 +236,43 @@ export const cancelarCitaPorId = async (idCita: string) => {
     }
   }
 };
+
+export const getSpecialtiesFromBack = async () => {
+    try {
+        const response = await axios.get('http://localhost:3002/api/especialidades');
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener especialidades:', error);
+        throw error;
+    }
+};
+
+export const getServicesFromBack = async () => {
+    try {
+        const response = await axios.get('http://localhost:3002/api/services');
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener servicios:', error);
+        throw error;
+    }
+};
+
+export const getDoctorFromBack = async () => {
+    try {
+        const response = await axios.get('http://localhost:3002/api/doctor/doctorWithSpeciality');
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener doctores:', error);
+        throw error;
+    }
+};
+
+export const postCita = async (citaData: any) => {
+  try {
+    const response = await axios.post('http://localhost:3002/api/citas/insertCita', citaData);
+    console.log('Cita confirmada:', response.data);
+    return response;
+  } catch (error) {
+    console.error('Error al confirmar la cita:', error);
+  }
+}

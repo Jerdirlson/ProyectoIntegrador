@@ -6,7 +6,7 @@ const router = useRouter(); // Inicializamos el enrutador
 const manejarCita = (accion: string) => {
   switch (accion) {
     case "agendar":
-      router.push("/dashboard"); // Redirigir a la página de agendar cita
+      router.push("/patient/schedule-appointment"); // Redirigir a la página de agendar cita
       break;
     case "cancelar":
       router.push("/patient/cancel-appointment"); // Redirigir a la página de cancelar cita
