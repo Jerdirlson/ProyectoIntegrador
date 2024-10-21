@@ -97,9 +97,7 @@ export const crearUsuario = async (usuarioJSON: object) => {
   return response.json(); // Retornar el JSON de la respuesta
 };
 
-
-
-
+// Función para obtener doctor por cédula
 export const obtenerDoctorPorCedula = async (cedula: string) => {
   try {
     const response = await axios.get(`${apiUrlDoctor}${cedula}`);
@@ -110,26 +108,61 @@ export const obtenerDoctorPorCedula = async (cedula: string) => {
   }
 };
 
-// Función para obtener hoja de vida por cédula
-export const obtenerHojaVida = async (cedula: string) => {
+// Función para obtener hoja de vida por cédula o ID
+export const obtenerHojaVida = async (cedula: string, buscarPorId = false) => {
   try {
-    const response = await axios.get(`${apiUrlHojaVida}${cedula}`);
+    const url = buscarPorId ? `${apiUrlHojaVida}id/${cedula}` : `${apiUrlHojaVida}cc/${cedula}`;
+    const response = await axios.get(url);
     return response.data;
   } catch (error) {
     console.error('Error al obtener hoja de vida:', error);
     throw error;
   }
 };
+
+// Función para actualizar hoja de vida
+export const actualizarHojaVida = async (idHojaVida: string, data: object) => {
+  try {
+    const response = await axios.put(`${apiUrlHojaVida}id/${idHojaVida}`, data);
+    return response.data;
+  } catch (error) {
+    console.error('Error al actualizar hoja de vida:', error);
+    throw error;
+  }
+};
+
+// Función para generar PDF de la hoja de vida
+export const generarPDFHojaVida = async (idHojaVida: string) => {
+  try {
+    const response = await axios.get(`${apiUrlHojaVida}id/${idHojaVida}/pdf`, {
+      responseType: 'blob'
+    });
+    
+    // Crear un enlace de descarga para el PDF
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `hoja-vida-${idHojaVida}.pdf`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error al generar el PDF de la hoja de vida:', error);
+    throw error;
+  }
+};
+
 // Función para obtener citas por cédula
 export const obtenerCitasCompletas = async (cedula: string) => {
-    try {
-      const response = await axios.get(`${apiUrlCitas}${cedula}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error al obtener citas:', error);
-      throw error;
-    }
-  };
+  try {
+    const response = await axios.get(`${apiUrlCitas}${cedula}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener citas:', error);
+    throw error;
+  }
+};
+
 // Función para obtener órdenes médicas por cédula
 export const obtenerOrdenesMedicas = async (cedula: string) => {
   try {
@@ -140,6 +173,7 @@ export const obtenerOrdenesMedicas = async (cedula: string) => {
     throw error;
   }
 };
+
 // Función para obtener colillas por cédula
 export const obtenerColillas = async (cedula: string) => {
   try {
@@ -172,6 +206,7 @@ export const obtenerFacturas = async (cedula: string) => {
   }
 };
 
+// Función para cancelar cita por ID
 export const cancelarCitaPorId = async (idCita: string) => {
   try {
     const response = await axios.delete(cancelarCitaUrl(idCita), {
@@ -179,16 +214,11 @@ export const cancelarCitaPorId = async (idCita: string) => {
         'Content-Type': 'application/json',
       },
     });
-
-    // Si fue exitosa, retorna la respuesta
     return response.data;
-  } catch (error) {
-    // Maneja los errores, incluyendo el caso en que no hay respuesta del servidor
+  } catch (error: any) {
     if (error.response) {
-      // El servidor respondió con un código de estado fuera del rango 2xx
       throw new Error(`Error ${error.response.status}: ${error.response.data.message}`);
     } else {
-      // Error en la configuración de la solicitud o problema de red
       throw new Error(`Error al cancelar la cita: ${error.message}`);
     }
   }

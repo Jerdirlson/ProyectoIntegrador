@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { Ambulance, Briefcase, Calendar, CreditCard, Database, FileText, Home, Repeat, Shield, UserPlus, Users, XCircle } from 'lucide-vue-next';
 import { ref } from 'vue';
-import { Home, UserPlus, Calendar, Repeat, XCircle, Ambulance, FileText, Briefcase, CreditCard, Database, Users, Shield } from 'lucide-vue-next';
 
 const menuItems = ref([
   { name: "Inicio", route: "/admin", icon: Home },  // Cambiado a la ruta de inicio
