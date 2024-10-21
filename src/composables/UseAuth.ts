@@ -8,6 +8,10 @@ export function useAuth() {
     const isAuthenticated = computed(() => !!user.value);
     const error = ref(null);
 
+    const setUser = (newUser: userType) => {
+        user.value = newUser;
+    };
+
     const isTokenExpired = (token: string): boolean => {
         try {
             const decoded: any = jwtDecode(token);
@@ -71,6 +75,7 @@ export function useAuth() {
         logout,
         isTokenExpired,
         error,
-        checkAuth
+        checkAuth,
+        setUser
     };
 }

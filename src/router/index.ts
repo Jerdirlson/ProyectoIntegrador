@@ -1,7 +1,7 @@
+import { useAuth } from "@/composables/UseAuth";
+import { useToast } from "@/composables/UseToast";
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import {useAuth} from "@/composables/UseAuth";
-import {useToast} from "@/composables/UseToast";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +20,38 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/DashboardView.vue'),
+    },
+    {
+      path: '/patient',
+      name: 'patient',
+      component: () => import('../views/DashboardUserView.vue'),
+      children: [
+        {
+          path: '',
+          name: 'dashboardpatient',
+          component: () => import('../components/DashboardUser/SelectorType.vue'),
+        },
+        {
+          path: 'schedule-appointment',
+          name: 'patient-schedule-appointment',
+          component: () => import('../components/admin/ScheduleAppointment.vue'),
+        },
+        {
+          path: 'see-appointment',
+          name: 'patient-see-appointment',
+          component: () => import('../views/SeeAppointment.vue'),
+        },
+        {
+          path: 'cancel-appointment',
+          name: 'patient-cancel-appointment',
+          component: () => import('../components/admin/CancelAppointment.vue'),
+        },
+        {
+          path: 'reschedule-appointment',
+          name: 'patient-reschedule-appointment',
+          component: () => import('../views/RescheduleAppointment.vue'),
+        }
+      ]
     },
     {
       path: '/schedule',
@@ -41,7 +73,91 @@ const router = createRouter({
             },
         ],
     },
-  
+
+    {
+      path:'/doc',
+      name: 'doc',
+      component: () => import('../views/PrincipalDoc.vue'),
+      children: [
+        {
+          path: '',
+          name: 'principal',
+          component: () => import('../views/Doctor/DocMenu.vue'),
+        },
+      {
+        path: 'citas',
+        name: 'citas',
+        component: () => import('../views/Doctor/Doc.vue'),
+      },
+      {
+        path: 'editarhistoriaclinica',
+        name: 'H',
+        component: () => import('../views/Doctor/HistoriaCEdit.vue'),
+      },
+      {
+        path:'crearhistoriaclinica',
+        name: 'Hcc',
+        component: () => import('../views/Doctor/HCcreate.vue'),
+      },
+      {
+        path: 'editarordenmedica',
+        name: 'Oe',
+        component: () => import('../views/Doctor/OrdenEdit.vue'),
+      },
+      {
+      path: 'crearordenmedica',
+      name: 'Oc',
+      component: () => import('../views/Doctor/OrdenCrear.vue'),
+      },
+      {
+        path:'citasiguiente',
+        name: 'citasiguiente',
+        component: () => import('../views/Doctor/DateDoc.vue'),
+      },
+      {
+        path:'docinfo',
+        name: 'docinfo',
+        component: () => import('../views/Doctor/patientinfo.vue'),
+      },
+      {
+        path:'historialclinicoinfo',
+        name: 'Hci',
+        component: () => import('../views/Doctor/HClinicaInfo.vue'),
+      },
+      {
+        path:'ordenmedicainfo',
+        name: 'ome',
+        component: () => import('../views/Doctor/OrdenInfo.vue'),
+      },
+      {
+        path:'dochistory',
+        name: 'dochistory',
+        component: () => import('../views/Doctor/MedicalHistory.vue'),
+      },
+      {
+        path:'docorder',
+        name: 'docorder',
+        component: () => import('../views/Doctor/MedicalOrder.vue'),
+      },
+      {
+        path:'docemergency',
+        name: 'docemergency',
+        component: () => import('../views/Doctor/DocEmergency.vue'),
+      },
+      {
+        path:'ordenmedicacita',
+        name: 'ordenmedicacita',
+        component: () => import('../views/Doctor/ordenMCita.vue'),
+      },
+      {
+        path:'historiaclinica',
+        name: 'historiaclinica',
+        component: () => import('../views/Doctor/hclinicaCita.vue'),
+      },
+    ],
+  },
+
+
     {
       path: '/admin',
       name: 'admin',

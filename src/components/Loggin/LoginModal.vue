@@ -46,11 +46,12 @@ const send = async () => {
     emit('login-success');
     emit('close');
   } catch (error) {
-    useToast({
-      title: 'Error',
-      description: 'Error en el servidor',
-      type: 'error'
-    });
+    console.log('este es el error ', error)
+    // useToast({
+    //   title: 'Error',
+    //   description: 'Error en el servidor',
+    //   type: 'error'
+    // });
   }
 };
 
@@ -61,6 +62,7 @@ const signup = async () => {
 
 const validateRol = (user : userType) => {
   console.log('yeye',user);
+  useAuth().setUser(user);
   if (user.idRol === 1) {
     //admin
     console.log('admin');
@@ -72,6 +74,12 @@ const validateRol = (user : userType) => {
   }
   if (user.idRol === 3) {
     //medic
+    router.push({name: 'doc'});
+  }
+
+  if (user.idRol === 4) {
+    //patient
+    router.push({path: '/patient'});
   }
 
 };

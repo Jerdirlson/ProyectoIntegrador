@@ -2,6 +2,8 @@
 import {ref} from 'vue';
 import {menuOperario, menuAdmin} from "@/utils/menu";
 import type {menuType} from "@/utils/menu";
+import {useAuth} from "@/composables/UseAuth";
+import router from "@/router";
 
 const isMenuExpanded = ref(true);
 
@@ -16,11 +18,9 @@ function toggleMenu() {
 }
 
 function salir() {
-  alert("Saliendo...");
-  const salirBtn = document.querySelector(".salir-btn");
-
   setTimeout(() => {
-    // Lógica adicional para salir o redirigir
+    useAuth().logout();
+    router.push({name: 'dashboard'});
   }, 500);
 }
 </script>

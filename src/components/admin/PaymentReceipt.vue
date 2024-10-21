@@ -1,12 +1,24 @@
 <script setup lang="ts"> 
 import { ref } from 'vue';
-import { obtenerColillas } from '../../service/Adminservice'; // Asegúrate de importar la función adecuada
+import { obtenerColillas, obtenerColillaPDF } from '../../service/Adminservice'; // Asegúrate de importar la función adecuada
 
 // Variables reactivas
 const searchById = ref(false);
 const searchQuery = ref('');
 const colillas = ref([]);
 const mensajeError = ref('');
+
+// Función para ver la colilla de pago
+const verColilla = async (idColilla: string) => {
+  try {
+    const pdfBlob = await obtenerColillaPDF(idColilla);
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl, '_blank');
+  } catch (error) {
+    console.error('Error al obtener el PDF de la colilla:', error);
+    mensajeError.value = 'Error al obtener el PDF de la colilla.';
+  }
+};
 
 // Función para buscar
 const buscar = async () => {
@@ -102,7 +114,7 @@ const buscar = async () => {
                 <td class="px-6 py-4 whitespace-nowrap">{{ colilla.idColilla }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ colilla.estado }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <button class="bg-blue-600 text-white px-3 py-1 rounded">VER</button>
+                  <button @click="verColilla(colilla.idColilla)" class="bg-blue-600 text-white px-3 py-1 rounded">VER</button>
                 </td>
               </tr>
             </tbody>
