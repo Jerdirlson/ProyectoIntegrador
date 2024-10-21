@@ -32,6 +32,11 @@ const router = createRouter({
           component: () => import('../components/DashboardUser/SelectorType.vue'),
         },
         {
+          path: 'schedule-appointment',
+          name: 'patient-schedule-appointment',
+          component: () => import('../components/admin/ScheduleAppointment.vue'),
+        },
+        {
           path: 'see-appointment',
           name: 'patient-see-appointment',
           component: () => import('../views/SeeAppointment.vue'),
@@ -39,7 +44,7 @@ const router = createRouter({
         {
           path: 'cancel-appointment',
           name: 'patient-cancel-appointment',
-          component: () => import('../views/CancelAppointment.vue'),
+          component: () => import('../components/admin/CancelAppointment.vue'),
         },
         {
           path: 'reschedule-appointment',

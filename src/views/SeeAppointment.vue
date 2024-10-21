@@ -30,11 +30,10 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const { user, checkAuth } = useAuth();
 
-const buscarCitas = async (idCita: string): responseCita => {
+const buscarCitas = async (idCita: string) => {
   try {
     const response = await axios.get(apiUrl + `citas/getCitaUser/${idCita}`);
     return response.data;
-    // citas.value = response.data;
   } catch (error) {
     console.error('Error al buscar citas:', error);
     citas.value = [
@@ -91,6 +90,7 @@ onMounted(async () => {
   if (user.value) {
     const reponseCita = await buscarCitas(user.value.CC);
     for (const reponseCitaElement of reponseCita) {
+      console.log(reponseCitaElement);
       const doctor = await getDoctor(reponseCitaElement.idDocCC);
       const servicio = await getService(reponseCitaElement.idServicio);
 
