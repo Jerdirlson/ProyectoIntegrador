@@ -37,3 +37,15 @@ const buscarCitas = async (idCita: string) => {
     citas.value = [];
   }
 };
+
+export const getPatient = async (idPatient: string) => {
+    try {
+        console.log('idPatient', idPatient);
+        const response = await axios.get(`http://localhost:3002/api/usuarios/getByCCUsers/${idPatient}`);
+        console.log('response', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener el paciente:', error);
+        throw new Error('Error al obtener el paciente');
+    }
+};

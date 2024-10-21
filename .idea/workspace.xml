@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/data/services.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Alert.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Toast.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ContentUser.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ContentUser.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DashboardUser/ViewTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DashboardUser/ViewTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Loggin/LoginModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Loggin/LoginModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/composables/UseAlert.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/UseToast.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/composables/UseAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/UseAuth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layouts/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/MainLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/router/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/LoginService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/LoginService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/DashboardView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/DashboardView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/HomeView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/HomeView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/PatientService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/PatientService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/DashboardUserView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/DashboardUserView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/SeeAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SeeAppointment.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +28,7 @@
       <list>
         <option value="TypeScript File" />
         <option value="Vue Composition API Component" />
+        <option value="tsconfig.json" />
       </list>
     </option>
   </component>
@@ -43,7 +46,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/patient&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -91,10 +94,14 @@
       <workItem from="1728230252875" duration="9177000" />
       <workItem from="1728917804646" duration="512000" />
       <workItem from="1728918857710" duration="7652000" />
+      <workItem from="1728965523421" duration="4734000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

@@ -8,6 +8,10 @@ export function useAuth() {
     const isAuthenticated = computed(() => !!user.value);
     const error = ref(null);
 
+    const setUser = (newUser: userType) => {
+        user.value = newUser;
+    };
+
     const isTokenExpired = (token: string): boolean => {
         try {
             const decoded: any = jwtDecode(token);
@@ -27,8 +31,7 @@ export function useAuth() {
             const token = response.data.aws;
             localStorage.setItem('token', token);
 
-            await fetchUser(token);
-            return response;
+            return await fetchUser(token);
         } catch (err) {
             error.value = err?.response?.data?.message || 'Authentication error';
             throw err;
@@ -40,6 +43,7 @@ export function useAuth() {
             const response = await getUserService(token);
             if (!response.data) throw new Error('Invalid user data');
             user.value = response.data;
+            return response.data;
         } catch (err) {
             console.error('Error fetching user:', err);
             error.value = err?.response?.data?.message || 'Error fetching user data';
@@ -71,6 +75,7 @@ export function useAuth() {
         logout,
         isTokenExpired,
         error,
-        checkAuth
+        checkAuth,
+        setUser
     };
 }

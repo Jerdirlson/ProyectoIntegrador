@@ -3,11 +3,11 @@
     <table>
       <thead>
         <tr>
-          <th>Paciente</th>
+          <th>CC</th>
           <th>Hora</th>
+          <th>Fecha</th>
           <th>Servicio</th>
           <th>ID Citas</th>
-          <th>CC</th>
           <th>DOC</th>
           <th>Estado</th>
           <th>Pago</th>
@@ -20,11 +20,11 @@
 
         <!-- Renderizar las citas obtenidas -->
         <tr v-for="(cita, index) in citas" :key="index">
-          <td>{{ cita.paciente || 'N/A' }}</td>
+          <td>{{ cita.cc || 'N/A' }}</td>
           <td>{{ cita.hora || 'N/A' }}</td>
+          <td>{{ cita.fecha || 'N/A' }}</td>
           <td>{{ cita.servicio || 'N/A' }}</td>
           <td>{{ cita.idCita || 'N/A' }}</td>
-          <td>{{ cita.cc || 'N/A' }}</td>
           <td>{{ cita.doc || 'N/A' }}</td>
           <td :class="cita.estado === 'Activo' ? 'text-green-500' : 'text-red-500'">
             {{ cita.estado || 'N/A' }}
@@ -40,22 +40,12 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import type {citasType} from "@/views/SeeAppointment.vue";
 
-// Definir el tipo de citas
-interface Cita {
-  paciente: string;
-  hora: string;
-  servicio: string;
-  idCita: string;
-  cc: string;
-  doc: string;
-  estado: string;
-  pago: string;
-}
 
 // Recibe las citas como prop
 const props = defineProps<{
-  citas: Cita[];
+  citas: citasType[];
 }>();
 </script>
 

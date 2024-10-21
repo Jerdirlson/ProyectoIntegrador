@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { Ambulance, Briefcase, Calendar, CreditCard, Database, FileText, Home, Repeat, Shield, UserPlus, Users, XCircle } from 'lucide-vue-next';
 import { ref } from 'vue';
+import {menuOperario, menuAdmin} from "@/utils/menu";
+import type {menuType} from "@/utils/menu";
+import {useAuth} from "@/composables/UseAuth";
+import router from "@/router";
 
 const menuItems = ref([
   { name: "Inicio", route: "/admin", icon: Home },  // Cambiado a la ruta de inicio
@@ -18,18 +22,23 @@ const menuItems = ref([
   { name: "Auditoría", route: "/admin/audit", icon: Shield }  // Ruta para auditoría
 ]);
 
+
 const isMenuExpanded = ref(true);
+
+const props = defineProps<{
+  type?: menuType;
+}>();
+
+const typeMenuSelected = props.type === "menuAdmin" ? menuAdmin : menuOperario;
 
 function toggleMenu() {
   isMenuExpanded.value = !isMenuExpanded.value;
 }
 
 function salir() {
-  alert("Saliendo...");
-  const salirBtn = document.querySelector(".salir-btn");
-
   setTimeout(() => {
-    // Lógica adicional para salir o redirigir
+    useAuth().logout();
+    router.push({name: 'dashboard'});
   }, 500);
 }
 </script>
@@ -61,7 +70,7 @@ function salir() {
         ]"
       >
         <div class="p-2 flex flex-col items-center">
-          <img v-if="isMenuExpanded" src="/svg/LogoLetrasGrandes.svg" alt="Logo" class="h-16 mb-2" />
+          <img v-if="isMenuExpanded" src="/svg/LogoVitamed-09.svg" alt="Logo" class="h-16 mb-2" />
           <img v-else src="/svg/logoSinLetras.svg" alt="Logo Pequeño" class="h-8 mb-2" />
           <div class="flex items-start ">
             <button
@@ -78,7 +87,7 @@ function salir() {
         <nav class="flex-grow overflow-y-auto">
           <ul class="p-2">
             <li
-                v-for="(item, index) in menuItems"
+                v-for="(item, index) in typeMenuSelected"
                 :key="index"
                 :class="[
                   'flex mb-4',
