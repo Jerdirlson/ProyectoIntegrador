@@ -59,12 +59,12 @@
     "ts.external.directory.path": "/home/jerdirlsons/u/proyectoIntegrador/ProyectoIntegrador/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Composition API Component&quot;
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
