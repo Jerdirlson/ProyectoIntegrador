@@ -36,10 +36,11 @@ onMounted(async () => {
 <template>
   <nav class="flex h-full">
     <ul class="flex pr-8 space-x-4 justify-center items-center gap-7">
-      <li><a href="#" class="hover:text-gray-700">Home</a></li>
-      <li><a href="#" class="hover:text-gray-700">About</a></li>
-      <li><a href="#" class="hover:text-gray-700">Services</a></li>
-      <li><a href="#" class="hover:text-gray-700">Contact</a></li>
+      <li><a href="/" class="hover:text-gray-700">Home</a></li>
+      <li><a href="/about" class="hover:text-gray-700">About</a></li>
+      <li><a href="/dashboard" class="hover:text-gray-700">Services</a></li>
+      <li><a href="/sedes" class="hover:text-gray-700">Facility</a></li>
+      <li><a href="/contact-us" class="hover:text-gray-700">Contact</a></li>
     </ul>
 
     <div id="image-user" class="flex flex-wrap items-center h-full w-1/6 relative">

@@ -23,6 +23,22 @@ const apiUrlResumenFinanciero = 'http://localhost:3002/api/resumen-financiero';
 const apiUrlResumenCRM = 'http://localhost:3002/api/resumen-crm';
 const apiUrlCitasPorEspecialidad = 'http://localhost:3002/api/citas-por-especialidad';
 
+export const obtenerHojaVidaPDF = async (cc: string) => {
+  try {
+    const response = await axios.get(`${apiUrlHojaVida}cc/${cc}/pdf`, {
+      responseType: 'blob',
+    });
+
+    // Crear una nueva ventana y abrir el PDF en ella
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
+  } catch (error) {
+    console.error('Error al obtener el PDF de la hoja de vida:', error);
+    throw error;
+  }
+};
+
 export const obtenerColillaPDF = async (idColilla: string) => {
   try {
     const response = await axios.get(`${apiUrlColillasP}pdf/${idColilla}`, {

@@ -1,26 +1,35 @@
 <template>
-    <div class="observations-section">
-      <label for="observations">Observaciones</label>
-      <textarea id="observations" v-model="observations" rows="4"></textarea>
-      <button @click="finalizeAppointment" class="finalize-btn">Finalizar cita</button>
-    </div>
-  </template>x
+  <div class="observations-section">
+    <label for="observations">Observaciones</label>
+    <textarea id="observations" v-model="observations" rows="4"></textarea>
+    <button @click="finalizeAppointment" class="finalize-btn">Finalizar cita</button>
+  </div>
+</template>
 
 <script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 export default {
-  data() {
-    return {
-      observations: '',
-    };
-  },
-  methods: {
-    finalizeAppointment() {
-      if (this.observations.trim()) {
-        console.log('Cita finalizada con observaciones:', this.observations);
+  setup() {
+    const observations = ref('');
+    const router = useRouter();
+
+    const finalizeAppointment = () => {
+      if (observations.value.trim()) {
+        router.push({ 
+          path: '/doc', 
+          query: { observaciones: observations.value }
+        });
       } else {
-        console.log('Cita finalizada sin observaciones.');
+        alert('Por favor, ingresa observaciones antes de finalizar la cita.');
       }
-    },
+    };
+
+    return {
+      observations,
+      finalizeAppointment,
+    };
   },
 };
 </script>

@@ -81,7 +81,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'principal',
+          name: 'doc',
           component: () => import('../views/Doctor/DocMenu.vue'),
         },
       {

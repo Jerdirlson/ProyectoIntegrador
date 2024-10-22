@@ -1,61 +1,60 @@
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue';
-import { obtenerHojaVida } from '../../service/Adminservice'; // Asegúrate de importar correctamente tu servicio
+import { obtenerHojaVida, obtenerHojaVidaPDF } from '@/service/Adminservice'; // Asegúrate de ajustar la ruta correctamente
 
-export default {
-  setup() {
-    const mensajeError = ref('');
-    const hojaVida = ref(null);
-    const patientDocument = ref(''); // Variable para almacenar el documento del paciente
-    const searchById = ref(false); // Estado del switch
+// Definición de variables reactivas
+const mensajeError = ref('');
+const hojaVida = ref(null);
+const patientDocument = ref(''); // Variable para almacenar el documento del paciente
+const searchById = ref(false); // Estado del switch
 
-    const buscarHojaVida = async () => {
-      try {
-        if (patientDocument.value.trim() === '') {
-          console.error('Por favor, ingrese una cédula.');
-          mensajeError.value = 'Por favor, ingrese una cédula.'; // Mostrar mensaje de error
-          return; // Salir si el campo de búsqueda está vacío
-        }
+// Función para buscar la hoja de vida
+const buscarHojaVida = async () => {
+  try {
+    if (patientDocument.value.trim() === '') {
+      mensajeError.value = 'Por favor, ingrese una cédula.'; // Mostrar mensaje de error si el campo está vacío
+      return; // Salir si el campo de búsqueda está vacío
+    }
 
-        // Limpiar la hoja de vida y el mensaje de error antes de buscar
-        hojaVida.value = null;
-        mensajeError.value = '';
+    // Limpiar la hoja de vida y el mensaje de error antes de buscar
+    hojaVida.value = null;
+    mensajeError.value = '';
 
-        // Usar el servicio importado
-        const datos = await obtenerHojaVida(patientDocument.value);
+    // Usar el servicio para obtener la hoja de vida
+    const datos = await obtenerHojaVida(patientDocument.value);
 
-        // Verificar si se encontraron datos
-        if (!datos) {
-          mensajeError.value = 'No se encontraron datos para la cédula proporcionada.'; // Mostrar mensaje si no hay resultados
-          return;
-        }
+    // Verificar si se encontraron datos
+    if (!datos) {
+      mensajeError.value = 'No se encontraron datos para la cédula proporcionada.'; // Mostrar mensaje si no hay resultados
+      return;
+    }
 
-        // Mapear los datos devueltos a la estructura deseada
-        hojaVida.value = {
-          nombre: datos['Nombre'],
-          cc: datos['CC'],
-          fechaCreacion: new Date(datos['Fecha Creación']).toLocaleDateString(),
-          tipoUsuario: datos['Tipo Usuario'],
-          estado: datos['Estado'],
-          idHojaVida: datos['idHoja_Vida'],
-        };
-
-      } catch (error) {
-        console.error('Error al buscar hoja de vida:', error);
-        mensajeError.value = 'No se encontraron datos con esta cédula.'; // Mostrar mensaje de error
-      }
+    // Mapear los datos devueltos a la estructura deseada
+    hojaVida.value = {
+      nombre: datos['Nombre'],
+      cc: datos['CC'],
+      fechaCreacion: new Date(datos['Fecha Creación']).toLocaleDateString(),
+      tipoUsuario: datos['Tipo Usuario'],
+      estado: datos['Estado'],
+      idHojaVida: datos['idHoja_Vida'],
     };
 
-    return {
-      patientDocument,
-      searchById,
-      mensajeError,
-      hojaVida,
-      buscarHojaVida,
-    };
-  },
+  } catch (error) {
+    console.error('Error al buscar hoja de vida:', error);
+    mensajeError.value = 'No se encontraron datos con esta cédula.'; // Mostrar mensaje de error
+  }
+};
+
+// Función para ver la hoja de vida en formato PDF
+const verHojaVidaPDF = async (cc: string) => {
+  try {
+    await obtenerHojaVidaPDF(cc);
+  } catch (error) {
+    console.error('Error al obtener la hoja de vida PDF:', error);
+  }
 };
 </script>
+
 
 <template>
   <div class="flex flex-col h-screen">
@@ -112,7 +111,6 @@ export default {
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo Usuario</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Hoja de Vida</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actualizar</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">VER</th>
               </tr>
             </thead>
@@ -125,11 +123,10 @@ export default {
                 <td class="px-6 py-4 whitespace-nowrap">{{ hojaVida.estado }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ hojaVida.idHojaVida }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <button class="bg-red-600 text-white px-3 py-1 rounded">Actualizar</button>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <button class="bg-blue-600 text-white px-3 py-1 rounded">VER</button>
-                </td>
+                  <button class="bg-blue-600 text-white px-3 py-1 rounded" @click="verHojaVidaPDF(hojaVida.cc)">
+            VER
+          </button>
+            </td>
               </tr>
               <tr v-else>
                 <td colspan="8" class="px-6 py-4 text-center">No se encontraron resultados.</td>
