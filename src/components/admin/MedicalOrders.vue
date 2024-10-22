@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { obtenerOrdenesMedicas } from '../..//service/Adminservice'; // Asegúrate de que la ruta sea correcta
+import { getUsuarioPorCC, getOrdenMedicaPorCC, getOrdenMedicaPorCCc, createOrdenMedica } from '@/service/DoctorService';
 
 // Variables reactivas
 const busqueda = ref('');
 const ordenesMedicas = ref([]);
 const ordenesFiltradas = ref([]); // Nueva propiedad para almacenar órdenes filtradas
 const mensajeError = ref(''); // Mensaje de error
+const patientDocument = ref('');
+
 
 // Función para buscar órdenes médicas por cédula
 const buscar = async () => {
@@ -49,6 +52,25 @@ const buscar = async () => {
     mensajeError.value = 'Ocurrió un error al buscar las órdenes médicas.'; // Mostrar mensaje de error
   }
 };
+
+async function viewMedicalHistory(idOrdenMedica) {
+  try {
+    const pdfBlob = await getOrdenMedicaPorCCc(idOrdenMedica); // Usar el idOrdenMedica para obtener el PDF
+
+    const fileURL = window.URL.createObjectURL(pdfBlob);
+    const fileLink = document.createElement('a');
+    fileLink.href = fileURL;
+    fileLink.setAttribute('download', `orden_medica_${idOrdenMedica}.pdf`);
+    document.body.appendChild(fileLink);
+    fileLink.click();
+    document.body.removeChild(fileLink);
+    window.URL.revokeObjectURL(fileURL);
+  } catch (error) {
+    console.error('Error al obtener la orden médica:', error);
+    alert('No se pudo obtener la orden médica. Por favor, intente de nuevo.');
+  }
+}
+
 
 // Al montar el componente, inicializar las órdenes
 onMounted(() => {
@@ -100,7 +122,7 @@ onMounted(() => {
                 </span>
               </td>
               <td class="py-3 px-4">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded" @click="viewMedicalHistory(orden.idOrdenMedica)">
                   VER
                 </button>
               </td>

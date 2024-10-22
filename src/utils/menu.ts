@@ -20,7 +20,7 @@ export const menuOperario = [
     { name: "Re-agendamiento Citas", route: "/operator/reschedule-appointment", icon: Repeat },  // Ruta para re-agendamiento
     { name: "Cancelación Citas", route: "/operator/cancel-appointment", icon: XCircle },  // Ruta para cancelación
     { name: "Emergencias", route: "/operator/emergencies", icon: Ambulance },  // Ruta para emergencias
-    { name: "Historial Médico", route: "/operator/medical-orders", icon: FileText },  // Ruta para historial médico (si corresponde)
+    { name: "Ordenes medicas", route: "/operator/medical-orders", icon: FileText },  // Ruta para historial médico (si corresponde)
     { name: "Hoja Vida", route: "/operator/resume", icon: Briefcase },  // Ruta para hoja de vida
     { name: "Factura Electrónica", route: "/operator/invoices", icon: FileText },  // Ruta para factura electrónica
     { name: "Colilla Pago", route: "/operator/payment-receipt", icon: CreditCard },  // Ruta para colilla de pago
