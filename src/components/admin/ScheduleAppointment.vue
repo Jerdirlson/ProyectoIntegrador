@@ -5,7 +5,13 @@ import {useAuth} from "@/composables/UseAuth";
 import type {userType} from "@/types/loginType";
 import {useToast} from "@/composables/UseToast";
 import {getPatient} from "@/service/PatientService";
-import {getDoctorFromBack, getServicesFromBack, getSpecialtiesFromBack, postCita} from "@/service/Adminservice";
+import {
+  getDoctorFromBack,
+  getSchedule,
+  getServicesFromBack,
+  getSpecialtiesFromBack,
+  postCita
+} from "@/service/Adminservice";
 import Button from "@/components/Button.vue";
 import router from "@/router";
 
@@ -43,16 +49,19 @@ const { user, checkAuth } = useAuth();
 
 const horaSeleccionada = ref<string>('');
 
-const horasDisponibles = computed(() => {
-  const horas = [];
-  for (let hora = 6; hora <= 17; hora++) {
-    horas.push(`${hora.toString().padStart(2, '0')}:00`);
-    if (hora !== 17) { // No añadir 17:30
-      horas.push(`${hora.toString().padStart(2, '0')}:30`);
+const horasDisponibles = ref<string[]>([]);
+
+const obtenerHorasDisponibles = async () => {
+  if (selectedDoctor.value && fechaHora.value) {
+    try {
+      const horas = await getSchedule(selectedDoctor.value, fechaHora.value);
+      horasDisponibles.value = horas;
+    } catch (error) {
+      console.error('Error al obtener las horas disponibles:', error);
+      horasDisponibles.value = [];
     }
   }
-  return horas;
-});
+};
 
 const fechaHoraCompleta = computed(() => {
   if (fechaHora.value && horaSeleccionada.value) {
@@ -174,6 +183,12 @@ const returnDashboardPatient = () =>{
 watch(selectedSpecialty, () => {
   filterServices();
   filterDoctors();
+});
+
+watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, oldFecha]) => {
+  if (newDoctor && newFecha && (newDoctor !== oldDoctor || newFecha !== oldFecha)) {
+    await obtenerHorasDisponibles();
+  }
 });
 
 </script>
