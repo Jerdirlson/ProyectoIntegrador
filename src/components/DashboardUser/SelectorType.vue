@@ -17,6 +17,9 @@ const manejarCita = (accion: string) => {
     case "ver":
       router.push("/patient/see-appointment"); // Redirigir a la página de ver citas
       break;
+    case "pagar":
+      router.push("/patient/mercadopago"); // Redirigir a la página de agendar cita
+      break;
     default:
       alert("Por favor seleccione una acción válida.");
       break;
@@ -74,6 +77,10 @@ const manejarCita = (accion: string) => {
           <button class="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
             @click="manejarCita('ver')">
             Ver mis citas
+          </button>
+          <button class="bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-200"
+            @click="manejarCita('pagar')">
+            Pagos
           </button>
         </div>
       </div>

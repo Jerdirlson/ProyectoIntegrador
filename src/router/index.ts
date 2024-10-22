@@ -32,6 +32,11 @@ const router = createRouter({
           component: () => import('../components/DashboardUser/SelectorType.vue'),
         },
         {
+          path: 'mercadopago',
+          name: 'mercadopago1',
+          component: () => import('../components/Mercadopago/MercadoPago.vue'),
+      },
+        {
           path: 'schedule-appointment',
           name: 'patient-schedule-appointment',
           component: () => import('../components/admin/ScheduleAppointment.vue'),
