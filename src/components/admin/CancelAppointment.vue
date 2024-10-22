@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { obtenerCitasCompletas, cancelarCitaPorId } from '../../service/Adminservice'; // Asegúrate de que la ruta sea correcta
+import {onMounted, ref} from 'vue';
+import { obtenerCitasCompletas, cancelarCitaPorId } from '@/service/Adminservice';
+import Button from "@/components/Button.vue";
+import {getPatient} from "@/service/PatientService";
+import {useAuth} from "@/composables/UseAuth";
+import router from "@/router";
 
 const menuOpen = ref(false);
 const documento = ref('');
-const citas = ref([]); // Almacenar todas las citas obtenidas
+const citas = ref([]);
 const error = ref(false);
 const loading = ref(false);
+const adminMode = ref(false);
+const { user, checkAuth } = useAuth();
+
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
@@ -57,12 +64,32 @@ const cancelarCita = async (idCita) => {
     loading.value = false;
   }
 };
+
+const returnDashboardPatient = () =>{
+  router.push({name: 'dashboardpatient'});
+}
+
+onMounted(async () => {
+  await checkAuth();
+  if (user.value) {
+    if (user.value.idRol !== 4) {
+      adminMode.value = true;
+    }
+  }else{
+    console.log('Usuario no autenticado');
+  }
+});
 </script>
 
 <template>
   <div class="flex flex-col h-screen bg-white">
     <div class="flex flex-1 overflow-hidden">
       <div class="flex-1 p-10 overflow-y-auto">
+        <div v-if="!adminMode" class="flex">
+          <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110" @click="returnDashboardPatient">
+            Volver al dashboard
+          </button>
+        </div>
         <div class="bg-white shadow-lg rounded-lg p-8 transform transition-all duration-500 hover:scale-105 hover:shadow-2xl mt-10 animate-fade-in">
           <div class="flex justify-center mb-6">
             <h2 class="text-4xl font-bold text-blue-600">Cancelar Cita</h2>

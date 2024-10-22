@@ -260,3 +260,19 @@ export const postCita = async (citaData: any) => {
     console.error('Error al confirmar la cita:', error);
   }
 }
+export const getSchedule = async (ccDoc: number, dia: string) => {
+  try {
+    const response = await axios.post('http://localhost:3002/api/citas/horario', {
+      ccDoc,
+      dia
+    });
+    const formattedHours = response.data.availableHours.map((hora: string) =>
+        hora.substring(0, 5)  // Toma solo las primeras 5 posiciones (HH:mm)
+    );
+
+    return formattedHours;
+  } catch (error) {
+    console.error('Error al obtener horarios disponibles:', error);
+    throw error;
+  }
+};

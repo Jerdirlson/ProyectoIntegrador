@@ -2,7 +2,9 @@
   <header id="main-header">
     <div class="header-item">
       <i class="fas fa-sign-out-alt"></i>
-      <span>Salir</span>
+      <button @click="salir">
+        Salir
+      </button>
     </div>
     <div class="header-item">
       <i class="fas fa-bell"></i>
@@ -10,9 +12,16 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: "MainHeader",
+<script setup lang="ts">
+import Button from "@/components/Button.vue";
+import { useAuth } from "@/composables/UseAuth.js";
+import router from "@/router/index.js";
+
+const salir = (): void => {
+  setTimeout(() => {
+    useAuth().logout();
+    router.push({ name: 'dashboard' });
+  }, 500);
 };
 </script>
 

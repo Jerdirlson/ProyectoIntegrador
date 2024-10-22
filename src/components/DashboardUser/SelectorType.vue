@@ -25,23 +25,24 @@ const manejarCita = (accion: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen bg-gray-100">
+  <div class="flex flex-col h-[calc(100vh-9rem)] bg-gray-100">
     <!-- Sección de Atención -->
-    <div class="flex mt-6">
-      <div class="bg-primary text-neutral-200 p-4 w-64 rounded-lg ml-10">
-        <h2 class="text-xl font-bold">Atención</h2>
+    <div class="flex flex-col pl-16 gap-6 h-1/5 justify-end">
+      <div class="flex mt-6">
+        <div class="bg-primary text-neutral-200 p-4 w-64 rounded-lg ml-10">
+          <h2 class="text-xl font-bold">Atención</h2>
+        </div>
+      </div>
+
+      <!-- Texto de advertencia -->
+      <div class="text-left ml-10"> <!-- Agregamos ml-10 para darle margen a la izquierda -->
+        <p class="text-lg">
+          Por favor, gestiona tus citas médicas de manera oportuna. Elige una opción a continuación para continuar.
+        </p>
       </div>
     </div>
-
-    <!-- Texto de advertencia -->
-  <div class="text-left ml-10"> <!-- Agregamos ml-10 para darle margen a la izquierda -->
-    <p class="text-lg">
-      Por favor, gestiona tus citas médicas de manera oportuna. Elige una opción a continuación para continuar.
-    </p>
-  </div>
-
     <!-- Contenedor principal con el logo y botones -->
-    <div class="flex-grow flex justify-center items-center mt-1"> 
+    <div class="flex-grow flex justify-center items-center h-3/5">
       <div class="bg-white shadow-lg rounded-lg p-10 w-3/5">
         <!-- Imagen -->
         <div class="flex justify-center mb-6">
