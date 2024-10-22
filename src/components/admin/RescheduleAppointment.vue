@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { obtenerCitasCompletas } from '../../service/Adminservice';
-import axios from "axios"; // Asegúrate de ajustar la ruta al archivo de servicios
+import {onMounted, ref} from 'vue';
+import { obtenerCitasCompletas } from '@/service/Adminservice';
+import axios from "axios";
+import router from "@/router";
+import {useAuth} from "@/composables/UseAuth";
+import Button from "@/components/Button.vue"; // Asegúrate de ajustar la ruta al archivo de servicios
 
 // Variables reactivas
 const cedula = ref(''); // Campo para la búsqueda por cédula
@@ -9,6 +12,9 @@ const citas = ref([]); // Almacenar todas las citas
 const citaSeleccionada = ref<any>(null); // Cita seleccionada por el usuario para re-agendar
 const errorMensaje = ref(''); // Mensaje de error
 const apiUrl = import.meta.env.VITE_API_URL;
+const adminMode = ref(false);
+const { user, checkAuth } = useAuth();
+
 
 // Función para buscar citas por cédula
 const buscarCitas = async () => {
@@ -69,7 +75,20 @@ const confirmarReagendacion = async () => {
   }
 };
 
+const returnDashboardPatient = () =>{
+  router.push({name: 'dashboardpatient'});
+}
 
+onMounted(async () => {
+  await checkAuth();
+  if (user.value) {
+    if (user.value.idRol !== 4) {
+      adminMode.value = true;
+    }
+  }else{
+    console.log('Usuario no autenticado');
+  }
+});
 
 </script>
 
@@ -77,6 +96,11 @@ const confirmarReagendacion = async () => {
   <div class="flex flex-col h-screen bg-gradient-to-r from-blue-50 to-blue-100">
     <div class="flex flex-1 overflow-hidden">
       <div class="flex-1 p-10 overflow-y-auto bg-white rounded-tl-3xl shadow-xl">
+        <div v-if="!adminMode" class="flex">
+          <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110" @click="returnDashboardPatient">
+            Volver al dashboard
+          </button>
+        </div>
         <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl mt-10 animate-fade-in">
           <h2 class="text-2xl font-semibold mb-6 text-blue-600">Re-agendar cita</h2>
 

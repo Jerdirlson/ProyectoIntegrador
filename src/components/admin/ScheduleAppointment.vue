@@ -6,6 +6,8 @@ import type {userType} from "@/types/loginType";
 import {useToast} from "@/composables/UseToast";
 import {getPatient} from "@/service/PatientService";
 import {getDoctorFromBack, getServicesFromBack, getSpecialtiesFromBack, postCita} from "@/service/Adminservice";
+import Button from "@/components/Button.vue";
+import router from "@/router";
 
 export interface specialityType {
   idEspecialidad: number;
@@ -165,6 +167,10 @@ onMounted(async () => {
   await getDoctor();
 });
 
+const returnDashboardPatient = () =>{
+  router.push({name: 'dashboardpatient'});
+}
+
 watch(selectedSpecialty, () => {
   filterServices();
   filterDoctors();
@@ -175,13 +181,16 @@ watch(selectedSpecialty, () => {
 
 <template>
   <div class="flex flex-col h-screen">
-    <!-- Contenedor para los banners -->
-    <div class="flex"></div>
 
     <div class="flex flex-1 overflow-hidden">
       <!-- Contenido principal a la izquierda -->
       <div class="flex-1 p-10 overflow-y-auto bg-gray-100">
-        <div class="bg-white shadow-lg rounded-lg p-6 mt-10">
+        <div v-if="!adminMode" class="flex">
+          <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110" @click="returnDashboardPatient">
+            Volver al dashboard
+          </button>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-6 mt-5">
           <h2 class="text-2xl font-semibold mb-6 text-blue-600">Agendar cita</h2>
 
           <!-- Campo para ingresar cédula y botón de búsqueda -->

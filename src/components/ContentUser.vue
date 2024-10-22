@@ -6,7 +6,6 @@ import router from "@/router";
 
 const { isAuthenticated, user, logout, checkAuth } = useAuth();
 
-const isVisible = computed(() => window.location.pathname !== '/');
 const isLoginVisible = ref(false);
 const isUserMenuVisible = ref(false);
 
@@ -43,7 +42,7 @@ onMounted(async () => {
       <li><a href="#" class="hover:text-gray-700">Contact</a></li>
     </ul>
 
-    <div v-if="isVisible" id="image-user" class="flex flex-wrap items-center h-full w-1/6 relative">
+    <div id="image-user" class="flex flex-wrap items-center h-full w-1/6 relative">
       <div class="flex h-3/4 w-full items-center justify-center">
         <button @click="isAuthenticated ? toggleUserMenu() : openLoginModal()"
                 class="flex rounded-full w-10 h-10 overflow-hidden">

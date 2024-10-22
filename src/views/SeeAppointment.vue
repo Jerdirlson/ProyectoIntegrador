@@ -3,6 +3,8 @@ import {onMounted, ref, watchEffect} from 'vue';
 import ViewTable from "@/components/DashboardUser/ViewTable.vue";
 import axios from 'axios';
 import {useAuth} from "@/composables/UseAuth";
+import router from "@/router";
+import Button from "@/components/Button.vue";
 
 export type citasType = {
   cc: string;
@@ -27,7 +29,7 @@ interface Service {
 
 const citas = ref<any[]>([]);
 const apiUrl = import.meta.env.VITE_API_URL;
-
+const adminMode = ref(false);
 const { user, checkAuth } = useAuth();
 
 const buscarCitas = async (idCita: string) => {
@@ -133,11 +135,32 @@ const parserPago = (pago: number, servicio : Service) => {
       return 'N/A';
   }
 };
+
+
+const returnDashboardPatient = () =>{
+  router.push({name: 'dashboardpatient'});
+}
+
+onMounted(async () => {
+  await checkAuth();
+  if (user.value) {
+    if (user.value.idRol !== 4) {
+      adminMode.value = true;
+    }
+  }else{
+    console.log('Usuario no autenticado');
+  }
+});
 </script>
 
 <template>
   <div class="w-full h-[calc(100vh-9rem)]">
     <div class="w-full h-full p-16">
+      <div v-if="!adminMode" class="flex pb-8">
+        <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110" @click="returnDashboardPatient">
+          Volver al dashboard
+        </button>
+      </div>
       <div class="flex flex-col h-full w-full">
         
         <!-- Título y descripción alineados a la izquierda -->

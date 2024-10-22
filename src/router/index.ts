@@ -49,7 +49,7 @@ const router = createRouter({
         {
           path: 'reschedule-appointment',
           name: 'patient-reschedule-appointment',
-          component: () => import('../views/RescheduleAppointment.vue'),
+          component: () => import('../components/admin/RescheduleAppointment.vue'),
         }
       ]
     },
