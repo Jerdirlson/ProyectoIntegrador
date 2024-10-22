@@ -12,7 +12,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { enqueueDoctor, popDoctor } from '@/service/DoctorService';
+import { useRouter } from 'vue-router'; // Importar el enrutador
 
+const router = useRouter(); // Inicializar el enrutador
 const isLoading = ref(false);
 const idDoc = '111';
 
@@ -26,6 +28,9 @@ const handleEnqueue = async () => {
     console.log('Resultado de pop:', result);
 
     alert('Proceso completado: Doctor encolado y desencolado');
+
+    // Redirigir a la nueva ruta
+    router.push('citasiguiente'); // Cambia '/nueva-ruta' por la ruta deseada
   } catch (error) {
     console.error('Error en el proceso:', error);
     alert('Ocurrió un error en el proceso');

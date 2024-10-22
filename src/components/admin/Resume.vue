@@ -1,9 +1,18 @@
 <script lang="ts">
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { obtenerHojaVida } from '../../service/Adminservice'; // Asegúrate de importar correctamente tu servicio
+import { obtenerHojaVidaPDF } from '@/service/Adminservice';
 
-export default {
+export default defineComponent({
   setup() {
+    const verHojaVidaPDF = async (cc: string) => {
+      try {
+        await obtenerHojaVidaPDF(cc);
+      } catch (error) {
+        console.error('Error al obtener la hoja de vida PDF:', error);
+      }
+    };
+
     const mensajeError = ref('');
     const hojaVida = ref(null);
     const patientDocument = ref(''); // Variable para almacenar el documento del paciente
@@ -52,9 +61,11 @@ export default {
       mensajeError,
       hojaVida,
       buscarHojaVida,
+      verHojaVidaPDF,
+
     };
   },
-};
+});
 </script>
 
 <template>
@@ -112,7 +123,6 @@ export default {
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo Usuario</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Hoja de Vida</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actualizar</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">VER</th>
               </tr>
             </thead>
@@ -125,11 +135,10 @@ export default {
                 <td class="px-6 py-4 whitespace-nowrap">{{ hojaVida.estado }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ hojaVida.idHojaVida }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <button class="bg-red-600 text-white px-3 py-1 rounded">Actualizar</button>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <button class="bg-blue-600 text-white px-3 py-1 rounded">VER</button>
-                </td>
+                  <button class="bg-blue-600 text-white px-3 py-1 rounded" @click="verHojaVidaPDF(hojaVida.cc)">
+            VER
+          </button>
+            </td>
               </tr>
               <tr v-else>
                 <td colspan="8" class="px-6 py-4 text-center">No se encontraron resultados.</td>
