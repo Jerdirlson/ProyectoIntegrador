@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Adminservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Adminservice.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +86,9 @@
       <workItem from="1728918857710" duration="7652000" />
       <workItem from="1728965523421" duration="4734000" />
       <workItem from="1729481853811" duration="17626000" />
-      <workItem from="1729565263696" duration="8728000" />
+      <workItem from="1729565263696" duration="9065000" />
+      <workItem from="1729601257314" duration="24000" />
+      <workItem from="1729624576483" duration="4472000" />
     </task>
     <servers />
   </component>

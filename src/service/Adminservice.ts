@@ -11,7 +11,8 @@ const apiUrlCitas = 'http://localhost:3002/api/citas/completas/';
 const apiUrlDoctor = 'http://localhost:3002/api/doctor/';
 
 const CrearHojadevidaurl = 'http://localhost:3002/api/crearHojaVida';
-const Crearusuariourl = 'http://localhost:3002/api/usuarios/crearusuario';
+const
+    Crearusuariourl = 'http://localhost:3002/api/usuarios/createUser';
 // URL para cancelar cita
 const cancelarCitaUrl = (idCita: string) => `http://localhost:3002/api/citas/citas/${idCita}`;
 
