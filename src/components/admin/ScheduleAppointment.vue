@@ -14,6 +14,7 @@ import {
 } from "@/service/Adminservice";
 import Button from "@/components/Button.vue";
 import router from "@/router";
+import {mailer} from "@/service/Mailer";
 
 export interface specialityType {
   idEspecialidad: number;
@@ -56,6 +57,42 @@ const minDate = computed(() => {
   return today.toISOString().split('T')[0];
 });
 
+const createAppointmentMessage = (patientInfo: userType, especialidad: string, servicio: string, doctor: userType, fecha: string, hora: string) => {
+  return `<div style="font-family: Arial, sans-serif; color: #333;">
+  <p>Estimado/a <strong>${ patientInfo.nombreUsuario } ${ patientInfo.apellidoUsuario }</strong>,</p>
+
+  <p>Nos complace confirmarle que su cita médica ha sido agendada exitosamente en Vitamed IPS. A continuación, encontrará los detalles de su cita:</p>
+
+  <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">INFORMACIÓN DE LA CITA</h3>
+  <ul style="list-style: none; padding-left: 0;">
+    <li><strong>Especialidad:</strong> ${ especialidad }</li>
+    <li><strong>Servicio:</strong> ${ servicio }</li>
+    <li><strong>Profesional:</strong> Dr(a). ${ doctor.nombreUsuario } ${ doctor.apellidoUsuario }</li>
+    <li><strong>Fecha:</strong> ${ fecha }</li>
+    <li><strong>Hora:</strong> ${ hora }</li>
+  </ul>
+
+  <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">INFORMACIÓN DEL PACIENTE</h3>
+  <ul style="list-style: none; padding-left: 0;">
+    <li><strong>Nombre completo:</strong> ${ patientInfo.nombreUsuario } ${ patientInfo.apellidoUsuario }</li>
+    <li><strong>Documento de identidad:</strong> ${ patientInfo.CC }</li>
+    <li><strong>Correo electrónico:</strong> ${ patientInfo.emailUsuario }</li>
+  </ul>
+
+  <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">RECOMENDACIONES IMPORTANTES</h3>
+  <ul style="list-style: none; padding-left: 0;">
+    <li>- Por favor, llegar 15 minutos antes de su cita</li>
+    <li>- Traer documento de identidad</li>
+    <li>- Traer orden médica si aplica</li>
+    <li>- Traer exámenes previos relacionados</li>
+    <li>- En caso de no poder asistir, cancelar la cita con mínimo 24 horas de anticipación</li>
+  </ul>
+  <p>¡Gracias por confiar en Vitamed IPS para el cuidado de su salud!</p>
+  <p>Si necesita cancelar o reprogramar su cita, o tiene alguna pregunta adicional, no dude en contactarnos:</p>
+</div>
+`;
+};
+
 const obtenerHorasDisponibles = async () => {
   if (selectedDoctor.value && fechaHora.value) {
     try {
@@ -81,6 +118,16 @@ const confirmarCita = async () => {
     console.error('Formulario incompleto o paciente no seleccionado');
     return;
   }
+
+  const selectedEspecialidad = especialidades.value.find(e => e.idEspecialidad === selectedSpecialty.value);
+  const selectedServicio = servicios.value.find(s => s.idServicio === selectedService.value);
+  const selectedDoctorInfo = doctores.value.find(d => d.CC === selectedDoctor.value);
+
+  if (!selectedEspecialidad || !selectedServicio || !selectedDoctorInfo) {
+    console.error('Falta información necesaria');
+    return;
+  }
+
   const citaData = {
     fecha: fechaHora.value,
     hora: horaSeleccionada.value,
@@ -92,13 +139,18 @@ const confirmarCita = async () => {
 
   try {
     await postCita(citaData);
-    useToast({
-      title: 'Cita agendada',
-      description: 'La cita ha sido agendada exitosamente. Se ha enviado un correo de confirmación al paciente.',
-      type: 'success',
-      timeoutId: 7000
-    });
-    router.push('./')
+
+    const messageBody = createAppointmentMessage(
+        patientInfo.value,
+        selectedEspecialidad.nombreEspecialidad,
+        selectedServicio.nombreServicio,
+        selectedDoctorInfo,
+        fechaHora.value,
+        horaSeleccionada.value
+    );
+
+    await mailer( 'Cita agendada exitosamente', patientInfo.value.emailUsuario, messageBody);
+
   } catch (error) {
     console.log('Error al agendar la cita:', error);
     useToast({

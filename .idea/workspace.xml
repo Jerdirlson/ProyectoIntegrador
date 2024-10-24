@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/service/Mailer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/layouts/AdminLayout.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,9 +20,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="tsconfig.json" />
         <option value="Vue Composition API Component" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -95,7 +99,7 @@
       <workItem from="1729565263696" duration="9065000" />
       <workItem from="1729601257314" duration="24000" />
       <workItem from="1729624576483" duration="4472000" />
-      <workItem from="1729733991551" duration="14232000" />
+      <workItem from="1729733991551" duration="18400000" />
     </task>
     <servers />
   </component>

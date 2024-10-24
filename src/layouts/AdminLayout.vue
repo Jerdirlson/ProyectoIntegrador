@@ -4,6 +4,7 @@ import {menuOperario, menuAdmin} from "@/utils/menu";
 import type {menuType} from "@/utils/menu";
 import {useAuth} from "@/composables/UseAuth";
 import router from "@/router";
+import Toast from "@/components/Toast.vue";
 
 const isMenuExpanded = ref(true);
 
@@ -90,6 +91,7 @@ function salir() {
       </aside>
     </div>
   </div>
+  <Toast />
 </template>
 
 <style scoped>

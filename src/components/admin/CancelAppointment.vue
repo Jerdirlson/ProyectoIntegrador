@@ -6,6 +6,7 @@ import {getPatient} from "@/service/PatientService";
 import {useAuth} from "@/composables/UseAuth";
 import router from "@/router";
 import {useToast} from "@/composables/UseToast";
+import {mailer} from "@/service/Mailer";
 
 const menuOpen = ref(false);
 const documento = ref('');
@@ -18,6 +19,37 @@ const { user, checkAuth } = useAuth();
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
+};
+
+const createCancelAppointmentMessage = (
+    patientInfo: any,
+    doctor: string,
+    fecha: string,
+    hora: string
+) => {
+  return `
+    <div style="font-family: Arial, sans-serif; color: #333;">
+      <p>Estimado/a <strong>${patientInfo.NombreCompleto}</strong>,</p>
+
+      <p>Lamentamos informarle que su cita médica ha sido <strong>cancelada</strong> en Vitamed IPS. A continuación, encontrará los detalles de la cita cancelada:</p>
+
+      <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">INFORMACIÓN DE LA CITA CANCELADA</h3>
+      <ul style="list-style: none; padding-left: 0;">
+        <li><strong>Doctor(a):</strong> Dr(a). ${doctor}</li>
+        <li><strong>Fecha:</strong> ${fecha}</li>
+        <li><strong>Hora:</strong> ${hora}</li>
+      </ul>
+
+      <p>Si necesita agendar una nueva cita o tiene alguna pregunta, no dude en contactarnos:</p>
+      <ul style="list-style: none; padding-left: 0;">
+        <li><strong>Línea de atención:</strong> (123) 456-7890</li>
+        <li><strong>WhatsApp:</strong> +57 300 123 4567</li>
+        <li><strong>Email:</strong> citas@vitamedips.com</li>
+      </ul>
+
+      <p>¡Gracias por confiar en Vitamed IPS para el cuidado de su salud!</p>
+    </div>
+  `;
 };
 
 const buscarCita = async () => {
@@ -44,9 +76,9 @@ const cancelarCita = async (idCita) => {
     useToast({
       title: 'Error',
       description: 'No se ha proporcionado un ID de cita válido.',
-      type : 'error',
+      type: 'error',
       timeoutId: 3000
-    })
+    });
     return;
   }
 
@@ -56,26 +88,48 @@ const cancelarCita = async (idCita) => {
     const response = await cancelarCitaPorId(idCita);
 
     if (response) {
-      useToast({
-        title: 'Cita cancelada',
-        description: 'La cita ha sido cancelada correctamente.',
-        type : 'success',
-        timeoutId: 3000
-      })
-      citas.value = citas.value.filter(cita => cita.IdCita !== idCita);
+      const cita = citas.value.find(c => c.IdCita === idCita);
+      const mensaje = createCancelAppointmentMessage(
+          cita,
+          cita.Doctor,
+          cita.FechaHora.split(' ')[0],
+          cita.FechaHora.split(' ')[1]
+      );
+
+      try {
+        await mailer('Cancelación de cita médica en Vitamed IPS', cita.CorreoElectronico, mensaje);
+
+        useToast({
+          title: 'Cita cancelada',
+          description: 'La cita ha sido cancelada correctamente y se ha enviado un correo electrónico de notificación.',
+          type: 'success',
+          timeoutId: 5000
+        });
+
+        citas.value = citas.value.filter(cita => cita.IdCita !== idCita);
+      } catch (mailError) {
+        console.error('Error al enviar el correo:', mailError);
+        useToast({
+          title: 'Cita cancelada',
+          description: 'La cita ha sido cancelada, pero no se pudo enviar el correo electrónico.',
+          type: 'error',
+          timeoutId: 3000
+        });
+      }
     }
   } catch (err) {
     console.error('Error en la solicitud de cancelación:', err);
     useToast({
       title: 'Error',
       description: 'Ha ocurrido un error al cancelar la cita.',
-      type : 'error',
+      type: 'error',
       timeoutId: 3000
-    })
+    });
   } finally {
     loading.value = false;
   }
 };
+
 
 const returnDashboardPatient = () =>{
   router.push({name: 'dashboardpatient'});

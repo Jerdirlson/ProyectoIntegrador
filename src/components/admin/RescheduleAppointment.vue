@@ -6,6 +6,7 @@ import router from "@/router";
 import {useAuth} from "@/composables/UseAuth";
 import Button from "@/components/Button.vue";
 import {useToast} from "@/composables/UseToast";
+import {mailer} from "@/service/Mailer";
 
 // Variables reactivas
 const cedula = ref('');
@@ -18,6 +19,45 @@ const { user, checkAuth } = useAuth();
 
 // Obtener la fecha actual en formato YYYY-MM-DD para el atributo min del input date
 const fechaMinima = ref(new Date().toISOString().split('T')[0]);
+
+const createRescheduleAppointmentMessage = (
+    patientInfo: any,
+    doctor: string,
+    nuevaFecha: string,
+    nuevaHora: string
+) => {
+  return `
+    <div style="font-family: Arial, sans-serif; color: #333;">
+      <p>Estimado/a,</p>
+
+      <p>Nos complace informarle que su cita médica ha sido <strong>re-agendada</strong> exitosamente en Vitamed IPS. A continuación, encontrará los nuevos detalles de su cita:</p>
+
+      <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">NUEVA INFORMACIÓN DE LA CITA</h3>
+      <ul style="list-style: none; padding-left: 0;">
+        <li><strong>Doctor(a):</strong> Dr(a). ${doctor}</li>
+        <li><strong>Nueva Fecha:</strong> ${nuevaFecha}</li>
+        <li><strong>Nueva Hora:</strong> ${nuevaHora}</li>
+      </ul>
+
+      <h3 style="border-bottom: 2px solid #ccc; padding-bottom: 5px;">RECOMENDACIONES IMPORTANTES</h3>
+      <ul style="list-style: none; padding-left: 0;">
+        <li>- Por favor, llegar 15 minutos antes de su cita</li>
+        <li>- Traer documento de identidad</li>
+        <li>- Traer orden médica si aplica</li>
+        <li>- En caso de no poder asistir, cancelar la cita con mínimo 24 horas de anticipación</li>
+      </ul>
+
+      <p>Si necesita cancelar o reprogramar su cita nuevamente, o tiene alguna pregunta adicional, no dude en contactarnos:</p>
+      <ul style="list-style: none; padding-left: 0;">
+        <li><strong>Línea de atención:</strong> (123) 456-7890</li>
+        <li><strong>WhatsApp:</strong> +57 300 123 4567</li>
+        <li><strong>Email:</strong> citas@vitamedips.com</li>
+      </ul>
+
+      <p>¡Gracias por confiar en Vitamed IPS para el cuidado de su salud!</p>
+    </div>
+  `;
+};
 
 const buscarCitas = async () => {
   if (!cedula.value) {
@@ -50,7 +90,12 @@ const seleccionarCita = (cita) => {
 
 const confirmarReagendacion = async () => {
   if (!citaSeleccionada.value || !citaSeleccionada.value.IdCita || !citaSeleccionada.value.NuevaFecha || !citaSeleccionada.value.NuevaHora) {
-    alert('Faltan datos para re-agendar la cita.');
+    useToast({
+      title: 'Error',
+      description: 'Por favor, seleccione una cita y complete la nueva fecha y hora.',
+      type : 'error',
+      timeoutId: 3000
+    })
     return;
   }
 
@@ -67,6 +112,10 @@ const confirmarReagendacion = async () => {
     });
 
     if (response.status === 200) {
+      const mensaje = createRescheduleAppointmentMessage(citaSeleccionada.value, citaSeleccionada.value.Doctor, nuevaFecha, nuevaHora);
+
+      console.log(citaSeleccionada.value)
+      await mailer( 'Cita re-agendada exitosamente', citaSeleccionada.value.CorreoElectronico, mensaje);
       useToast({
         title: 'Cita re-agendada',
         description: 'La cita ha sido re-agendada correctamente. Se le enviara un correo electronico',
