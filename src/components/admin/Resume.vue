@@ -44,9 +44,17 @@ const buscarHojaVida = async () => {
     mensajeError.value = 'No se encontraron datos con esta cédula.'; // Mostrar mensaje de error
   }
 };
+import {useToast} from "@/composables/UseToast";
 
 // Función para ver la hoja de vida en formato PDF
 const verHojaVidaPDF = async (cc: string) => {
+  useToast({
+      title: 'Viendo',
+      description: 'Abriendo hoja de vida.',
+      type: 'success',
+      timeoutId: 6000
+    });
+
   try {
     await obtenerHojaVidaPDF(cc);
   } catch (error) {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Citas from '@/components/doctor/AppointmentDay.vue';
+import Toast from '@/components/Toast.vue';
 </script>
 
 <template>
@@ -11,7 +12,9 @@ import Citas from '@/components/doctor/AppointmentDay.vue';
         </div>
       </section>
     </main>
+    <Toast></Toast>
   </div>
+
 </template>
 
 <style scoped>

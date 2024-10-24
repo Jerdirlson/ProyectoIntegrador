@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Date from '@/components/doctor/Date.vue';
 import Obser from '@/components/doctor/obser.vue';
+import Toast from '@/components/Toast.vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
@@ -17,6 +18,7 @@ const patient = ref(route.params.patient);
       </div>
     </main>
   </div>
+  <Toast></Toast>
 </template>
 
 <style scoped>

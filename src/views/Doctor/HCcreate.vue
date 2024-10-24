@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { getHistoriaClinicaPorCC, createHistoriaClinica } from '@/service/DoctorService';
 import { useRoute } from 'vue-router';
+import Toast from '@/components/Toast.vue';
+
 
 // Definir todos los campos como variables reactivas
 const idHistoria_Medica = ref('');
@@ -117,12 +119,18 @@ const submitForm = async () => {
   try {
     const response = await createHistoriaClinica(formData);
     console.log('Historia clínica creada exitosamente:', response);
-    alert('Historia clínica creada correctamente');
-  } catch (error) {
+    useToast({
+      title: 'Creado correctamente',
+      description: 'Historia clinica creada correctamente.',
+      type: 'success',
+      timeoutId: 6000
+    });  } catch (error) {
     console.error('Error al enviar la historia clínica:', error.response || error);
     alert('Error al enviar la historia clínica. Revisa la consola para más detalles.');
   }
 };
+import {useToast} from "@/composables/UseToast";
+
 
 </script>
 
@@ -265,6 +273,7 @@ const submitForm = async () => {
       <button type="submit" class="submit-button">Enviar</button>
     </form>
   </div>
+  <Toast></Toast>
 </template>
 
 <style scoped>

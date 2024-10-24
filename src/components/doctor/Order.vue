@@ -30,10 +30,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { getUsuarioPorCC, getOrdenMedicaPorCC, getOrdenMedicaPorCCc, createOrdenMedica } from '@/service/DoctorService';
-import { useRouter } from 'vue-router'; 
+import { useRouter } from 'vue-router';
+import { useToast } from "@/composables/UseToast";
 
 async function viewMedicalHistory() {
   if (patientDocument.value) {
+    console.log('Error');
+        useToast({
+          title: 'Orden medica',
+          description: 'Descargando orden medica.',
+          type: 'success',
+          timeoutId: 5000
+        });
     try {
       const pdfBlob = await getOrdenMedicaPorCCc(patientDocument.value);
       
@@ -46,12 +54,22 @@ async function viewMedicalHistory() {
       document.body.removeChild(fileLink);
       window.URL.revokeObjectURL(fileURL);
     } catch (error) {
-      console.error('Error al obtener la orden médica:', error);
-      alert('No se pudo obtener la orden médica. Por favor, intente de nuevo.');
+      console.log('Error');
+        useToast({
+          title: 'Orden Medica',
+          description: 'No se encontro orden medica del paciente.',
+          type: 'error',
+          timeoutId: 5000
+        });
     }
   } else {
-    alert('Por favor, ingrese el documento del paciente antes de ver la orden médica.');
-  }
+    console.log('Error');
+        useToast({
+          title: 'Ingresa CC',
+          description: 'ingresa cc del paciente antes de ver.',
+          type: 'warning',
+          timeoutId: 5000
+        });  }
 }
 
 const buscarPaciente = async () => {
@@ -62,9 +80,7 @@ const buscarPaciente = async () => {
       const historiaClinica = await getOrdenMedicaPorCC(patientDocument.value);
       if (historiaClinica) {
         patientData.value = historiaClinica; 
-      } else {
-        alert('No se encontró orden medica para este paciente');
-      }
+      } else {     }
     } else {
       alert('Paciente no encontrado');
     }
@@ -93,8 +109,13 @@ const editMedicalHistory = () => {
       query: { cc: ccPaciente } 
     });
   } else {
-    console.error('No se encontró datos del paciente.');
-  }
+    console.log('Error');
+        useToast({
+          title: 'Orden Medica',
+          description: 'No se encontro orden medica del paciente.',
+          type: 'error',
+          timeoutId: 5000
+        });  }
 };
 
 const createMedicalHistory = () => {
@@ -104,8 +125,13 @@ const createMedicalHistory = () => {
       query: { cc: patientDocument.value }
     });
   } else {
-    alert('Por favor, ingrese el documento del paciente para crear una orden médica.');
-  }
+    console.log('Error');
+        useToast({
+          title: 'Orden Medica',
+          description: 'No se encontro orden medica del paciente.',
+          type: 'error',
+          timeoutId: 5000
+        });  }
 };
 
 </script>

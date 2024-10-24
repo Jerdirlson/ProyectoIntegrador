@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Order from '@/components/doctor/Order.vue';
+import Toast from '@/components/Toast.vue';
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import Order from '@/components/doctor/Order.vue';
         </div>
       </main>
     </div>
+    <Toast></Toast>
 </template>
 
 <style scoped>

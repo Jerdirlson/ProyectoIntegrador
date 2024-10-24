@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { getOrdenMedicaPorCC, updateOrdenMedica } from '@/service/DoctorService'; // Asegúrate de tener esta función en tu servicio
 import { useRoute } from 'vue-router';
+import Toast from '@/components/Toast.vue';
+
 
 // Definir todos los campos como variables reactivas
 const idOrden_Medica = ref('');
@@ -45,6 +47,7 @@ const cargarOrdenMedica = async () => {
 onMounted(() => {
   cargarOrdenMedica();
 });
+import {useToast} from "@/composables/UseToast";
 
 const submitForm = async () => {
   // Crear un objeto formData con los valores del formulario
@@ -60,8 +63,12 @@ const submitForm = async () => {
     // Llamar a la función updateOrdenMedica con el ID y el objeto formData
     const response = await updateOrdenMedica(String(idOrden_Medica.value), formData);
     console.log('Orden médica actualizada:', response);
-    alert('Orden médica actualizada correctamente');
-  } catch (error) {
+    useToast({
+      title: 'Actualizado',
+      description: 'Orden medica actualizada correctamente.',
+      type: 'success',
+      timeoutId: 6000
+    });  } catch (error) {
     console.error('Error al actualizar la orden médica:', error);
     alert('Error al actualizar la orden médica. Revisa la consola para más detalles.');
   }
@@ -117,6 +124,7 @@ const submitForm = async () => {
       <button type="submit" class="submit-button">Actualizar Orden Médica</button>
     </form>
   </div>
+  <Toast></Toast>
 </template>
 
 <style scoped>

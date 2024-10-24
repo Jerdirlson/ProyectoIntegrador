@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { createOrdenMedica } from '@/service/DoctorService'; 
 import { useRoute } from 'vue-router';
+import {useToast} from "@/composables/UseToast";
+import Toast from '@/components/Toast.vue';
+
 
 const idCita = ref('');  
 const estadoOM = ref('');
@@ -24,8 +27,12 @@ const submitForm = async () => {
   try {
     const response = await createOrdenMedica(formData);
     console.log('Orden médica creada:', response);
-    alert('Orden médica creada correctamente');
-  } catch (error) {
+    useToast({
+      title: 'Creado correctamente',
+      description: 'Orden medica creada correctamente.',
+      type: 'success',
+      timeoutId: 6000
+    });  } catch (error) {
     console.error('Error al crear la orden médica:', error);
     alert('Error al crear la orden médica. Revisa la consola para más detalles.');
   }
@@ -73,6 +80,7 @@ const submitForm = async () => {
       <button type="submit" class="submit-button">Crear Orden Médica</button>
     </form>
   </div>
+  <Toast></Toast>
 </template>
 
 <style scoped>
