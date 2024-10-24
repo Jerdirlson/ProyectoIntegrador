@@ -95,10 +95,10 @@ const confirmarCita = async () => {
     useToast({
       title: 'Cita agendada',
       description: 'La cita ha sido agendada exitosamente. Se ha enviado un correo de confirmación al paciente.',
-      type: 'error',
+      type: 'success',
       timeoutId: 7000
     });
-    router.push({name: 'dashboardpatient'});
+    router.push('./')
   } catch (error) {
     console.log('Error al agendar la cita:', error);
     useToast({
