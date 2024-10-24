@@ -5,8 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04622bbe-23d3-4b6a-8adf-58e6281ac53e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/svg/check-circle.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/svg/close.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/svg/disabled.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/svg/exclamation-circle.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SvgIcon.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DashboardUser/SelectorType.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DashboardUser/SelectorType.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Toast.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Toast.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/AdminInvoices.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/AdminInvoices.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/CancelAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/PaymentReceipt.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/PaymentReceipt.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/RescheduleAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/Resume.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/Resume.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/admin/ScheduleAppointment.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/composables/UseAuth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/UseAuth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/composables/UseToast.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/composables/UseToast.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/Adminservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/Adminservice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +36,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
-        <option value="Vue Composition API Component" />
         <option value="tsconfig.json" />
+        <option value="Vue Composition API Component" />
       </list>
     </option>
   </component>
@@ -56,6 +75,12 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/svg" />
+      <recent name="$PROJECT_DIR$/resources/svg" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -89,6 +114,7 @@
       <workItem from="1729565263696" duration="9065000" />
       <workItem from="1729601257314" duration="24000" />
       <workItem from="1729624576483" duration="4472000" />
+      <workItem from="1729733991551" duration="13071000" />
     </task>
     <servers />
   </component>

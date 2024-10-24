@@ -1,11 +1,12 @@
-import { reactive, watch } from 'vue';
+import { reactive } from 'vue';
 
 export type ToastType = 'success' | 'warning' | 'error';
 
 export interface Toast {
-    title?: string;
+    title: string;
     description?: string;
-    type?: ToastType;
+    type: ToastType;
+    timeoutId: number;
 }
 
 export const toastStatus = reactive({
@@ -13,15 +14,10 @@ export const toastStatus = reactive({
     title: '',
     description: '',
     type: 'success' as ToastType,
-    timeoutId: null as number | null,
+    timeoutId: 5000,
 });
 
 export const useToast = (info?: Toast) => {
-    if (toastStatus.timeoutId !== null) {
-        clearTimeout(toastStatus.timeoutId);
-        toastStatus.timeoutId = null;
-    }
-
     if (toastStatus.open) {
         toastStatus.open = false;
         setTimeout(() => {
@@ -36,29 +32,6 @@ const showNewToast = (info?: Toast) => {
     toastStatus.title = info?.title ?? '';
     toastStatus.description = info?.description ?? '';
     toastStatus.type = info?.type ?? 'success';
+    toastStatus.timeoutId = info?.timeoutId ?? 5000;
     toastStatus.open = true;
-
-    toastStatus.timeoutId = setTimeout(() => {
-        toastStatus.open = false;
-        toastStatus.timeoutId = null;
-    }, 3000) as unknown as number;
 };
-
-const resetToast = () => {
-    if (toastStatus.timeoutId !== null) {
-        clearTimeout(toastStatus.timeoutId);
-        toastStatus.timeoutId = null;
-    }
-    toastStatus.title = '';
-    toastStatus.description = '';
-    toastStatus.type = 'success';
-};
-
-watch(
-    () => toastStatus.open,
-    (newValue) => {
-        if (!newValue) {
-            setTimeout(resetToast, 300);
-        }
-    },
-);

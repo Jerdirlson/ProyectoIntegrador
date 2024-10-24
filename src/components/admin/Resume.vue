@@ -62,7 +62,7 @@ const verHojaVidaPDF = async (cc: string) => {
 
     <div class="flex flex-1 overflow-hidden">
       <div class="flex-1 p-10 overflow-hidden bg-gray-100">
-        <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl mt-10">
+        <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:shadow-2xl mt-10">
           <h2 class="text-2xl font-semibold mb-6 text-blue-600">Hoja de Vida</h2>
 
           <!-- Switch personalizado para buscar por CC o ID -->

@@ -259,6 +259,7 @@ export const postCita = async (citaData: any) => {
     return response;
   } catch (error) {
     console.error('Error al confirmar la cita:', error);
+    throw error;
   }
 }
 export const getSchedule = async (ccDoc: number, dia: string) => {

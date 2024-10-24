@@ -51,6 +51,11 @@ const horaSeleccionada = ref<string>('');
 
 const horasDisponibles = ref<string[]>([]);
 
+const today = new Date();
+const minDate = computed(() => {
+  return today.toISOString().split('T')[0];
+});
+
 const obtenerHorasDisponibles = async () => {
   if (selectedDoctor.value && fechaHora.value) {
     try {
@@ -85,7 +90,24 @@ const confirmarCita = async () => {
     idHistoria_Medica: '1'
   };
 
-  await postCita(citaData);
+  try {
+    await postCita(citaData);
+    useToast({
+      title: 'Cita agendada',
+      description: 'La cita ha sido agendada exitosamente. Se ha enviado un correo de confirmación al paciente.',
+      type: 'error',
+      timeoutId: 7000
+    });
+    router.push({name: 'dashboardpatient'});
+  } catch (error) {
+    console.log('Error al agendar la cita:', error);
+    useToast({
+      title: 'Error',
+      description: 'Ha ocurrido un error al agendar la cita.',
+      type: 'error',
+      timeoutId: 6000
+    });
+  }
 };
 
 const getInfoPatient = async () => {
@@ -195,10 +217,8 @@ watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, old
 
 
 <template>
-  <div class="flex flex-col h-screen">
-
+  <div class="flex flex-col h-[calc(100vh-9rem)]">
     <div class="flex flex-1 overflow-hidden">
-      <!-- Contenido principal a la izquierda -->
       <div class="flex-1 p-10 overflow-y-auto bg-gray-100">
         <div v-if="!adminMode" class="flex">
           <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110" @click="returnDashboardPatient">
@@ -208,7 +228,6 @@ watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, old
         <div class="bg-white shadow-lg rounded-lg p-6 mt-5">
           <h2 class="text-2xl font-semibold mb-6 text-blue-600">Agendar cita</h2>
 
-          <!-- Campo para ingresar cédula y botón de búsqueda -->
           <div v-if="adminMode" class="mb-6 flex items-center space-x-2">
             <input
               type="text"
@@ -224,12 +243,10 @@ watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, old
             </button>
           </div>
 
-          <!-- Mensaje en caso de que no se encuentre información -->
           <div v-if="mostrarError" class="text-red-500 mb-6">
             <p>No se encontró información para el número de cédula ingresado.</p>
           </div>
 
-          <!-- Información de la cita -->
           <div class="mb-6">
             <h3 class="text-lg font-semibold mb-4">Información de la cita</h3>
             <div class="grid grid-cols-2 gap-4">
@@ -248,6 +265,7 @@ watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, old
                 <input
                   type="date"
                   v-model="fechaHora"
+                  :min="minDate"
                   class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                 />
                 <label class="block text-sm text-gray-600 mb-1">Hora</label>
@@ -266,7 +284,6 @@ watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, old
 
           <div v-if='patientInfo' class="flex flex-col mb-6">
             <div>
-              <!-- Selector de Especialidad -->
               <div class="mb-4">
                 <label class="block text-sm text-gray-600 mb-1">Especialidad</label>
                 <select
@@ -284,7 +301,6 @@ watch([selectedDoctor, fechaHora], async ([newDoctor, newFecha], [oldDoctor, old
                 </select>
               </div>
 
-              <!-- Selector de Servicio -->
               <div class="mb-4">
                 <label class="block text-sm text-gray-600 mb-1">Servicio</label>
                 <select

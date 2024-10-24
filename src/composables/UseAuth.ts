@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { LoginService, getUserService } from "@/service/LoginService";
 import type { ILoginService, userType } from "@/types/loginType";
 import { jwtDecode } from "jwt-decode";
+import router from "@/router";
 
 export function useAuth() {
     const user = ref<userType | null>(null);

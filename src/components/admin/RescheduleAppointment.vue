@@ -4,19 +4,21 @@ import { obtenerCitasCompletas } from '@/service/Adminservice';
 import axios from "axios";
 import router from "@/router";
 import {useAuth} from "@/composables/UseAuth";
-import Button from "@/components/Button.vue"; // Asegúrate de ajustar la ruta al archivo de servicios
+import Button from "@/components/Button.vue";
+import {useToast} from "@/composables/UseToast";
 
 // Variables reactivas
-const cedula = ref(''); // Campo para la búsqueda por cédula
-const citas = ref([]); // Almacenar todas las citas
-const citaSeleccionada = ref<any>(null); // Cita seleccionada por el usuario para re-agendar
-const errorMensaje = ref(''); // Mensaje de error
+const cedula = ref('');
+const citas = ref([]);
+const citaSeleccionada = ref<any>(null);
+const errorMensaje = ref('');
 const apiUrl = import.meta.env.VITE_API_URL;
 const adminMode = ref(false);
 const { user, checkAuth } = useAuth();
 
+// Obtener la fecha actual en formato YYYY-MM-DD para el atributo min del input date
+const fechaMinima = ref(new Date().toISOString().split('T')[0]);
 
-// Función para buscar citas por cédula
 const buscarCitas = async () => {
   if (!cedula.value) {
     errorMensaje.value = "Debe ingresar una cédula para buscar.";
@@ -24,24 +26,26 @@ const buscarCitas = async () => {
   }
 
   try {
-    // Llamada a la API para obtener las citas
     const response = await obtenerCitasCompletas(cedula.value);
     if (response && response.length > 0) {
-      citas.value = response; // Asignar todas las citas encontradas
-      errorMensaje.value = ''; // Limpiar el mensaje de error
+      citas.value = response;
+      errorMensaje.value = '';
     } else {
       errorMensaje.value = "No se encontraron citas para la cédula proporcionada.";
-      citas.value = []; // Limpiar las citas si no se encuentra nada
+      citaSeleccionada.value = null;
     }
   } catch (error) {
     console.error("Error al buscar las citas:", error);
     errorMensaje.value = "No se pudo realizar la búsqueda. Inténtalo nuevamente.";
+  } finally {
+    setTimeout(() => {
+      errorMensaje.value = '';
+    }, 5000);
   }
 };
 
-// Función para seleccionar una cita para re-agendar
 const seleccionarCita = (cita) => {
-  citaSeleccionada.value = { ...cita }; // Crear una copia de la cita seleccionada
+  citaSeleccionada.value = { ...cita };
 };
 
 const confirmarReagendacion = async () => {
@@ -52,26 +56,40 @@ const confirmarReagendacion = async () => {
 
   try {
     const idCita = citaSeleccionada.value.IdCita;
-    const nuevaFecha = citaSeleccionada.value.NuevaFecha; // Nueva fecha
-    const nuevaHora = citaSeleccionada.value.NuevaHora;   // Nueva hora
+    const nuevaFecha = citaSeleccionada.value.NuevaFecha;
+    const nuevaHora = citaSeleccionada.value.NuevaHora;
 
     console.log('Re-agendando la cita con ID:', idCita, 'a la fecha:', nuevaFecha, 'y hora:', nuevaHora);
 
-    // Realizar la solicitud PUT al backend enviando la fecha y la hora por separado
     const response = await axios.put(`${apiUrl}citas/cita/${idCita}`, {
       nuevaFecha: nuevaFecha,
       nuevaHora: nuevaHora
     });
 
     if (response.status === 200) {
-      alert('Cita re-agendada exitosamente');
-      // Aquí puedes realizar acciones adicionales como limpiar el formulario o actualizar la lista de citas
+      useToast({
+        title: 'Cita re-agendada',
+        description: 'La cita ha sido re-agendada correctamente. Se le enviara un correo electronico',
+        type : 'success',
+        timeoutId: 5000
+      })
+      citaSeleccionada.value = {};
     } else {
-      alert('Error al re-agendar la cita');
+      useToast({
+        title: 'Error',
+        description: 'No se pudo re-agendar la cita. Inténtalo nuevamente.',
+        type : 'error',
+        timeoutId: 3000
+      })
     }
   } catch (error) {
     console.error('Error al re-agendar la cita:', error);
-    alert('Error en el proceso de re-agendación');
+    useToast({
+      title: 'Error',
+      description: 'No se pudo re-agendar la cita. Inténtalo nuevamente.',
+      type : 'error',
+      timeoutId: 3000
+    })
   }
 };
 
@@ -89,11 +107,10 @@ onMounted(async () => {
     console.log('Usuario no autenticado');
   }
 });
-
 </script>
 
 <template>
-  <div class="flex flex-col h-screen bg-gradient-to-r from-blue-50 to-blue-100">
+  <div class="flex flex-col h-[calc(100vh-9rem)] bg-gradient-to-r from-blue-50 to-blue-100">
     <div class="flex flex-1 overflow-hidden">
       <div class="flex-1 p-10 overflow-y-auto bg-white rounded-tl-3xl shadow-xl">
         <div v-if="!adminMode" class="flex">
@@ -104,7 +121,6 @@ onMounted(async () => {
         <div class="bg-white shadow-lg rounded-lg p-6 transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl mt-10 animate-fade-in">
           <h2 class="text-2xl font-semibold mb-6 text-blue-600">Re-agendar cita</h2>
 
-          <!-- Campo de búsqueda por cédula -->
           <div class="mb-6">
             <label for="cedula" class="block text-sm font-medium text-gray-600 mb-2">Buscar citas por cédula</label>
             <div class="flex">
@@ -113,12 +129,10 @@ onMounted(async () => {
             </div>
           </div>
 
-          <!-- Mensaje de error -->
           <div v-if="errorMensaje" class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative animate-bounce" role="alert">
             <span class="block sm:inline">{{ errorMensaje }}</span>
           </div>
 
-          <!-- Lista de citas -->
           <div v-if="citas.length > 0" class="mb-6">
             <h3 class="text-lg font-semibold mb-4">Citas encontradas</h3>
             <ul>
@@ -141,23 +155,23 @@ onMounted(async () => {
             </ul>
           </div>
 
-          <!-- Re-agendar la cita seleccionada -->
           <div v-if="citaSeleccionada" class="mb-6">
             <h3 class="text-lg font-semibold mb-4">Re-agendar cita seleccionada</h3>
             <div class="grid grid-cols-2 gap-4">
-              <!-- Input para la nueva fecha -->
               <div>
                 <label class="block text-sm text-gray-600 mb-1">Nueva Fecha</label>
-                <input type="date" v-model="citaSeleccionada.NuevaFecha" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                <input
+                    type="date"
+                    v-model="citaSeleccionada.NuevaFecha"
+                    :min="fechaMinima"
+                    class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               </div>
-              <!-- Input para la nueva hora -->
               <div>
                 <label class="block text-sm text-gray-600 mb-1">Nueva Hora</label>
                 <input type="time" v-model="citaSeleccionada.NuevaHora" class="w-full p-2 border border-gray-300 rounded transition duration-300 focus:border-blue-600 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
               </div>
             </div>
 
-            <!-- Botón Confirmar Re-agendación -->
             <div class="flex justify-end mt-4">
               <button class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-110 animate-pulse" @click="confirmarReagendacion">
                 Confirmar Re-agendación
@@ -171,7 +185,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-/* Animación de Bounce */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -185,7 +198,6 @@ onMounted(async () => {
   animation: bounce 1s infinite;
 }
 
-/* Animación de Fade In */
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -201,7 +213,6 @@ onMounted(async () => {
   animation: fade-in 0.5s forwards;
 }
 
-/* Animación de Pulso */
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
@@ -215,13 +226,12 @@ onMounted(async () => {
   animation: pulse 1.5s infinite;
 }
 
-/* Scroll sin scrollbar visible */
 .flex-1 {
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .flex-1::-webkit-scrollbar {
-  display: none; /* Chrome, Safari y Opera */
+  display: none;
 }
 </style>

@@ -5,6 +5,7 @@ import Button from "@/components/Button.vue";
 import {getPatient} from "@/service/PatientService";
 import {useAuth} from "@/composables/UseAuth";
 import router from "@/router";
+import {useToast} from "@/composables/UseToast";
 
 const menuOpen = ref(false);
 const documento = ref('');
@@ -40,26 +41,37 @@ const buscarCita = async () => {
 
 const cancelarCita = async (idCita) => {
   if (!idCita) {
-    alert("No hay cita seleccionada.");
+    useToast({
+      title: 'Error',
+      description: 'No se ha proporcionado un ID de cita válido.',
+      type : 'error',
+      timeoutId: 3000
+    })
     return;
   }
 
-  console.log('Cancelando la cita con ID:', idCita);
   loading.value = true;
 
   try {
-    // Llamar a la función para cancelar la cita
     const response = await cancelarCitaPorId(idCita);
 
-    // Verificar la respuesta
     if (response) {
-      alert("Cita cancelada exitosamente.");
-      // Remover la cita cancelada de la lista de citas
+      useToast({
+        title: 'Cita cancelada',
+        description: 'La cita ha sido cancelada correctamente.',
+        type : 'success',
+        timeoutId: 3000
+      })
       citas.value = citas.value.filter(cita => cita.IdCita !== idCita);
     }
   } catch (err) {
     console.error('Error en la solicitud de cancelación:', err);
-    alert("Error en la solicitud de cancelación.");
+    useToast({
+      title: 'Error',
+      description: 'Ha ocurrido un error al cancelar la cita.',
+      type : 'error',
+      timeoutId: 3000
+    })
   } finally {
     loading.value = false;
   }
@@ -82,7 +94,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen bg-white">
+  <div class="flex flex-col h-[calc(100vh-9rem)] bg-white">
     <div class="flex flex-1 overflow-hidden">
       <div class="flex-1 p-10 overflow-y-auto">
         <div v-if="!adminMode" class="flex">
