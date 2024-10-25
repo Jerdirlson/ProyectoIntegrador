@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InfoPatient from '@/components/doctor/InfoPatient.vue';
+import Toast from '@/components/Toast.vue';
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import InfoPatient from '@/components/doctor/InfoPatient.vue';
         </div>
       </main>
     </div>
+    <Toast></Toast>
   </template>
   
 

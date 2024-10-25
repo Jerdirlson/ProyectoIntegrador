@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { obtenerOrdenesMedicas } from '../..//service/Adminservice'; // Asegúrate de que la ruta sea correcta
 import { getUsuarioPorCC, getOrdenMedicaPorCC, getOrdenMedicaPorCCc, createOrdenMedica } from '@/service/DoctorService';
+import {useToast} from "@/composables/UseToast";
 
 // Variables reactivas
 const busqueda = ref('');

@@ -8,8 +8,16 @@ const searchQuery = ref('');
 const colillas = ref([]);
 const mensajeError = ref('');
 
+import {useToast} from "@/composables/UseToast";
+
 // Función para ver la colilla de pago
 const verColilla = async (idColilla: string) => {
+  useToast({
+      title: 'Viendo',
+      description: 'Abriendo la colilla de pago.',
+      type: 'success',
+      timeoutId: 6000
+    });
   try {
     const pdfBlob = await obtenerColillaPDF(idColilla);
     const pdfUrl = URL.createObjectURL(pdfBlob);

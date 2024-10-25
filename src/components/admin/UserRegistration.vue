@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { crearHojaVida, crearUsuario } from '../../service/Adminservice';
+import { useToast } from "@/composables/UseToast";
 // Options for selectors
 const tiposPaciente = [
   { value: 1, label: 'Sisben' },
@@ -157,20 +158,36 @@ const handleContinue = async () => {
 
       if (usuarioData) {
         console.log('Usuario creado:', usuarioData);
-        alert('Usuario y Hoja de Vida creados exitosamente');
-        // Aquí puedes añadir lógica para reiniciar el formulario o redirigir al usuario
+        useToast({
+          title: 'Exitoso',
+          description: 'Usuario y hoja de vida creado exitosamente.',
+          type: 'success',
+          timeoutId: 5000
+        });         // Aquí puedes añadir lógica para reiniciar el formulario o redirigir al usuario
       } else {
         console.error('Error al crear el usuario.');
-        alert('Error al crear el usuario');
-      }
+        useToast({
+          title: 'Error',
+          description: 'Error al crear usuario.',
+          type: 'error',
+          timeoutId: 5000
+        });       }
     } else {
       console.error('Error al crear la hoja de vida.');
-      alert('Error al crear la Hoja de Vida');
-    }
+      useToast({
+          title: 'Error',
+          description: 'Error al crear hoja de vida.',
+          type: 'error',
+          timeoutId: 5000
+        });     }
   } catch (error) {
     console.error('Error en la solicitud:', error);
-    alert('Error en la solicitud');
-  }
+    useToast({
+          title: 'Error',
+          description: 'Error en la solicitud.',
+          type: 'error',
+          timeoutId: 5000
+        });   }
 };
 
 </script>

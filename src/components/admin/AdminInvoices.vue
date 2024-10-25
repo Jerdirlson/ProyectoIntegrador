@@ -37,7 +37,15 @@ const buscar = async () => {
   }
 };
 
+import {useToast} from "@/composables/UseToast";
+
 const verFactura = async (idCita: number) => {
+  useToast({
+      title: 'Viendo',
+      description: 'Abriendo Factura.',
+      type: 'success',
+      timeoutId: 6000
+    });
   try {
     const pdfBlob = await obtenerFacturaPDF(idCita);
     const fileURL = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf' }));

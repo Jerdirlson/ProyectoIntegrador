@@ -9,6 +9,7 @@
 <script>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useToast } from "@/composables/UseToast";
 
 export default {
   setup() {
@@ -22,7 +23,13 @@ export default {
           query: { observaciones: observations.value }
         });
       } else {
-        alert('Por favor, ingresa observaciones antes de finalizar la cita.');
+        console.log('Error al agendar la cita:');
+        useToast({
+          title: 'Observaciones requeridas',
+          description: 'Por favor, ingresa observaciones antes de finalizar la cita.',
+          type: 'warning',
+          timeoutId: 5000
+        });
       }
     };
 
@@ -33,7 +40,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .observations-section {

@@ -51,6 +51,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPacientesAsignadosAlDoctor, getHistoriaClinicaPorCCc } from '@/service/DoctorService';
+import { useToast } from "@/composables/UseToast";
 
 const router = useRouter();
 const citas = ref<Cita[]>([]); // Esto define citas como un arreglo de objetos Cita
@@ -107,6 +108,12 @@ const receiveAppointment = () => {
 
 const verHistoriaClinica = async (CC: string) => {
   try {
+    useToast({
+          title: 'Mostrando Historia',
+          description: 'Mostrando historia clinica.',
+          type: 'success',
+          timeoutId: 5000
+        }); 
     const pdfBlob = await getHistoriaClinicaPorCCc(CC);
 
     const fileURL = window.URL.createObjectURL(pdfBlob);

@@ -29,6 +29,8 @@
 import { ref } from 'vue';
 import { getUsuarioPorCC, getHistoriaClinicaPorCC, getHistoriaClinicaPorCCc } from '@/service/DoctorService';
 import { useRouter } from 'vue-router';
+import { useToast } from "@/composables/UseToast";
+
 
 const buscarPaciente = async () => {
   try {
@@ -39,11 +41,21 @@ const buscarPaciente = async () => {
       if (historiaClinica) {
         patientData.value = historiaClinica;
       } else {
-        alert('No se encontró historia clínica para este paciente');
-      }
+        console.log('Error');
+        useToast({
+          title: 'Historia clinica',
+          description: 'No se encontro historia clinica del paciente.',
+          type: 'warning',
+          timeoutId: 5000
+        });      }
     } else {
-      alert('Paciente no encontrado');
-    }
+      console.log('Error');
+        useToast({
+          title: 'Paciente',
+          description: 'No se encontro paciente.',
+          type: 'warning',
+          timeoutId: 5000
+        });    }
   } catch (error) {
     console.error(error);
   }
@@ -55,6 +67,13 @@ interface PatientData {
 
 const VerHistoriaClinica = async () => {
   if (patientDocument.value) {
+    console.log('Error');
+        useToast({
+          title: 'Historia clinica',
+          description: 'Descargando historia clinica.',
+          type: 'success',
+          timeoutId: 5000
+        });
     try {
       // Realizar la petición para obtener el PDF de la historia clínica
       const pdfBlob = await getHistoriaClinicaPorCCc(patientDocument.value);
@@ -71,8 +90,13 @@ const VerHistoriaClinica = async () => {
       document.body.removeChild(fileLink);
       window.URL.revokeObjectURL(fileURL);
     } catch (error) {
-      console.error('Error al obtener la historia clínica:', error);
-      alert('No se pudo obtener la historia clínica. Por favor, intente de nuevo.');
+      console.log('Error');
+        useToast({
+          title: 'Historia clinica',
+          description: 'No se encontro historia clinica del paciente.',
+          type: 'error',
+          timeoutId: 5000
+        });
     }
   } else {
     alert('Por favor, ingrese el documento del paciente antes de ver la historia clínica.');
@@ -89,8 +113,13 @@ const editarHistoriaClinica = () => {
       query: { cc: ccPaciente } 
     });
   } else {
-    console.error('No se encontró datos del paciente.');
-  }
+    console.log('Error');
+        useToast({
+          title: 'Historia clinica',
+          description: 'No se encontro historia clinica del paciente.',
+          type: 'error',
+          timeoutId: 5000
+        });  }
 };
 
 const crearHistoria = () => {
@@ -102,8 +131,13 @@ const crearHistoria = () => {
       query: { cc: ccPaciente } 
     });
   } else {
-    console.error('No se encontró datos del paciente.');
-  }
+    console.log('Error');
+        useToast({
+          title: 'Historia clinica',
+          description: 'No se encontro historia clinica del paciente.',
+          type: 'error',
+          timeoutId: 5000
+        });  }
 };
 
 const patientData = ref<PatientData | null>(null);

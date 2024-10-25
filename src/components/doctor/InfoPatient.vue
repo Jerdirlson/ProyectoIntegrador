@@ -31,6 +31,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getUsuarioPorCC, getHistoriaClinicaPorCC, getOrdenMedicaPorCC } from '@/service/DoctorService';
+import { useToast } from "@/composables/UseToast";
+
 
 export default {
   setup() {
@@ -53,22 +55,37 @@ export default {
           historiaClinica.value = historia ? historia : null;
           ordenMedica.value = orden ? orden : null;
           if (!historia) {
-            alert('No se encontró la historia clínica para este paciente');
+            console.log('Error');
+        useToast({
+          title: 'Historia clinica',
+          description: 'No se encontro historia clinica',
+          type: 'warning',
+          timeoutId: 5000
+        });
           }
           
           if (!orden) {
-            alert('No se encontró la orden médica para este paciente');
-          }
+            console.log('Error');
+        useToast({
+          title: 'Orden Medica',
+          description: 'No se encontro orden medica',
+          type: 'warning',
+          timeoutId: 5000
+        });          
+      }
           
         } else {
-          alert('Paciente no encontrado');
-          patient.value = null;
+          console.log('Error');
+        useToast({
+          title: 'Paciente',
+          description: 'No se encontro un paciente',
+          type: 'warning',
+          timeoutId: 5000
+        });            patient.value = null;
           historiaClinica.value = null;
           ordenMedica.value = null;
         }
       } catch (error) {
-        console.error('Error al buscar el paciente, la historia clínica o la orden médica:', error);
-        alert('Error al buscar el paciente. Revisa la consola para más detalles.');
       }
     };
 
@@ -79,8 +96,13 @@ export default {
           query: { cc: document.value }
         });
       } else {
-        alert('No hay historia médica disponible para este paciente');
-      }
+        console.log('Error');
+        useToast({
+          title: 'No hay historia Medica',
+          description: 'No se encontro historia medica',
+          type: 'warning',
+          timeoutId: 5000
+        });        }
     };
 
     const consultarOrdenMedica = () => {
@@ -90,8 +112,13 @@ export default {
           query: { cc: document.value }
         });
       } else {
-        alert('No hay historia médica disponible para este paciente');
-      }
+        console.log('Error');
+        useToast({
+          title: 'No hay orden Medica',
+          description: 'No se encontro orden medica',
+          type: 'warning',
+          timeoutId: 5000
+        });      }
     };
 
     return {

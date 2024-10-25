@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import MedicalHistory from '@/components/doctor/MedicalHist.vue';
+import Toast from '@/components/Toast.vue';
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import MedicalHistory from '@/components/doctor/MedicalHist.vue';
         </div>
       </main>
     </div>
+    <Toast></Toast>
 </template>
 
 <style scoped>

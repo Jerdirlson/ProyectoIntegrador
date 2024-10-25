@@ -2,6 +2,10 @@
 import { ref, onMounted } from 'vue';
 import { getHistoriaClinicaPorCC, updateHistoriaClinica } from '@/service/DoctorService';
 import { useRoute } from 'vue-router';
+import {useToast} from "@/composables/UseToast";
+import Toast from '@/components/Toast.vue';
+
+
 
 // Definir todos los campos como variables reactivas
 const idHistoria_Medica = ref('');
@@ -120,8 +124,12 @@ const submitForm = async () => {
 
   try {
     const response = await updateHistoriaClinica(Number(idHistoria_Medica.value), formData);
-    console.log('Historia clínica actualizada exitosamente:', response);
-    alert('Historia clínica actualizada correctamente');
+    useToast({
+      title: 'Actulizado',
+      description: 'Historia clinica actualizada correctamente.',
+      type: 'success',
+      timeoutId: 6000
+    });
     // Opcional: Redireccionar o actualizar la UI según sea necesario
   } catch (error) {
     console.error('Error al actualizar la historia clínica:', error.response || error);
@@ -270,6 +278,7 @@ const submitForm = async () => {
       <button type="submit" class="submit-button">Enviar</button>
     </form>
   </div>
+  <Toast></Toast>
 </template>
 
 <style scoped>
